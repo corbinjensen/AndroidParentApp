@@ -1,4 +1,4 @@
-package ca.sfu.vhn.parentapp;
+package ca.sfu.fluorine.parentapp;
 
 import org.junit.Test;
 
