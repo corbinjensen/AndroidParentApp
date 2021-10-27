@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_children">
+
+    <fragment
+        android:id="@+id/navigation_children"
+        android:name="ca.sfu.fluorine.parentapp.view.ChildrenFragment"
+        android:label="@string/title_children"
+        tools:layout="@layout/fragment_children" />
+
+    <fragment
+        android:id="@+id/navigation_coin_flip"
+        android:name="ca.sfu.fluorine.parentapp.view.CoinFlipFragment"
+        android:label="@string/title_coin_flip"
+        tools:layout="@layout/fragment_coin_flip" />
+
+    <fragment
+        android:id="@+id/navigation_timeout"
+        android:name="ca.sfu.fluorine.parentapp.view.TimeoutFragment"
+        android:label="@string/title_timeout"
+        tools:layout="@layout/fragment_timeout" />
+</navigation>

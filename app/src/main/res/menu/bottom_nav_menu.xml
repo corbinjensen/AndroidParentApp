@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_children"
+        android:icon="@drawable/ic_child_solid"
+        android:title="@string/title_children" />
+
+    <item
+        android:id="@+id/navigation_coin_flip"
+        android:icon="@drawable/ic_noun_coin_flip"
+        android:title="@string/title_coin_flip"/>
+
+    <item
+        android:id="@+id/navigation_timeout"
+        android:icon="@drawable/ic_stopwatch_solid"
+        android:title="@string/title_timeout"/>
+
+</menu>
