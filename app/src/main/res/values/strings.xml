@@ -3,4 +3,6 @@
     <string name="title_children">Children</string>
     <string name="title_coin_flip">Coin flip</string>
     <string name="title_timeout">Timeout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
