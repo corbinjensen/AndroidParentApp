@@ -32,4 +32,6 @@
         <item>5</item>
         <item>10</item>
     </integer-array>
+    <string name="time_up">Time\'s up!</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

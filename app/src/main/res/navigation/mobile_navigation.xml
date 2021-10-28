@@ -46,6 +46,9 @@
             android:name="duration"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/redirect_to_end_screen"
+            app:destination="@id/timeoutFinishFragment" />
     </fragment>
 
     <dialog
@@ -59,4 +62,13 @@
             app:popUpTo="@id/navigation_timeout"
             app:popUpToInclusive="true"/>
     </dialog>
+    <fragment
+        android:id="@+id/timeoutFinishFragment"
+        android:name="ca.sfu.fluorine.parentapp.view.timeout.TimeoutFinishFragment"
+        android:label="fragment_timeout_finish"
+        tools:layout="@layout/fragment_timeout_finish" >
+        <action
+            android:id="@+id/return_to_timeout"
+            app:destination="@id/navigation_timeout" />
+    </fragment>
 </navigation>
