@@ -23,7 +23,10 @@ public class TimeoutFragment extends Fragment {
 		// Inflate the layout for this fragment
 		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
 
-		timer.registerAction(this::updateTimerUI);
+		timer.registerAction(this::updateTimerUI, () -> {
+			updateButtonUI();
+			updateTimerUI();
+		});
 		updateTimerUI();
 
 		// Set up listeners for the buttons
@@ -32,10 +35,7 @@ public class TimeoutFragment extends Fragment {
 			updateButtonUI();
 		});
 
-		binding.resetButton.setOnClickListener((view) -> {
-			timer.reset();
-			updateButtonUI();
-		});
+		binding.resetButton.setOnClickListener((view) -> timer.reset());
 
 		return binding.getRoot();
 	}

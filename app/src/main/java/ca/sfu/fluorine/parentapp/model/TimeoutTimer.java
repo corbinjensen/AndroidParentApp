@@ -9,14 +9,16 @@ public class TimeoutTimer {
 	private final int minutes = 1;
 	private long remainingTimeInMillis;
 	private CountDownTimer timer;
-	private Runnable actionOnUpdate;
+	private Runnable actionOnUpdate, actionOnReset;
 
 	public TimeoutTimer() {
 		reset();
 	}
 
-	public void registerAction(@NonNull Runnable action) {
-		actionOnUpdate = action;
+	public void registerAction(@NonNull Runnable actionOnUpdate,
+							   @NonNull Runnable actionOnReset) {
+		this.actionOnUpdate = actionOnUpdate;
+		this.actionOnReset = actionOnReset;
 	}
 
 	public void toggle() {
@@ -36,7 +38,7 @@ public class TimeoutTimer {
 		if (timer != null) timer.cancel();
 		remainingTimeInMillis = minutes * 60000;
 		timer = makeTimer(minutes * 60000);
-		runAction();
+		execute(actionOnReset);
 	}
 
 	public long getRemainingTimeInMillis() {
@@ -51,10 +53,9 @@ public class TimeoutTimer {
 		return running;
 	}
 
-	private void runAction() {
-		if (actionOnUpdate != null) {
-			actionOnUpdate.run();
-		}
+	private static void execute(Runnable action) {
+		if (action == null) return;
+		action.run();
 	}
 
 	private CountDownTimer makeTimer(long timeInMillis) {
@@ -62,13 +63,12 @@ public class TimeoutTimer {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				remainingTimeInMillis = millisUntilFinished;
-				runAction();
+				execute(actionOnUpdate);
 			}
 
 			@Override
 			public void onFinish() {
-				running = false;
-				runAction();
+				reset();
 			}
 		};
 	}
