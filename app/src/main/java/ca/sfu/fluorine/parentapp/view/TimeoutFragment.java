@@ -58,9 +58,9 @@ public class TimeoutFragment extends Fragment {
 	private void updateButtonUI() {
 		binding.resetButton.setEnabled(!timer.isPristine());
 		if (!timer.isRunning()) {
-			binding.playButton.setText(timer.isPristine() ? R.string.start : R.string.pause);
+			binding.playButton.setText(timer.isPristine() ? R.string.start : R.string.resume);
 		} else {
-			binding.playButton.setText(R.string.stop);
+			binding.playButton.setText(R.string.pause);
 		}
 	}
 
