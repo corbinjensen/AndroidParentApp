@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 
@@ -21,12 +23,18 @@ public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
 
 	@Override
-	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
+	public View onCreateView(
+	    @NonNull LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
+    ) {
 		// Inflate the layout for this fragment
 		binding = FragmentChildrenBinding.inflate(inflater, container, false);
 		return binding.getRoot();
-	}
+
+    }
+
+
 
 	@Override
 	public void onDestroy() {
