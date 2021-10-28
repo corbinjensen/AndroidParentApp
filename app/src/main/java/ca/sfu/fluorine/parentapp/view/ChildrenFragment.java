@@ -1,3 +1,7 @@
+/*
+    ChildrenFragment.java - represents the UI of the configure children feature.
+ */
+
 package ca.sfu.fluorine.parentapp.view;
 
 import android.os.Bundle;
