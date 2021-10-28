@@ -8,50 +8,49 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-
-import java.util.function.Consumer;
+import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.DialogCustomTimerBinding;
 
 public class CustomTimerDialog extends AppCompatDialogFragment {
 	private DialogCustomTimerBinding binding;
-	private Consumer<Integer> startTimerAction;
-
-	private CustomTimerDialog() {
-		super();
-	}
-
-	public CustomTimerDialog(@NonNull Consumer<Integer> startTimer) {
-		this();
-		this.startTimerAction = startTimer;
-	}
 
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-		initializeView();
-		dialogBuilder
+		initialize();
+
+		return new AlertDialog.Builder(getActivity())
 				.setView(binding.getRoot())
 				.setTitle(R.string.custom_timer)
-		.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {})
-		.setPositiveButton(R.string.start, (dialogInterface, i) ->
-			startTimerAction.accept(binding.customDurationPicker.getValue()));
-		return dialogBuilder.create();
+				.setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.cancel())
+				.setPositiveButton(R.string.start, (dialog, i) -> {
+					startTimer();
+					dialog.dismiss();
+				})
+				.create();
 	}
 
-	private void initializeView() {
+	private void initialize() {
 		binding = DialogCustomTimerBinding.inflate(getLayoutInflater());
 		NumberPicker picker = binding.customDurationPicker;
 		picker.setMinValue(getResources().getInteger(R.integer.min_duration));
 		picker.setMaxValue(getResources().getInteger(R.integer.max_duration));
 		updateUI(picker.getValue());
 
-		picker.setOnValueChangedListener((numberPicker, oldValue, newValue) -> updateUI(newValue));
+		picker.setOnValueChangedListener(
+				(numberPicker, oldValue, newValue) -> updateUI(newValue));
 	}
 
 	private void updateUI(int value) {
 		binding.minutes.setText(getResources().getQuantityString(R.plurals.minutes, value));
+	}
+
+	private void startTimer() {
+		CustomTimerDialogDirections.RunCustomTimerAction action
+				= CustomTimerDialogDirections.runCustomTimerAction();
+		action.setDuration(binding.customDurationPicker.getValue());
+		NavHostFragment.findNavController(this).navigate(action);
 	}
 }

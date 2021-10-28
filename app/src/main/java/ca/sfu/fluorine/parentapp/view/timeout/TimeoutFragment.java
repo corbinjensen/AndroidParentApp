@@ -18,6 +18,7 @@ import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 public class TimeoutFragment extends Fragment {
 	private FragmentTimeoutBinding binding;
 	private TimeoutTimer timer;
+	private Runnable playButtonAction;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,7 +39,7 @@ public class TimeoutFragment extends Fragment {
 		updateTimerUI();
 
 		// Set up listeners for the buttons
-		Runnable playButtonAction = () -> {
+		playButtonAction = () -> {
 			timer.toggle();
 			updateButtonUI();
 		};
@@ -49,9 +50,19 @@ public class TimeoutFragment extends Fragment {
 			timer.discard();
 			Navigation.findNavController(view).navigate(R.id.reset_timer_action);
 		});
+	}
 
-		// Start the timer
+	@Override
+	public void onStart() {
+		super.onStart();
 		playButtonAction.run();
+	}
+
+	// Discard the timer when the fragment is no longer visible
+	@Override
+	public void onStop() {
+		super.onStop();
+		timer.discard();
 	}
 
 	private void updateTimerUI() {

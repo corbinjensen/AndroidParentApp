@@ -23,8 +23,13 @@
         android:label="@string/title_timeout"
         tools:layout="@layout/fragment_timeout_selector" >
         <action
-            android:id="@+id/start_timer_action"
-            app:destination="@id/timeout_running" />
+            android:id="@+id/start_preset_timer_action"
+            app:destination="@id/timeout_running"
+            app:popUpTo="@id/navigation_timeout"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/show_custom_dialog_action"
+            app:destination="@id/custom_timer_dialog" />
     </fragment>
 
     <fragment
@@ -34,10 +39,24 @@
         tools:layout="@layout/fragment_timeout" >
         <action
             android:id="@+id/reset_timer_action"
-            app:destination="@id/navigation_timeout" />
+            app:destination="@id/navigation_timeout"
+            app:popUpTo="@id/timeout_running"
+            app:popUpToInclusive="true"/>
         <argument
             android:name="duration"
             app:argType="integer"
             android:defaultValue="1" />
     </fragment>
+
+    <dialog
+        android:id="@+id/custom_timer_dialog"
+        android:name="ca.sfu.fluorine.parentapp.view.timeout.CustomTimerDialog"
+        android:label="dialog_custom_timer"
+        tools:layout="@layout/dialog_custom_timer" >
+        <action
+            android:id="@+id/run_custom_timer_action"
+            app:destination="@id/timeout_running"
+            app:popUpTo="@id/navigation_timeout"
+            app:popUpToInclusive="true"/>
+    </dialog>
 </navigation>

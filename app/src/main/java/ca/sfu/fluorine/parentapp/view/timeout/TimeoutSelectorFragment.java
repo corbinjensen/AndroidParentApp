@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,57 +14,53 @@ import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
-import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.*;
+import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
 public class TimeoutSelectorFragment extends Fragment {
-	private FragmentTimeoutSelectorBinding binding;
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 @Nullable ViewGroup container,
 							 @Nullable Bundle savedInstanceState) {
-		binding = FragmentTimeoutSelectorBinding.inflate(inflater, container, false);
-		return binding.getRoot();
+		return FragmentTimeoutSelectorBinding
+				.inflate(inflater, container, false)
+				.getRoot();
 	}
 
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+		final LinearLayout buttonList = FragmentTimeoutSelectorBinding.bind(view).buttonList;
+
 		// Add buttons for preset durations
 		int[] presetDurations = getResources().getIntArray(R.array.preset_durations);
 		for (final int duration : presetDurations) {
-			binding.buttonList.addView(createPresetButton(duration));
+			buttonList.addView(createPresetButton(view, duration));
 		}
 
 		// Add a button for custom data
 		Button customButton = new Button(getContext());
 		customButton.setText(R.string.custom_timer);
-		customButton.setOnClickListener(_view -> {
-			CustomTimerDialog dialog = new CustomTimerDialog(this::startTimer);
-			dialog.show(getChildFragmentManager(), null);
-		});
-		binding.buttonList.addView(customButton);
+		customButton.setOnClickListener(btnView ->
+			Navigation.findNavController(view).navigate(R.id.show_custom_dialog_action)
+		);
+		buttonList.addView(customButton);
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		binding = null;
-	}
-
-	public Button createPresetButton(int minutes) {
+	public Button createPresetButton(View view, int minutes) {
 		Button button = new Button(getContext());
 		String buttonLabel = getResources()
 				.getQuantityString(R.plurals.duration_in_minutes, minutes, minutes);
 		button.setText(buttonLabel);
-		button.setOnClickListener(view -> startTimer(minutes));
+		button.setOnClickListener(btnView -> {
+			StartPresetTimerAction action =
+					TimeoutSelectorFragmentDirections.startPresetTimerAction();
+			action.setDuration(minutes);
+			Navigation.findNavController(view)
+					.navigate(action);
+		});
 		return button;
-	}
-
-	public void startTimer(int minutes) {
-		StartTimerAction action = TimeoutSelectorFragmentDirections.startTimerAction();
-		action.setDuration(minutes);
-		Navigation.findNavController(binding.getRoot()).navigate(action);
 	}
 }
