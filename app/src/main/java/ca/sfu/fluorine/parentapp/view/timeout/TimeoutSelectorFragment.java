@@ -38,6 +38,12 @@ public class TimeoutSelectorFragment extends Fragment {
 
 		// Add a button for custom data
 		Button customButton = new Button(getContext());
+		customButton.setText(R.string.custom_timer);
+		customButton.setOnClickListener(_view -> {
+			CustomTimerDialog dialog = new CustomTimerDialog(this::startTimer);
+			dialog.show(getChildFragmentManager(), null);
+		});
+		binding.buttonList.addView(customButton);
 	}
 
 	@Override
