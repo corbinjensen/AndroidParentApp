@@ -6,12 +6,13 @@ import androidx.annotation.NonNull;
 
 public class TimeoutTimer {
 	private boolean pristine = true, running = false;
-	private final int minutes = 1;
+	private final int minutes;
 	private long remainingTimeInMillis;
 	private CountDownTimer timer;
 	private Runnable actionOnUpdate, actionOnReset;
 
-	public TimeoutTimer() {
+	public TimeoutTimer(int minutes) {
+		this.minutes = minutes;
 		reset();
 	}
 
@@ -36,8 +37,8 @@ public class TimeoutTimer {
 		pristine = true;
 		running = false;
 		if (timer != null) timer.cancel();
-		remainingTimeInMillis = minutes * 60000;
-		timer = makeTimer(minutes * 60000);
+		remainingTimeInMillis = minutes * 60000L;
+		timer = makeTimer(remainingTimeInMillis);
 		execute(actionOnReset);
 	}
 

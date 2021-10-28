@@ -15,7 +15,7 @@ import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 public class TimeoutFragment extends Fragment {
 	private FragmentTimeoutBinding binding;
-	private final TimeoutTimer timer = new TimeoutTimer();
+	private TimeoutTimer timer;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -23,6 +23,7 @@ public class TimeoutFragment extends Fragment {
 		// Inflate the layout for this fragment
 		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
 
+		timer = makeTimer(1);
 		timer.registerAction(this::updateTimerUI, () -> {
 			updateButtonUI();
 			updateTimerUI();
@@ -61,5 +62,14 @@ public class TimeoutFragment extends Fragment {
 		} else {
 			binding.playButton.setText(R.string.stop);
 		}
+	}
+
+	private TimeoutTimer makeTimer(int minutes) {
+		TimeoutTimer timer = new TimeoutTimer(minutes);
+		timer.registerAction(this::updateTimerUI, () -> {
+			updateTimerUI();
+			updateButtonUI();
+		});
+		return timer;
 	}
 }
