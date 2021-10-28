@@ -11,4 +11,15 @@
     <string name="resume">Resume</string>
     <string name="reset">Reset</string>
     <string name="custom">Custom</string>
+
+    <integer name="min_duration">1</integer>
+    <integer name="max_duration">60</integer>
+
+    <integer-array name="preset_values">
+        <item>@integer/min_duration</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </integer-array>
 </resources>

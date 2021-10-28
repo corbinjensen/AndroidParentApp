@@ -19,7 +19,25 @@
 
     <fragment
         android:id="@+id/navigation_timeout"
+        android:name="ca.sfu.fluorine.parentapp.view.TimeoutSelectorFragment"
+        android:label="@string/title_timeout"
+        tools:layout="@layout/fragment_timeout_selector" >
+        <action
+            android:id="@+id/start_timer_action"
+            app:destination="@id/timeout_running" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/timeout_running"
         android:name="ca.sfu.fluorine.parentapp.view.TimeoutFragment"
         android:label="@string/title_timeout"
-        tools:layout="@layout/fragment_timeout" />
+        tools:layout="@layout/fragment_timeout" >
+        <action
+            android:id="@+id/reset_timer_action"
+            app:destination="@id/navigation_timeout" />
+        <argument
+            android:name="duration"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>

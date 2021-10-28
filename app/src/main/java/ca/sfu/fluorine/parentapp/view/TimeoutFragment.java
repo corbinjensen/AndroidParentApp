@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutBinding;
@@ -22,29 +24,34 @@ public class TimeoutFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
-
-		timer = makeTimer(1);
-		timer.registerAction(this::updateTimerUI, () -> {
-			updateButtonUI();
-			updateTimerUI();
-		});
-		updateTimerUI();
-
-		// Set up listeners for the buttons
-		binding.playButton.setOnClickListener((view) -> {
-			timer.toggle();
-			updateButtonUI();
-		});
-
-		binding.resetButton.setOnClickListener((view) -> timer.reset());
-
 		return binding.getRoot();
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		binding = null;
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		// Set up timer from the argument
+		int minutes = TimeoutFragmentArgs.fromBundle(getArguments()).getDuration();
+		timer = new TimeoutTimer(minutes);
+		timer.registerAction(this::updateTimerUI);
+		updateTimerUI();
+
+		// Set up listeners for the buttons
+		Runnable playButtonAction = () -> {
+			timer.toggle();
+			updateButtonUI();
+		};
+
+		binding.playButton.setOnClickListener((btnView) -> playButtonAction.run());
+
+		binding.resetButton.setOnClickListener((btnView) -> {
+			timer.discard();
+			Navigation.findNavController(view).navigate(R.id.reset_timer_action);
+		});
+
+		// Start the timer
+		playButtonAction.run();
 	}
 
 	private void updateTimerUI() {
@@ -58,18 +65,9 @@ public class TimeoutFragment extends Fragment {
 	private void updateButtonUI() {
 		binding.resetButton.setEnabled(!timer.isPristine());
 		if (!timer.isRunning()) {
-			binding.playButton.setText(timer.isPristine() ? R.string.start : R.string.resume);
+			binding.playButton.setText(R.string.resume);
 		} else {
 			binding.playButton.setText(R.string.pause);
 		}
-	}
-
-	private TimeoutTimer makeTimer(int minutes) {
-		TimeoutTimer timer = new TimeoutTimer(minutes);
-		timer.registerAction(this::updateTimerUI, () -> {
-			updateTimerUI();
-			updateButtonUI();
-		});
-		return timer;
 	}
 }
