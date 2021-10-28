@@ -6,19 +6,18 @@ import androidx.annotation.NonNull;
 
 public class TimeoutTimer {
 	private boolean pristine = true, running = false;
-	private final int minutes;
 	private long remainingTimeInMillis;
 	private CountDownTimer timer;
-	private Runnable actionOnUpdate;
+	private Runnable actionOnTick, actionOnFinish;
 
 	public TimeoutTimer(int minutes) {
-		this.minutes = minutes;
 		remainingTimeInMillis = minutes * 60000L;
 		timer = makeTimer(remainingTimeInMillis);
 	}
 
-	public void registerAction(@NonNull Runnable actionOnUpdate) {
-		this.actionOnUpdate = actionOnUpdate;
+	public void registerActions(@NonNull Runnable actionOnTick, @NonNull Runnable actionOnFinish) {
+		this.actionOnTick = actionOnTick;
+		this.actionOnFinish = actionOnFinish;
 	}
 
 	public void toggle() {
@@ -33,6 +32,7 @@ public class TimeoutTimer {
 	}
 
 	public void discard() {
+		if (timer == null) return;
 		timer.cancel();
 		timer = null;
 	}
@@ -59,12 +59,13 @@ public class TimeoutTimer {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				remainingTimeInMillis = millisUntilFinished;
-				execute(actionOnUpdate);
+				execute(actionOnTick);
 			}
 
 			@Override
 			public void onFinish() {
 				discard();
+				execute(actionOnFinish);
 			}
 		};
 	}

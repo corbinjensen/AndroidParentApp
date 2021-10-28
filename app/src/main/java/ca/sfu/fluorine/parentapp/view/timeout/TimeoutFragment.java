@@ -35,7 +35,9 @@ public class TimeoutFragment extends Fragment {
 		// Set up timer from the argument
 		int minutes = TimeoutFragmentArgs.fromBundle(getArguments()).getDuration();
 		timer = new TimeoutTimer(minutes);
-		timer.registerAction(this::updateTimerUI);
+		timer.registerActions(this::updateTimerUI, () ->
+			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
+		);
 		updateTimerUI();
 
 		// Set up listeners for the buttons

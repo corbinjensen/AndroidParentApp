@@ -36,4 +36,6 @@ public class TimeoutFinishFragment extends Fragment {
 			Navigation.findNavController(view).navigate(R.id.return_to_timeout)
 		);
 	}
+
+	// TODO: Play music and vibrate the phone when this fragment appear
 }
