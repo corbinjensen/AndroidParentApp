@@ -3,4 +3,12 @@
     <string name="title_children">Children</string>
     <string name="title_coin_flip">Coin flip</string>
     <string name="title_timeout">Timeout</string>
+
+    <!--  Timeout  -->
+    <string name="remaining_time">%02d:%02d</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="reset">Reset</string>
+    <string name="custom">Custom</string>
 </resources>

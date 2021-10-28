@@ -8,17 +8,35 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 
 public class TimeoutFragment extends Fragment {
 	private FragmentTimeoutBinding binding;
+	private final TimeoutTimer timer = new TimeoutTimer();
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
+
+		timer.registerAction(this::updateTimerUI);
+		updateTimerUI();
+
+		// Set up listeners for the buttons
+		binding.playButton.setOnClickListener((view) -> {
+			timer.toggle();
+			updateButtonUI();
+		});
+
+		binding.resetButton.setOnClickListener((view) -> {
+			timer.reset();
+			updateButtonUI();
+		});
+
 		return binding.getRoot();
 	}
 
@@ -26,5 +44,22 @@ public class TimeoutFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		binding = null;
+	}
+
+	private void updateTimerUI() {
+		long remainingInSeconds = timer.getRemainingTimeInMillis() / 1000;
+		binding.countDownText.setText(getString(
+				R.string.remaining_time,
+				remainingInSeconds / 60,
+				remainingInSeconds % 60));
+	}
+
+	private void updateButtonUI() {
+		binding.resetButton.setEnabled(!timer.isPristine());
+		if (!timer.isRunning()) {
+			binding.playButton.setText(timer.isPristine() ? R.string.start : R.string.pause);
+		} else {
+			binding.playButton.setText(R.string.stop);
+		}
 	}
 }
