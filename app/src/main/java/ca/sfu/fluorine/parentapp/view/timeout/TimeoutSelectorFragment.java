@@ -16,6 +16,12 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
 import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
+/**
+ * Represents the screen for timer selection
+ *
+ * Users can either have quick access to preset duration
+ * or start their own custom timer
+ */
 public class TimeoutSelectorFragment extends Fragment {
 
 	@Nullable
@@ -63,4 +69,6 @@ public class TimeoutSelectorFragment extends Fragment {
 		});
 		return button;
 	}
+
+	// TODO: Make this screen more beautiful
 }

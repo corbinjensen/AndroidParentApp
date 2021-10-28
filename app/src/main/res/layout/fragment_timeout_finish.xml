@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.timeout.TimeoutFinishFragment">
-
+    <!--  TODO: Create beautiful end screen when timer reaches 0  -->
     <TextView
         android:id="@+id/finish_label"
         android:layout_width="wrap_content"

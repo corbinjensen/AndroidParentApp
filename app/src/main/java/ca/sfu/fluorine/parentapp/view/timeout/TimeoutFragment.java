@@ -14,7 +14,9 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
-
+/**
+ * Represents the screen of the timer counting down
+ */
 public class TimeoutFragment extends Fragment {
 	private FragmentTimeoutBinding binding;
 	private TimeoutTimer timer;

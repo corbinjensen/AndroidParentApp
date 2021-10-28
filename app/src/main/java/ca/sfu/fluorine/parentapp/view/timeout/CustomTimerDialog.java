@@ -13,6 +13,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.DialogCustomTimerBinding;
 
+/**
+ * Represents a dialog to start a timer with customized duration
+ */
 public class CustomTimerDialog extends AppCompatDialogFragment {
 	private DialogCustomTimerBinding binding;
 

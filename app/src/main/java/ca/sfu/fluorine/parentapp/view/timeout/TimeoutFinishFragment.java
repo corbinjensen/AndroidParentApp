@@ -15,6 +15,9 @@ import android.widget.Button;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
 
+/**
+ * Represents the end screen when the timer reaches 0
+ */
 public class TimeoutFinishFragment extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
