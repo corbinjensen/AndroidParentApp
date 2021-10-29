@@ -5,7 +5,7 @@ package ca.sfu.fluorine.parentapp.model;
 public class Child {
     private String firstName, lastName;
 
-    public void Child(String firstName, String lastName) {
+    public Child(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
