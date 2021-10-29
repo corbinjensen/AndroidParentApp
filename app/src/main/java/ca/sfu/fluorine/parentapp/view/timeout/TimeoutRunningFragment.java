@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 /**
@@ -20,7 +21,13 @@ import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 public class TimeoutRunningFragment extends Fragment {
 	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
-	private Runnable playButtonAction;
+	private TimeoutSetting timeoutSetting;
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		timeoutSetting = TimeoutSetting.getInstance(getContext());
+	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -40,33 +47,39 @@ public class TimeoutRunningFragment extends Fragment {
 		timer.registerActions(this::updateTimerUI, () ->
 			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
 		);
+
 		updateTimerUI();
+		updateButtonUI();
 
-		// Set up listeners for the buttons
-		playButtonAction = () -> {
-			timer.toggle();
-			updateButtonUI();
-		};
-
-		binding.playButton.setOnClickListener((btnView) -> playButtonAction.run());
+		binding.playButton.setOnClickListener((btnView) -> toggleTimer());
 
 		binding.resetButton.setOnClickListener((btnView) -> {
 			timer.discard();
 			Navigation.findNavController(view).navigate(R.id.reset_timer_action);
 		});
-	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		playButtonAction.run();
+		if (timeoutSetting.isTimerRunning()) {
+			toggleTimer();
+		}
 	}
 
 	// Discard the timer when the fragment is no longer visible
 	@Override
 	public void onStop() {
 		super.onStop();
+
+		// Save the timer if it's not finished
+		if (timer.isFinished()) {
+			timeoutSetting.saveTimer(timer);
+		} else {
+			timeoutSetting.clear();
+		}
 		timer.discard();
+	}
+
+	private void toggleTimer() {
+		timer.toggle();
+		updateButtonUI();
 	}
 
 	private void updateTimerUI() {

@@ -43,6 +43,10 @@ public class TimeoutTimer {
 		return running;
 	}
 
+	public boolean isFinished() {
+		return timer != null;
+	}
+
 	private static void execute(Runnable action) {
 		if (action == null) return;
 		action.run();
