@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,11 @@ public class TimeoutSelectorFragment extends Fragment {
 
 		// Navigate away to running timer when a timer is active
 		TimeoutSetting setting = TimeoutSetting.getInstance(getContext());
-		Long millisLeft = setting.getSavedRemainingMillis();
-		if (millisLeft != null) {
+		Long expiredTime = setting.getSavedExpiredTime();
+		if (expiredTime != null) {
 			StartPresetTimerAction action =
 					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			action.setDuration(millisLeft);
+			action.setExpiredTime(expiredTime);
 			NavHostFragment.findNavController(this).navigate(action);
 		}
 	}
@@ -81,7 +82,9 @@ public class TimeoutSelectorFragment extends Fragment {
 		button.setOnClickListener(btnView -> {
 			StartPresetTimerAction action =
 					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			action.setDuration(minutes * TimeoutTimer.MINUTES_TO_MILLIS);
+			long expiredTime = Calendar.getInstance().getTimeInMillis()
+					+ minutes * TimeoutTimer.MINUTES_TO_MILLIS;
+			action.setExpiredTime(expiredTime);
 			Navigation.findNavController(view)
 					.navigate(action);
 		});

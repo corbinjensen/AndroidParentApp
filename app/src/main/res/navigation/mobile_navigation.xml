@@ -30,7 +30,7 @@
                 app:popUpTo="@id/timeout_running"
                 app:popUpToInclusive="true" />
             <argument
-                android:name="duration"
+                android:name="expiredTime"
                 android:defaultValue="-1L"
                 app:argType="long" />
             <action

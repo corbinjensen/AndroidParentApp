@@ -1,5 +1,9 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import java.util.Calendar;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
+import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
 
 /**
  * Represents the screen of the timer counting down
@@ -42,7 +50,7 @@ public class TimeoutRunningFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		// Set up timer from the argument
-		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getDuration();
+		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
 		timer = new TimeoutTimer(millis);
 		timer.registerActions(this::updateTimerUI, () ->
 			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
@@ -69,7 +77,7 @@ public class TimeoutRunningFragment extends Fragment {
 		super.onStop();
 
 		// Save the timer if it's not finished
-		if (timer.isFinished()) {
+		if (timer.getState() != TimerState.FINISHED) {
 			timeoutSetting.saveTimer(timer);
 		} else {
 			timeoutSetting.clear();
@@ -83,7 +91,7 @@ public class TimeoutRunningFragment extends Fragment {
 	}
 
 	private void updateTimerUI() {
-		long remainingInSeconds = timer.getRemainingTimeInMillis() / 1000;
+		long remainingInSeconds = timer.getMillisLeft() / 1000;
 		binding.countDownText.setText(getString(
 				R.string.remaining_time,
 				remainingInSeconds / 60,
@@ -91,7 +99,7 @@ public class TimeoutRunningFragment extends Fragment {
 	}
 
 	private void updateButtonUI() {
-		if (!timer.isRunning()) {
+		if (timer.getState() == TimerState.PAUSED) {
 			binding.playButton.setText(R.string.resume);
 		} else {
 			binding.playButton.setText(R.string.pause);
