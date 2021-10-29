@@ -1,20 +1,26 @@
 package ca.sfu.fluorine.parentapp.model;
-/*
-    Child.java - represents a child
+
+/**
+ *  Child.java - represents a child
  */
 public class Child {
-    private String firstName, lastName;
+    public String firstName, lastName;
 
     public Child(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return "Child{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
+    public String getFirstName() {
+        return firstName;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+    
 }
