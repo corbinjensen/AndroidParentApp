@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
-            android:name="ca.sfu.fluorine.parentapp.MainActivity"
+            android:name=".ChildFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
