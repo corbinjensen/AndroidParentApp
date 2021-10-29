@@ -11,8 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
-            android:name=".CoinFlip"
-            android:exported="true" />
+            android:name=".ChildFormActivity"
+            android:exported="false" />
+        <activity android:name=".CoinFlip"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
