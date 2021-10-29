@@ -22,5 +22,5 @@ public class Child {
     public String getFullName() {
         return firstName + " " + lastName;
     }
-    
+
 }

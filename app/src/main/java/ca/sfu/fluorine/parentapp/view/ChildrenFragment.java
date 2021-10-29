@@ -1,5 +1,3 @@
-
-
 package ca.sfu.fluorine.parentapp.view;
 
 import android.content.Intent;
@@ -39,8 +37,6 @@ public class ChildrenFragment extends Fragment {
             container,
             false
         );
-
-
 
 		return binding.getRoot();
 
