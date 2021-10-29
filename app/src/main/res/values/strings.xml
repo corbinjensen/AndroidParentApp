@@ -3,4 +3,38 @@
     <string name="title_children">Children</string>
     <string name="title_coin_flip">Coin flip</string>
     <string name="title_timeout">Timeout</string>
+
+    <!--  Timeout  -->
+    <string name="custom_timer">Custom timer</string>
+    <plurals name="duration_in_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+
+    <string name="remaining_time">%02d:%02d</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="reset">Reset</string>
+
+    <integer name="min_duration">1</integer>
+    <integer name="max_duration">60</integer>
+
+    <integer-array name="preset_durations">
+        <item>@integer/min_duration</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </integer-array>
+    <string name="time_up">Time\'s up!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="add_child">Add Child</string>
 </resources>
