@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/drawable/ic_child_solid.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_noun_coin_flip.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_stopwatch_solid.xml" value="0.5796875" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/layout/activity_coin_flip.xml" value="0.13134057971014493" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_children.xml" value="0.3375" />
         <entry key="app/src/main/res/layout/fragment_coin_flip.xml" value="0.3375" />
