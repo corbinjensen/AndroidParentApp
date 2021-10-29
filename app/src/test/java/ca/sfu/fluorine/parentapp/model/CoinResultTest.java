@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 class CoinResultTest {
     String headString = "HEADS";
     String tailString = "TAILS";
+    String childFirst = "FIRST";
+    String childLast = "LAST";
 
     @Test
     public void getDateTimeOfFlip() {
@@ -33,27 +35,26 @@ class CoinResultTest {
 
         expectedCoinResult.setFlipResult();
 
-
        assertTrue(expectedCoinResult.flipResult.equals(headString)
                || expectedCoinResult.flipResult.equals(tailString) );
 
     }
 
     @Test
-    public void getIfPickerWon() {
+    public void getDidPickerWin() {
         CoinResult expectedCoinResult = new CoinResult();
         boolean pickerWon = true;
         expectedCoinResult.didPickerWin = pickerWon;
 
-        assertEquals(expectedCoinResult.getIfPickerWon(), pickerWon);
+        assertEquals(expectedCoinResult.getDidPickerWin(), pickerWon);
 
     }
 
     @Test
     public void setDidPickerWin() {
         CoinResult expectedCoinResult = new CoinResult();
-        String kidGuess = headString;
-        expectedCoinResult.flipResult = kidGuess;
+        expectedCoinResult.flipResult = headString;
+        expectedCoinResult.childGuess = headString;
         expectedCoinResult.setDidPickerWin();
 
         assertEquals(expectedCoinResult.didPickerWin, true);
@@ -63,16 +64,16 @@ class CoinResultTest {
     @Test
     public void setCoinResult() {
         CoinResult expectedCoinResult = new CoinResult();
-        Child child = new Child(); // TODO : Add init & loose data for child.
-        expectedCoinResult.setCoinResult(child);
+        Child child = new Child(childFirst, childLast);
+        expectedCoinResult.setCoinResult(child, headString);
 
-        assertTrue(expectedCoinResult.flipResult == headString
-                || expectedCoinResult.flipResult == tailString);
-        assertTrue(expectedCoinResult.didPickerWin == true
-                || expectedCoinResult.didPickerWin == false);
-        assertTrue(expectedCoinResult.childGuess == headString
-                || expectedCoinResult.childGuess == tailString);
-        assertTrue(expectedCoinResult.whoPicked, child); // TODO : CHILD
+        assertTrue(expectedCoinResult.flipResult.equals(headString)
+                || expectedCoinResult.flipResult.equals(tailString));
+        assertTrue(expectedCoinResult.didPickerWin
+                || !(expectedCoinResult.didPickerWin));
+        assertTrue(expectedCoinResult.childGuess.equals(headString)
+                || expectedCoinResult.childGuess.equals(tailString));
+        assertEquals(expectedCoinResult.whoPicked, child);
 
 
 
@@ -81,16 +82,14 @@ class CoinResultTest {
     @Test
     public void getCoinResult(){
         CoinResult expectedCoinResult = new CoinResult();
-        Child child = new Child();
-        child.first = "FIRST";
-        child.last = "LAST";
+        String childFlipGuess = headString;
 
         expectedCoinResult.setFlipResult();
-        expectedCoinResult.setDidPickerWin(child);
-        expectedCoinResult.setChildGuess(child);
+        expectedCoinResult.setDidPickerWin();
+        expectedCoinResult.setChildGuess(childFlipGuess);
 
         assertEquals(expectedCoinResult.getFlipResult(), expectedCoinResult.flipResult);
-        assertEquals(expectedCoinResult.getIfPickerWon(), expectedCoinResult.didPickerWin);
+        assertEquals(expectedCoinResult.getDidPickerWin(), expectedCoinResult.didPickerWin);
         assertEquals(expectedCoinResult.getChildGuess(), expectedCoinResult.childGuess);
 
     }
@@ -113,5 +112,16 @@ class CoinResultTest {
 
         assertEquals(coinResult.getChildGuess(), flipGuess);
 
+    }
+
+    @Test
+    public void editChildGuess(){
+        Child child = new Child(childFirst, childLast);
+        CoinResult coinResult = new CoinResult();
+
+        coinResult.setCoinResult(child, tailString);
+        coinResult.editCoinResult(child, headString);
+
+        assertEquals(coinResult.childGuess, headString);
     }
 }

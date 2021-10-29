@@ -1,12 +1,14 @@
 package ca.sfu.fluorine.parentapp.model;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class CoinResult {
     public LocalDateTime dateTimeOfFlip = LocalDateTime.now(); // Sets time to creation of CoinResult
     public String flipResult;
-    //public Child whoPicked; //TODO : Add Child functionality
+    public Child whoPicked;
     public boolean didPickerWin;
+    public String childGuess;
 
     public LocalDateTime getDateTimeOfFlip() {
         return this.dateTimeOfFlip;
@@ -16,9 +18,23 @@ public class CoinResult {
         return this.flipResult;
     }
 
-    public void setFlipResult(boolean flipResult) {
+    public boolean flipResult(){
+        Random rand = new Random();
+        boolean coinFlipResult = rand.nextBoolean();
+        return coinFlipResult;
+    }
+
+    public void setChildGuess(String guess){
+        this.childGuess = guess;
+    }
+
+    public String getChildGuess(){
+        return this.childGuess;
+    }
+
+    public void setFlipResult() {
         String resultOfFlip;
-        boolean isHeads = flipResult; // TODO : Add coinFlip() function ie bool return of random number 0/1
+        boolean isHeads = flipResult();
         String headsResult = "HEADS";
         String tailsResult = "TAILS";
 
@@ -28,7 +44,6 @@ public class CoinResult {
         this.flipResult = resultOfFlip;
     }
 
-    /*
     public Child getWhoPicked() { //TODO : Add functionality for Child getter
         return this.whoPicked;
     }
@@ -36,16 +51,32 @@ public class CoinResult {
     public void setWhoPicked(Child whoPicked) { //TODO : Add functionality for Child setter
         this.whoPicked = whoPicked;
     }
-     */
-    public boolean getIfPickerWon() {
-        return didPickerWin;
+
+    public boolean getDidPickerWin() {
+        return this.didPickerWin;
     }
 
-    public void setDidPickerWin(String childGuess) {
+    public void setDidPickerWin() {
         boolean pickerWin = false;
-        if (childGuess.equals(this.flipResult)){
+        if (this.childGuess.equals(this.flipResult)){
             pickerWin = true;
         }
         this.didPickerWin = pickerWin;
+    }
+
+    public void setCoinResult(Child child, String guess){
+
+        this.setFlipResult();
+        this.setDidPickerWin();
+        this.setWhoPicked(child);
+        this.setChildGuess(guess);
+    }
+
+    public void editCoinResult(Child child, String guess){
+        this.dateTimeOfFlip = LocalDateTime.now();
+        this.setWhoPicked(child);
+        this.setChildGuess(guess);
+        this.setDidPickerWin();
+
     }
 }
