@@ -54,6 +54,8 @@ public class CoinFlip extends AppCompatActivity {
                 fadeIn.setInterpolator(new DecelerateInterpolator());
                 fadeIn.setDuration(3000);
                 fadeIn.setFillAfter(true);
+
+                coin.startAnimation(fadeIn);
             }
 
             @Override
@@ -61,5 +63,7 @@ public class CoinFlip extends AppCompatActivity {
 
             }
         });
+
+        coin.startAnimation(fadeOut);
     }
 }
