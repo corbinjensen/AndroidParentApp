@@ -25,8 +25,8 @@ public class CoinFlip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-        coin = (TextView) findViewById(R.id.coin);
-        btn = (Button) findViewById(R.id.btn);
+        coin = findViewById(R.id.coin);
+        btn = findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
