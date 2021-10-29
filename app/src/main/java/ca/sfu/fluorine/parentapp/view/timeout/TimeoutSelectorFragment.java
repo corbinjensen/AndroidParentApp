@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
 /**
@@ -63,7 +64,7 @@ public class TimeoutSelectorFragment extends Fragment {
 		button.setOnClickListener(btnView -> {
 			StartPresetTimerAction action =
 					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			action.setDuration(minutes);
+			action.setDuration(minutes * TimeoutTimer.MINUTES_TO_MILLIS);
 			Navigation.findNavController(view)
 					.navigate(action);
 		});

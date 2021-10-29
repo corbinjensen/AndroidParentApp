@@ -5,13 +5,14 @@ import android.os.CountDownTimer;
 import androidx.annotation.NonNull;
 
 public class TimeoutTimer {
+	public final static long MINUTES_TO_MILLIS = 60000;
 	private boolean pristine = true, running = false;
 	private long remainingTimeInMillis;
 	private CountDownTimer timer;
 	private Runnable actionOnTick, actionOnFinish;
 
-	public TimeoutTimer(int minutes) {
-		remainingTimeInMillis = minutes * 60000L;
+	public TimeoutTimer(long millis) {
+		remainingTimeInMillis = millis;
 		timer = makeTimer(remainingTimeInMillis);
 	}
 

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.DialogCustomTimerBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 /**
  * Represents a dialog to start a timer with customized duration
@@ -53,7 +54,9 @@ public class CustomTimerDialog extends AppCompatDialogFragment {
 	private void startTimer() {
 		CustomTimerDialogDirections.RunCustomTimerAction action
 				= CustomTimerDialogDirections.runCustomTimerAction();
-		action.setDuration(binding.customDurationPicker.getValue());
+		long durationInMillis
+				= binding.customDurationPicker.getValue() * TimeoutTimer.MINUTES_TO_MILLIS;
+		action.setDuration(durationInMillis);
 		NavHostFragment.findNavController(this).navigate(action);
 	}
 }

@@ -35,8 +35,8 @@ public class TimeoutRunningFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		// Set up timer from the argument
-		int minutes = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getDuration();
-		timer = new TimeoutTimer(minutes);
+		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getDuration();
+		timer = new TimeoutTimer(millis);
 		timer.registerActions(this::updateTimerUI, () ->
 			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
 		);
