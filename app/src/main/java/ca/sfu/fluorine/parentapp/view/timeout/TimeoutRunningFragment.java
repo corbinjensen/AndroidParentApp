@@ -78,7 +78,6 @@ public class TimeoutRunningFragment extends Fragment {
 	}
 
 	private void updateButtonUI() {
-		binding.resetButton.setEnabled(!timer.isPristine());
 		if (!timer.isRunning()) {
 			binding.playButton.setText(R.string.resume);
 		} else {

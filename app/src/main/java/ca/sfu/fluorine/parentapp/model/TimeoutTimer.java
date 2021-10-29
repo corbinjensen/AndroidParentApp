@@ -2,11 +2,9 @@ package ca.sfu.fluorine.parentapp.model;
 
 import android.os.CountDownTimer;
 
-import androidx.annotation.NonNull;
-
 public class TimeoutTimer {
 	public final static long MINUTES_TO_MILLIS = 60000;
-	private boolean pristine = true, running = false;
+	private boolean running = false;
 	private long remainingTimeInMillis;
 	private CountDownTimer timer;
 	private Runnable actionOnTick, actionOnFinish;
@@ -16,13 +14,12 @@ public class TimeoutTimer {
 		timer = makeTimer(remainingTimeInMillis);
 	}
 
-	public void registerActions(@NonNull Runnable actionOnTick, @NonNull Runnable actionOnFinish) {
+	public void registerActions(Runnable actionOnTick, Runnable actionOnFinish) {
 		this.actionOnTick = actionOnTick;
 		this.actionOnFinish = actionOnFinish;
 	}
 
 	public void toggle() {
-		pristine = false;
 		running = !running;
 		if (running) {
 			timer = makeTimer(remainingTimeInMillis);
@@ -40,10 +37,6 @@ public class TimeoutTimer {
 
 	public long getRemainingTimeInMillis() {
 		return remainingTimeInMillis;
-	}
-
-	public boolean isPristine() {
-		return pristine;
 	}
 
 	public boolean isRunning() {
