@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.Button;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
+import ca.sfu.fluorine.parentapp.view.ChildrenFragmentDirections;
 
 /**
  * Represents the end screen when the timer reaches 0

@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutBinding;
+import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 /**
  * Represents the screen of the timer counting down
  */
-public class TimeoutFragment extends Fragment {
-	private FragmentTimeoutBinding binding;
+public class TimeoutRunningFragment extends Fragment {
+	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
 	private Runnable playButtonAction;
 
@@ -26,7 +26,7 @@ public class TimeoutFragment extends Fragment {
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
+		binding = FragmentTimeoutRunningBinding.inflate(inflater, container, false);
 		return binding.getRoot();
 	}
 
@@ -35,7 +35,7 @@ public class TimeoutFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		// Set up timer from the argument
-		int minutes = TimeoutFragmentArgs.fromBundle(getArguments()).getDuration();
+		int minutes = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getDuration();
 		timer = new TimeoutTimer(minutes);
 		timer.registerActions(this::updateTimerUI, () ->
 			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
