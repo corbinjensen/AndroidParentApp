@@ -20,8 +20,7 @@ public class CoinResult {
 
     public boolean flipResult(){
         Random rand = new Random();
-        boolean coinFlipResult = rand.nextBoolean();
-        return coinFlipResult;
+        return rand.nextBoolean();
     }
 
     public void setChildGuess(String guess){

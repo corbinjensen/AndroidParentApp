@@ -57,7 +57,7 @@ class CoinResultTest {
         expectedCoinResult.childGuess = headString;
         expectedCoinResult.setDidPickerWin();
 
-        assertEquals(expectedCoinResult.didPickerWin, true);
+        assertTrue(expectedCoinResult.didPickerWin);
 
     }
 
@@ -67,30 +67,12 @@ class CoinResultTest {
         Child child = new Child(childFirst, childLast);
         expectedCoinResult.setCoinResult(child, headString);
 
-        assertTrue(expectedCoinResult.flipResult.equals(headString)
-                || expectedCoinResult.flipResult.equals(tailString));
-        assertTrue(expectedCoinResult.didPickerWin
-                || !(expectedCoinResult.didPickerWin));
-        assertTrue(expectedCoinResult.childGuess.equals(headString)
-                || expectedCoinResult.childGuess.equals(tailString));
-        assertEquals(expectedCoinResult.whoPicked, child);
+        boolean doGuessMatchResult = (expectedCoinResult.childGuess.equals(expectedCoinResult.flipResult));
+        boolean doGuessMatchPick = (doGuessMatchResult == expectedCoinResult.didPickerWin);
+
+        assertEquals(doGuessMatchResult, doGuessMatchPick);
 
 
-
-    }
-
-    @Test
-    public void getCoinResult(){
-        CoinResult expectedCoinResult = new CoinResult();
-        String childFlipGuess = headString;
-
-        expectedCoinResult.setFlipResult();
-        expectedCoinResult.setDidPickerWin();
-        expectedCoinResult.setChildGuess(childFlipGuess);
-
-        assertEquals(expectedCoinResult.getFlipResult(), expectedCoinResult.flipResult);
-        assertEquals(expectedCoinResult.getDidPickerWin(), expectedCoinResult.didPickerWin);
-        assertEquals(expectedCoinResult.getChildGuess(), expectedCoinResult.childGuess);
 
     }
 
@@ -112,6 +94,15 @@ class CoinResultTest {
 
         assertEquals(coinResult.getChildGuess(), flipGuess);
 
+    }
+
+    @Test
+    public void getWhoPicked(){
+        CoinResult expectedCoinResult = new CoinResult();
+        Child child = new Child(childFirst, childLast);
+        expectedCoinResult.whoPicked = child;
+
+        assertEquals(expectedCoinResult.getWhoPicked(), child);
     }
 
     @Test
