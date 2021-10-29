@@ -13,6 +13,8 @@
         <activity
             android:name=".ChildFormActivity"
             android:exported="false" />
+        <activity android:name=".CoinFlip"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
