@@ -11,22 +11,29 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutBinding;
+import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 
 /**
  * Represents the screen of the timer counting down
  */
-public class TimeoutFragment extends Fragment {
-	private FragmentTimeoutBinding binding;
+public class TimeoutRunningFragment extends Fragment {
+	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
-	private Runnable playButtonAction;
+	private TimeoutSetting timeoutSetting;
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		timeoutSetting = TimeoutSetting.getInstance(getContext());
+	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		binding = FragmentTimeoutBinding.inflate(inflater, container, false);
+		binding = FragmentTimeoutRunningBinding.inflate(inflater, container, false);
 		return binding.getRoot();
 	}
 
@@ -35,38 +42,44 @@ public class TimeoutFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		// Set up timer from the argument
-		int minutes = TimeoutFragmentArgs.fromBundle(getArguments()).getDuration();
-		timer = new TimeoutTimer(minutes);
+		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getDuration();
+		timer = new TimeoutTimer(millis);
 		timer.registerActions(this::updateTimerUI, () ->
 			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
 		);
+
 		updateTimerUI();
+		updateButtonUI();
 
-		// Set up listeners for the buttons
-		playButtonAction = () -> {
-			timer.toggle();
-			updateButtonUI();
-		};
-
-		binding.playButton.setOnClickListener((btnView) -> playButtonAction.run());
+		binding.playButton.setOnClickListener((btnView) -> toggleTimer());
 
 		binding.resetButton.setOnClickListener((btnView) -> {
 			timer.discard();
 			Navigation.findNavController(view).navigate(R.id.reset_timer_action);
 		});
-	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		playButtonAction.run();
+		if (timeoutSetting.isTimerRunning()) {
+			toggleTimer();
+		}
 	}
 
 	// Discard the timer when the fragment is no longer visible
 	@Override
 	public void onStop() {
 		super.onStop();
+
+		// Save the timer if it's not finished
+		if (timer.isFinished()) {
+			timeoutSetting.saveTimer(timer);
+		} else {
+			timeoutSetting.clear();
+		}
 		timer.discard();
+	}
+
+	private void toggleTimer() {
+		timer.toggle();
+		updateButtonUI();
 	}
 
 	private void updateTimerUI() {
@@ -78,7 +91,6 @@ public class TimeoutFragment extends Fragment {
 	}
 
 	private void updateButtonUI() {
-		binding.resetButton.setEnabled(!timer.isPristine());
 		if (!timer.isRunning()) {
 			binding.playButton.setText(R.string.resume);
 		} else {

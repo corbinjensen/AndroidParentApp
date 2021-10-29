@@ -11,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
+import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
 /**
@@ -23,6 +26,21 @@ import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.
  * or start their own custom timer
  */
 public class TimeoutSelectorFragment extends Fragment {
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Navigate away to running timer when a timer is active
+		TimeoutSetting setting = TimeoutSetting.getInstance(getContext());
+		Long millisLeft = setting.getSavedRemainingMillis();
+		if (millisLeft != null) {
+			StartPresetTimerAction action =
+					TimeoutSelectorFragmentDirections.startPresetTimerAction();
+			action.setDuration(millisLeft);
+			NavHostFragment.findNavController(this).navigate(action);
+		}
+	}
 
 	@Nullable
 	@Override
@@ -63,7 +81,7 @@ public class TimeoutSelectorFragment extends Fragment {
 		button.setOnClickListener(btnView -> {
 			StartPresetTimerAction action =
 					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			action.setDuration(minutes);
+			action.setDuration(minutes * TimeoutTimer.MINUTES_TO_MILLIS);
 			Navigation.findNavController(view)
 					.navigate(action);
 		});
