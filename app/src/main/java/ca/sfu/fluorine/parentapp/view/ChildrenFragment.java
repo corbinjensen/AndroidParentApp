@@ -54,7 +54,7 @@ public class ChildrenFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // floating action button
-        binding.addChildBtn.setOnClickListener(
+        binding.buttonAddChild.setOnClickListener(
             btnView -> {
                 Intent intent = new Intent(getContext(), ChildFormActivity.class);
             startActivity(intent);
