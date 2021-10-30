@@ -8,6 +8,7 @@ public class TimeoutSetting {
 	private final static String KEY = "timeout";
 	private final static String RUNNING = "running";
 	private final static String EXPIRED_TIME = "expired";
+	private final static String REMAINING_TIME = "remaining";
 	private SharedPreferences preferences;
 	private TimeoutSetting() {}
 
@@ -22,8 +23,8 @@ public class TimeoutSetting {
 	public void saveTimer(TimeoutTimer timer) {
 		if (timer == null) return;
 		if (timer.getState() != TimeoutTimer.TimerState.FINISHED) {
-			preferences
-					.edit()
+			preferences.edit()
+					.putLong(REMAINING_TIME, timer.getMillisLeft())
 					.putLong(EXPIRED_TIME, timer.expiredTime)
 					.putBoolean(RUNNING, timer.getState() == TimeoutTimer.TimerState.RUNNING)
 					.apply();
@@ -31,9 +32,13 @@ public class TimeoutSetting {
 
 	}
 
-	public Long getSavedExpiredTime() {
+	public Long getExpiredTime() {
 		long value = preferences.getLong(EXPIRED_TIME, -1);
 		return (value > 0) ? value : null;
+	}
+
+	public long getRemainingTime() {
+		return preferences.getLong(REMAINING_TIME, 0);
 	}
 
 	public boolean isTimerRunning() {

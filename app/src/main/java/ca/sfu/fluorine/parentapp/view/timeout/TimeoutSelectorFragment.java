@@ -34,12 +34,10 @@ public class TimeoutSelectorFragment extends Fragment {
 
 		// Navigate away to running timer when a timer is active
 		TimeoutSetting setting = TimeoutSetting.getInstance(getContext());
-		Long expiredTime = setting.getSavedExpiredTime();
+		Long expiredTime = setting.getExpiredTime();
 		if (expiredTime != null) {
-			StartPresetTimerAction action =
-					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			action.setExpiredTime(expiredTime);
-			NavHostFragment.findNavController(this).navigate(action);
+			NavHostFragment.findNavController(this)
+					.navigate(R.id.start_preset_timer_action);
 		}
 	}
 

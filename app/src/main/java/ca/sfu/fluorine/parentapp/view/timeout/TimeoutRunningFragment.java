@@ -38,12 +38,7 @@ public class TimeoutRunningFragment extends Fragment {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
-	}
-
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		timeoutSetting = TimeoutSetting.getInstance(getContext());
+		timeoutSetting = TimeoutSetting.getInstance(context);
 	}
 
 	@Override
@@ -66,8 +61,12 @@ public class TimeoutRunningFragment extends Fragment {
 		TimeoutExpiredNotification.hideNotification(context);
 
 		// Set up the timer
-		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
-		timer = new TimeoutTimer(millis);
+		timer = makeTimerFromSettings();
+		if (timer == null) {
+			long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
+			timer = new TimeoutTimer(millis);
+		}
+
 		timer.registerActions(this::updateTimerUI, () ->
 				NavHostFragment.findNavController(this)
 						.navigate(R.id.redirect_to_end_screen)
@@ -93,10 +92,13 @@ public class TimeoutRunningFragment extends Fragment {
 	public void onStop() {
 		super.onStop();
 
+		TimerState state = timer.getState();
 		// Save the timer if it's not finished
-		if (timer.getState() != TimerState.FINISHED) {
+		if (state != TimerState.FINISHED) {
 			timeoutSetting.saveTimer(timer);
-			setAlarm(timer);
+			if (state == TimerState.RUNNING) {
+				setAlarm(timer);
+			}
 		} else {
 			timeoutSetting.clear();
 		}
@@ -122,6 +124,16 @@ public class TimeoutRunningFragment extends Fragment {
 		} else {
 			binding.playButton.setText(R.string.pause);
 		}
+	}
+
+	private TimeoutTimer makeTimerFromSettings() {
+		Long expiredTime = timeoutSetting.getExpiredTime();
+		if (expiredTime == null) return null;
+		if (!timeoutSetting.isTimerRunning()) {
+			long remainingTime = timeoutSetting.getRemainingTime();
+			expiredTime = remainingTime + Calendar.getInstance().getTimeInMillis();
+		}
+		return new TimeoutTimer(expiredTime);
 	}
 
 	private void setAlarm(@NonNull TimeoutTimer timeoutTimer) {
