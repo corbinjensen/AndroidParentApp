@@ -32,22 +32,22 @@ public class CoinResult {
     }
 
     public void setFlipResult() {
-        String resultOfFlip;
+
         boolean isHeads = flipResult();
         String headsResult = "HEADS";
         String tailsResult = "TAILS";
 
-        //Assume if isHeads is true result = heads, false = tails
-        resultOfFlip = isHeads ? headsResult : tailsResult;
+        //Assume if isHeads is true result = heads, else false = tails
+       String resultOfFlip = isHeads ? headsResult : tailsResult;
 
         this.flipResult = resultOfFlip;
     }
 
-    public Child getWhoPicked() { //TODO : Add functionality for Child getter
+    public Child getWhoPicked() {
         return this.whoPicked;
     }
 
-    public void setWhoPicked(Child whoPicked) { //TODO : Add functionality for Child setter
+    public void setWhoPicked(Child whoPicked) {
         this.whoPicked = whoPicked;
     }
 
