@@ -44,7 +44,7 @@ public class ParentApp extends Application {
 
 		// Set up the notification channel
 		getSystemService(NotificationManager.class).createNotificationChannel(
-				TimeoutExpiredNotification.makeNotificationChannel()
+				TimeoutExpiredNotification.makeNotificationChannel(getApplicationContext())
 		);
 	}
 }
