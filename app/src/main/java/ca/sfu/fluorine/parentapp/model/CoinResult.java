@@ -66,13 +66,13 @@ public class CoinResult {
     public void setCoinResult(Child child, String guess){
 
         this.setFlipResult();
-        this.setDidPickerWin();
-        this.setWhoPicked(child);
         this.setChildGuess(guess);
+        this.setWhoPicked(child);
+        this.setDidPickerWin();
+
     }
 
     public void editCoinResult(Child child, String guess){
-        this.dateTimeOfFlip = LocalDateTime.now();
         this.setWhoPicked(child);
         this.setChildGuess(guess);
         this.setDidPickerWin();
