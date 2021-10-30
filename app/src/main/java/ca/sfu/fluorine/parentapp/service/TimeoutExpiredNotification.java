@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -29,6 +31,7 @@ public class TimeoutExpiredNotification {
 				.setContentText(context.getString(R.string.timeout_notification_content))
 				.setPriority(NotificationCompat.PRIORITY_HIGH)
 				.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+				.setShowWhen(false)
 				.setContentIntent(pendingIntent)
 				.setAutoCancel(true)
 				.build();
@@ -47,8 +50,11 @@ public class TimeoutExpiredNotification {
 				context.getString(R.string.timeout_notification_channel_name),
 				NotificationManager.IMPORTANCE_HIGH
 		);
+		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		channel.setDescription(
 				context.getString(R.string.timeout_notification_channel_description));
+		channel.enableVibration(true);
+		channel.setSound(sound, null);
 		return channel;
 	}
 }
