@@ -21,6 +21,7 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
 
 /**
@@ -30,6 +31,13 @@ public class TimeoutRunningFragment extends Fragment {
 	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
 	private TimeoutSetting timeoutSetting;
+	private Context context;
+
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		this.context = context;
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +79,13 @@ public class TimeoutRunningFragment extends Fragment {
 		}
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		removeAlarm();
+		TimeoutExpiredNotification.hideNotification(context);
+	}
+
 	// Discard the timer when the fragment is no longer visible
 	@Override
 	public void onStop() {
@@ -79,6 +94,7 @@ public class TimeoutRunningFragment extends Fragment {
 		// Save the timer if it's not finished
 		if (timer.getState() != TimerState.FINISHED) {
 			timeoutSetting.saveTimer(timer);
+			setAlarm(timer);
 		} else {
 			timeoutSetting.clear();
 		}
@@ -104,5 +120,16 @@ public class TimeoutRunningFragment extends Fragment {
 		} else {
 			binding.playButton.setText(R.string.pause);
 		}
+	}
+
+	private void setAlarm(@NonNull TimeoutTimer timeoutTimer) {
+		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
+		context.getSystemService(AlarmManager.class)
+				.setExact(AlarmManager.RTC_WAKEUP, timeoutTimer.expiredTime, intent);
+	}
+
+	private void removeAlarm() {
+		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
+		context.getSystemService(AlarmManager.class).cancel(intent);
 	}
 }
