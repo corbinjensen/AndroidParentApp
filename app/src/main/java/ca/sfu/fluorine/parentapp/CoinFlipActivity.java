@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class CoinFlip extends AppCompatActivity {
+public class CoinFlipActivity extends AppCompatActivity {
 
     public static final Random RANDOM = new Random();
     private TextView coin;
