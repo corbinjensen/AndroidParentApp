@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Calendar;
 
@@ -56,12 +57,20 @@ public class TimeoutRunningFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+	}
 
-		// Set up timer from the argument
+	@Override
+	public void onResume() {
+		super.onResume();
+		removeAlarm();
+		TimeoutExpiredNotification.hideNotification(context);
+
+		// Set up the timer
 		long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
 		timer = new TimeoutTimer(millis);
 		timer.registerActions(this::updateTimerUI, () ->
-			Navigation.findNavController(view).navigate(R.id.redirect_to_end_screen)
+				NavHostFragment.findNavController(this)
+						.navigate(R.id.redirect_to_end_screen)
 		);
 
 		updateTimerUI();
@@ -71,19 +80,12 @@ public class TimeoutRunningFragment extends Fragment {
 
 		binding.resetButton.setOnClickListener((btnView) -> {
 			timer.discard();
-			Navigation.findNavController(view).navigate(R.id.reset_timer_action);
+			NavHostFragment.findNavController(this).navigate(R.id.reset_timer_action);
 		});
 
 		if (timeoutSetting.isTimerRunning()) {
 			toggleTimer();
 		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		removeAlarm();
-		TimeoutExpiredNotification.hideNotification(context);
 	}
 
 	// Discard the timer when the fragment is no longer visible

@@ -3,11 +3,9 @@ package ca.sfu.fluorine.parentapp;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -44,17 +42,9 @@ public class ParentApp extends Application {
 			public void onActivityDestroyed(@NonNull Activity activity) { }
 		});
 
-		createTimeoutNotificationChannel();
-	}
-
-
-	private void createTimeoutNotificationChannel() {
-		NotificationChannel channel = new NotificationChannel(
-				TimeoutExpiredNotification.CHANNEL_ID,
-				TimeoutExpiredNotification.CHANNEL_NAME,
-				NotificationManager.IMPORTANCE_HIGH
+		// Set up the notification channel
+		getSystemService(NotificationManager.class).createNotificationChannel(
+				TimeoutExpiredNotification.makeNotificationChannel()
 		);
-		NotificationManager manager = getSystemService(NotificationManager.class);
-		manager.createNotificationChannel(channel);
 	}
 }

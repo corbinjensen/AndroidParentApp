@@ -18,6 +18,10 @@ public class TimeoutExpiredReceiver extends BroadcastReceiver {
 
 	public static PendingIntent makePendingIntent(Context context) {
 		Intent intent = new Intent(context, TimeoutExpiredReceiver.class);
-		return PendingIntent.getBroadcast(context, 0, intent, 0);
+		return PendingIntent.getBroadcast(
+				context,
+				0,
+				intent,
+				PendingIntent.FLAG_IMMUTABLE);
 	}
 }
