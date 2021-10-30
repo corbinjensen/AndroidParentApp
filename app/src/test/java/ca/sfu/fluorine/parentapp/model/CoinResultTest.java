@@ -67,13 +67,9 @@ class CoinResultTest {
         Child child = new Child(childFirst, childLast);
         expectedCoinResult.setCoinResult(child, headString);
 
-        boolean doGuessMatchResult = (expectedCoinResult.childGuess.equals(expectedCoinResult.flipResult));
-        boolean doGuessMatchPick = (doGuessMatchResult == expectedCoinResult.didPickerWin);
-
-        assertEquals(doGuessMatchResult, doGuessMatchPick);
-
-
-
+        assertEquals(expectedCoinResult.childGuess, headString);
+        assertEquals(expectedCoinResult.whoPicked, child);
+        assertEquals(expectedCoinResult.didPickerWin, (expectedCoinResult.childGuess.equals(expectedCoinResult.flipResult)));
     }
 
     @Test
