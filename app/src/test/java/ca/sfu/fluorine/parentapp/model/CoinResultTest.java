@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 
 class CoinResultTest {
     //local constants
+
     private final String HEAD_STRING = "HEADS";
     private final String TAIL_STRING = "TAILS";
+
     private final String TEST_CHILD_FIRST = "FIRST";
     private final String TEST_CHILD_LAST = "LAST";
 

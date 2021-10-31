@@ -4,11 +4,20 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 public class CoinResult {
+    // Use enum to store the sides of the coin
+    public enum CoinSide {
+        HEAD,
+        TAIL
+    }
+
+    // TODO: Convert these to private (maybe final as well)
     public LocalDateTime dateTimeOfFlip = LocalDateTime.now(); // Sets time to creation of CoinResult
     public String flipResult;
     public Child whoPicked;
-    public boolean didPickerWin;
+    public boolean didPickerWin; // May be not necessary
     public String childGuess;
+
+    // TODO: Add a constructor and remove all setters
 
     public LocalDateTime getDateTimeOfFlip() {
         return this.dateTimeOfFlip;
@@ -18,6 +27,7 @@ public class CoinResult {
         return this.flipResult;
     }
 
+    // TODO: Maybe don't need (CoinResult doesn't have responsibility to flip coins)
     public boolean flipResult(){
         Random rand = new Random();
         return rand.nextBoolean();
@@ -34,6 +44,8 @@ public class CoinResult {
     public void setFlipResult() {
 
         boolean isHeads = flipResult();
+
+        // TODO: Please remove this hard-coded string
         String headsResult = "HEADS";
         String tailsResult = "TAILS";
 
@@ -51,6 +63,7 @@ public class CoinResult {
         this.whoPicked = whoPicked;
     }
 
+    // TODO: Refer to line 16
     public boolean getDidPickerWin() {
         return this.didPickerWin;
     }
