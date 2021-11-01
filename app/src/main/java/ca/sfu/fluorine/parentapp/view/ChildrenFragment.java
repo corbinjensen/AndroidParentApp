@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +26,15 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
  */
 public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
+
+	// Define the ListView object
+	ListView childrenList;
+
+	// Define variables for user selected contact
+    long childID;
+
+    // Adapter that binds the result Cursor to the ListView
+    private SimpleCursorAdapter cursorAdapter;
 
     @Override
 	public View onCreateView(
