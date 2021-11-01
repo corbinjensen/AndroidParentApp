@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
 import ca.sfu.fluorine.parentapp.model.CoinResult.CoinSide;
 
 class CoinResultTest {
