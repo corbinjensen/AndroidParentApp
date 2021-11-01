@@ -8,28 +8,21 @@ public class CoinFlipHistory {
     //int num of flips total
     int numCoinFlipsInHistory;
 
-    //add coinflip to list
+    //add coin flip to list
     public void addCoinResultToHistory(CoinResult flipResult){
         this.coinResultHistory.add(flipResult);
+        this.numCoinFlipsInHistory++;
     }
 
     //remove coinFlip from list at index
     public void removeCoinResultFromHistory(int index){
         this.coinResultHistory.remove(index);
+        this.numCoinFlipsInHistory--;
     }
 
     public void removeLastCoinResultFromHistory(){
-        this.coinResultHistory.remove(numCoinFlipsInHistory-1);
-    }
-
-    //edit existing coin flip from INDEX (start at 0)
-    public void editCoinResultFromHistory(Child child, String guess,int index){
-        CoinResult newCoinResult = new CoinResult();
-        newCoinResult = coinResultHistory.get(index);
-        child = newCoinResult.whoPicked;
-
-        newCoinResult.setCoinResult(child,guess);
-
+        this.coinResultHistory.removeLast();
+        this.numCoinFlipsInHistory--;
     }
 
 }

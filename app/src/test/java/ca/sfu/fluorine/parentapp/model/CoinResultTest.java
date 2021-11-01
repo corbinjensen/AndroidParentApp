@@ -6,112 +6,77 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import ca.sfu.fluorine.parentapp.model.CoinResult.CoinSide;
+
 class CoinResultTest {
     //local constants
-
-    private final String HEAD_STRING = "HEADS";
-    private final String TAIL_STRING = "TAILS";
-
     private final String TEST_CHILD_FIRST = "FIRST";
     private final String TEST_CHILD_LAST = "LAST";
 
-    @Test       
-    public void getDateTimeOfFlip() {
-        CoinResult expectedCoinResult = new CoinResult();
-        LocalDateTime flipTime = expectedCoinResult.dateTimeOfFlip;
+    @Test
+    public void CoinResult(){
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
-        assertEquals(expectedCoinResult.getDateTimeOfFlip(), flipTime);
+        assertNotNull(expectedCoinResult.getDateTimeOfFlip());
+        assertEquals(expectedCoinResult.getWhoPicked(), dummyChild);
+        assertEquals(expectedCoinResult.getChildGuess(), dummyChildGuess);
+        assertEquals(expectedCoinResult.getFlipResult(), dummyFlipResult);
+        assertEquals(expectedCoinResult.didPickerWin(), (dummyChildGuess.equals(dummyFlipResult)));
+
+    }
+
+
+    @Test
+    public void getDateTimeOfFlip() {
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
+
+        assertNotNull(expectedCoinResult.getDateTimeOfFlip());
     }
 
     @Test
     public void getFlipResult() {
-        CoinResult expectedCoinResult = new CoinResult();
-        String actualFlipResult = HEAD_STRING;
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
-        expectedCoinResult.flipResult = actualFlipResult;
-        assertEquals(expectedCoinResult.getFlipResult(), actualFlipResult);
+        assertEquals(expectedCoinResult.getFlipResult(), dummyFlipResult);
     }
 
     @Test
-    public void setFlipResult() {
-        CoinResult expectedCoinResult = new CoinResult();
+    public void getChildGuess() {
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
-        expectedCoinResult.setFlipResult();
+        assertEquals(expectedCoinResult.getChildGuess(),dummyChildGuess);
+    }
 
-       assertTrue(expectedCoinResult.flipResult.equals(HEAD_STRING)
-               || expectedCoinResult.flipResult.equals(TAIL_STRING) );
+    @Test
+    public void getWhoPicked() {
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
+        assertEquals(expectedCoinResult.getWhoPicked(), dummyChild);
     }
 
     @Test
     public void getDidPickerWin() {
-        CoinResult expectedCoinResult = new CoinResult();
-        boolean pickerWon = true;
-        expectedCoinResult.didPickerWin = pickerWon;
+        Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
+        CoinSide dummyChildGuess = CoinSide.HEAD;
+        CoinSide dummyFlipResult = CoinSide.TAIL;
+        CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
-        assertEquals(expectedCoinResult.getDidPickerWin(), pickerWon);
+        assertEquals(expectedCoinResult.didPickerWin(), (dummyChildGuess.equals(dummyFlipResult)));
 
-    }
-
-    @Test
-    public void setDidPickerWin() {
-        CoinResult expectedCoinResult = new CoinResult();
-        expectedCoinResult.flipResult = HEAD_STRING;
-        expectedCoinResult.childGuess = HEAD_STRING;
-        expectedCoinResult.setDidPickerWin();
-
-        assertTrue(expectedCoinResult.didPickerWin);
-
-    }
-
-    @Test
-    public void setCoinResult() {
-        CoinResult expectedCoinResult = new CoinResult();
-        Child child = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
-        expectedCoinResult.setCoinResult(child, HEAD_STRING);
-
-        assertEquals(expectedCoinResult.childGuess, HEAD_STRING);
-        assertEquals(expectedCoinResult.whoPicked, child);
-        assertEquals(expectedCoinResult.didPickerWin, (expectedCoinResult.childGuess.equals(expectedCoinResult.flipResult)));
-    }
-
-    @Test
-    public void setChildGuess(){
-        CoinResult coinResult = new CoinResult();
-        String flipGuess = HEAD_STRING;
-        coinResult.setChildGuess(flipGuess);
-
-        assertEquals(coinResult.childGuess, flipGuess);
-
-    }
-
-    @Test
-    public void getChildGuess(){
-        CoinResult coinResult = new CoinResult();
-        String flipGuess = TAIL_STRING;
-        coinResult.childGuess = flipGuess;
-
-        assertEquals(coinResult.getChildGuess(), flipGuess);
-
-    }
-
-    @Test
-    public void getWhoPicked(){
-        CoinResult expectedCoinResult = new CoinResult();
-        Child child = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
-        expectedCoinResult.whoPicked = child;
-
-        assertEquals(expectedCoinResult.getWhoPicked(), child);
-    }
-
-    @Test
-    public void editChildGuess(){
-        Child child = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
-        CoinResult coinResult = new CoinResult();
-
-        coinResult.setCoinResult(child, TAIL_STRING);
-        coinResult.editCoinResult(child, HEAD_STRING);
-
-        assertEquals(coinResult.childGuess, HEAD_STRING);
     }
 }
