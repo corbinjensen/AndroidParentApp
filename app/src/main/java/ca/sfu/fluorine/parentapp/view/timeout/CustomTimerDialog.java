@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.view.timeout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.NumberPicker;
 
@@ -54,9 +55,9 @@ public class CustomTimerDialog extends AppCompatDialogFragment {
 	private void startTimer() {
 		CustomTimerDialogDirections.RunCustomTimerAction action
 				= CustomTimerDialogDirections.runCustomTimerAction();
-		long durationInMillis
-				= binding.customDurationPicker.getValue() * TimeoutTimer.MINUTES_TO_MILLIS;
-		action.setDuration(durationInMillis);
+		long expiredTime = binding.customDurationPicker.getValue() * TimeoutTimer.MINUTES_TO_MILLIS
+				+ Calendar.getInstance().getTimeInMillis();
+		action.setExpiredTime(expiredTime);
 		NavHostFragment.findNavController(this).navigate(action);
 	}
 }

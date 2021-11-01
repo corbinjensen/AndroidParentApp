@@ -1,17 +1,28 @@
 package ca.sfu.fluorine.parentapp.model;
 
+import android.icu.util.Calendar;
 import android.os.CountDownTimer;
 
 public class TimeoutTimer {
 	public final static long MINUTES_TO_MILLIS = 60000;
-	private boolean running = false;
-	private long remainingTimeInMillis;
+	private final static long INTERVAL = 1000;
+	private TimerState state = TimerState.PAUSED;
+	public final long expiredTime;
+	private long millisLeft;
 	private CountDownTimer timer;
 	private Runnable actionOnTick, actionOnFinish;
 
-	public TimeoutTimer(long millis) {
-		remainingTimeInMillis = millis;
-		timer = makeTimer(remainingTimeInMillis);
+	public enum TimerState {
+		RUNNING,
+		PAUSED,
+		FINISHED
+	}
+
+	public TimeoutTimer(long expiredTime) {
+		this.expiredTime = expiredTime;
+		millisLeft = expiredTime - Calendar.getInstance().getTimeInMillis();
+		if (millisLeft < 0) millisLeft = 0;
+		timer = makeTimer(millisLeft);
 	}
 
 	public void registerActions(Runnable actionOnTick, Runnable actionOnFinish) {
@@ -20,31 +31,29 @@ public class TimeoutTimer {
 	}
 
 	public void toggle() {
-		running = !running;
-		if (running) {
-			timer = makeTimer(remainingTimeInMillis);
+		if (state == TimerState.PAUSED) {
+			timer = makeTimer(millisLeft);
 			timer.start();
+			state = TimerState.RUNNING;
 		} else {
 			timer.cancel();
+			state = TimerState.PAUSED;
 		}
 	}
 
 	public void discard() {
+		state = TimerState.FINISHED;
 		if (timer == null) return;
 		timer.cancel();
 		timer = null;
 	}
 
-	public long getRemainingTimeInMillis() {
-		return remainingTimeInMillis;
+	public long getMillisLeft() {
+		return millisLeft;
 	}
 
-	public boolean isRunning() {
-		return running;
-	}
-
-	public boolean isFinished() {
-		return timer != null;
+	public TimerState getState() {
+		return state;
 	}
 
 	private static void execute(Runnable action) {
@@ -52,11 +61,11 @@ public class TimeoutTimer {
 		action.run();
 	}
 
-	private CountDownTimer makeTimer(long timeInMillis) {
-		return new CountDownTimer(timeInMillis, 1000) {
+	private CountDownTimer makeTimer(long millis) {
+		return new CountDownTimer(millis, INTERVAL) {
 			@Override
 			public void onTick(long millisUntilFinished) {
-				remainingTimeInMillis = millisUntilFinished;
+				millisLeft = millisUntilFinished;
 				execute(actionOnTick);
 			}
 
