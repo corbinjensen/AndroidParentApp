@@ -41,12 +41,6 @@ public class CoinResult {
     }
 
     public boolean didPickerWin(){
-        boolean pickerWon = false ;
-
-        if(this.childGuess.equals(this.flipResult)){
-            pickerWon = true;
-        }
-
-        return pickerWon;
+        return (this.childGuess.equals(this.flipResult));
     }
 }
