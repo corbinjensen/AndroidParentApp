@@ -6,8 +6,9 @@ import android.content.SharedPreferences;
 public class TimeoutSetting {
 	private static TimeoutSetting instance;
 	private final static String KEY = "timeout";
-	private final static String REMAIN = "remain";
 	private final static String RUNNING = "running";
+	private final static String EXPIRED_TIME = "expired";
+	private final static String REMAINING_TIME = "remaining";
 	private SharedPreferences preferences;
 	private TimeoutSetting() {}
 
@@ -20,19 +21,24 @@ public class TimeoutSetting {
 	}
 
 	public void saveTimer(TimeoutTimer timer) {
-		long millisLeft = timer.getRemainingTimeInMillis();
-		if (timer.isFinished()) {
-			preferences
-					.edit()
-					.putLong(REMAIN, millisLeft)
-					.putBoolean(RUNNING, timer.isRunning()).apply();
+		if (timer == null) return;
+		if (timer.getState() != TimeoutTimer.TimerState.FINISHED) {
+			preferences.edit()
+					.putLong(REMAINING_TIME, timer.getMillisLeft())
+					.putLong(EXPIRED_TIME, timer.expiredTime)
+					.putBoolean(RUNNING, timer.getState() == TimeoutTimer.TimerState.RUNNING)
+					.apply();
 		}
 
 	}
 
-	public Long getSavedRemainingMillis() {
-		long value = preferences.getLong(REMAIN, -1);
+	public Long getExpiredTime() {
+		long value = preferences.getLong(EXPIRED_TIME, -1);
 		return (value > 0) ? value : null;
+	}
+
+	public long getRemainingTime() {
+		return preferences.getLong(REMAINING_TIME, 0);
 	}
 
 	public boolean isTimerRunning() {

@@ -34,6 +34,20 @@
     </integer-array>
     <string name="time_up">Time\'s up!</string>
     <string name="dismiss">Dismiss</string>
+
+    <!--  Timeout notification  -->
+    <string name="timeout_notification_channel_name">
+        Timeout timer notification
+    </string>
+    <string name="timeout_notification_channel_description">
+        Send notification when the timeout timer ends
+    </string>
+    <string name="timeout_notification_title">Your timeout period is finished</string>
+    <string name="timeout_notification_content">
+        Tap to dismiss this notification
+    </string>
+
+    <!--  Add child activity  -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="add_child">Add Child</string>
