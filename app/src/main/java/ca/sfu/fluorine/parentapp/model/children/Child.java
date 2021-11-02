@@ -1,10 +1,13 @@
-package ca.sfu.fluorine.parentapp.model;
+package ca.sfu.fluorine.parentapp.model.children;
+
+import java.util.ArrayList;
 
 /**
  *  Child.java - represents a child
  */
 public class Child {
-    public String firstName, lastName;
+    private final String firstName;
+    private final String lastName;
 
     public Child(String firstName, String lastName) {
         this.firstName = firstName;
@@ -18,9 +21,4 @@ public class Child {
     public String getLastName() {
         return lastName;
     }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-    
 }
