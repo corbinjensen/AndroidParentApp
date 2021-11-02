@@ -2,22 +2,23 @@ package ca.sfu.fluorine.parentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class CoinFlipActivity extends AppCompatActivity {
 
     public static final Random RANDOM = new Random();
-    private TextView coin;
+    private ImageView heads;
+    private ImageView tails;
     private Button btn;
 
 
@@ -25,45 +26,72 @@ public class CoinFlipActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-        coin = findViewById(R.id.coin);
-        btn = findViewById(R.id.btn);
+        heads = findViewById(R.id.heads);
+        tails = findViewById(R.id.tails);
+        btn = findViewById(R.id.flip_coin_btn);
+        float scale = getApplicationContext()
+                .getResources()
+                .getDisplayMetrics().density;
+
+        heads.setCameraDistance(8000 * scale);
+        tails.setCameraDistance(8000 * scale);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flipCoin();
+                flipCoin(true).start();
             }
         });
     }
 
-    private void flipCoin() {
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator());
-        fadeOut.setDuration(1000);
-        fadeOut.setFillAfter(true);
-        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+    private AnimatorSet flipCoin(boolean result) {
+        ArrayList<Animator> animationSequence = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            animationSequence.add(halfRotation(heads, tails));
+            animationSequence.add(halfRotation(tails, heads));
+        }
 
+        if (result) {
+            animationSequence.add(halfRotation(heads, tails));
+        }
+
+        AnimatorSet flipAnimation = new AnimatorSet();
+        flipAnimation.playSequentially(animationSequence);
+
+        // Styling up animation
+        flipAnimation.setInterpolator(new AccelerateDecelerateInterpolator(this, null));
+
+        // Define accompanying action for the animation
+        flipAnimation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                btn.setEnabled(false);
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                coin.setText(RANDOM.nextFloat() > 0.5f ? "Tails" : "Heads");
-
-                Animation fadeIn = new AlphaAnimation(0, 1);
-                fadeIn.setInterpolator(new DecelerateInterpolator());
-                fadeIn.setDuration(3000);
-                fadeIn.setFillAfter(true);
-
-                coin.startAnimation(fadeIn);
+            public void onAnimationEnd(Animator animator) {
+                btn.setEnabled(true);
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animator) {
+            }
 
+            @Override
+            public void onAnimationRepeat(Animator animator) {
             }
         });
 
-        coin.startAnimation(fadeOut);
+        return flipAnimation;
     }
-}
+
+    private AnimatorSet halfRotation(View start, View end) {
+        Animator animationOut = AnimatorInflater.loadAnimator(this, R.animator.out_animator);
+        Animator animationIn = AnimatorInflater.loadAnimator(this, R.animator.in_animator);
+        animationOut.setTarget(start);
+        animationIn.setTarget(end);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animationIn, animationOut);
+        return animatorSet;
+    }
+  }
