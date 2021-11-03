@@ -1,23 +1,19 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.NavGraph;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.view.ChildrenFragmentDirections;
+import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 
 /**
  * Represents the end screen when the timer reaches 0
@@ -39,9 +35,10 @@ public class TimeoutFinishFragment extends Fragment {
 
 		// Add listener to the button
 		Button dismissButton = FragmentTimeoutFinishBinding.bind(view).button;
-		dismissButton.setOnClickListener(btnView ->
-			Navigation.findNavController(view).navigate(R.id.return_to_timeout)
-		);
+		dismissButton.setOnClickListener(btnView -> {
+			TimeoutSetting.getInstance(getContext()).clear();
+			Navigation.findNavController(view).navigate(R.id.return_to_timeout);
+		});
 	}
 
 	// TODO: Play music and vibrate the phone when this fragment appear
