@@ -9,8 +9,16 @@ import java.util.List;
 
 public class ChildrenManager {
 
+    private static ChildrenManager instance;
     // create a list of children objects.
     List<Child> children = new ArrayList<>();
+
+    public static ChildrenManager getInstance() {
+        if(instance == null) {
+            instance = new ChildrenManager();
+        }
+        return instance;
+    }
 
     // add child
     public void addChild(String fName, String lName) {
@@ -23,6 +31,11 @@ public class ChildrenManager {
 
     }
 
+    //get child by index
+    public Child getChildFromIndex(int index) {
+        return children.get(index);
+    }
+
     // modify child
     public void modifyChild(int id,String fName, String lName) {
 
@@ -32,6 +45,10 @@ public class ChildrenManager {
         // Overwrite the old child at that ID
         children.set(id,child);
 
+    }
+
+    public List<Child> getAllChildren() {
+        return children;
     }
 
     // delete child
