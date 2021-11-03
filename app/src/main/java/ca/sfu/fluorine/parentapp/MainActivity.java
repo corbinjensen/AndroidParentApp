@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             holder.titleCreationName.setText(child.getFullName());
 
             // make the list item clickable
+            // TODO - change to edit activity.
             holder.itemView.setOnClickListener((View view) -> {
 
             });
