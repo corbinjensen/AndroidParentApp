@@ -24,7 +24,7 @@ import ca.sfu.fluorine.parentapp.model.ChildrenManager;
 public class MainActivity extends AppCompatActivity {
 
 	private ActivityMainBinding binding;
-	private final ChildListAdapter adapter = new ChildListAdapter(this);
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+
+		ChildrenFragment childrenFragment = new ChildrenFragment();
 
 
 		// Passing each menu ID as a set of Ids because each
@@ -43,78 +45,8 @@ public class MainActivity extends AppCompatActivity {
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(binding.navView, navController);
 
-        RecyclerView childList = findViewById(R.id.childrenList);
-        childList.setAdapter(adapter);
-        childList.setLayoutManager(new LinearLayoutManager(this));
+
 
 	}
-
-
-    class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.ViewHolder> {
-        private final ChildrenManager childrenManager = ChildrenManager.getInstance();
-        private final Context context;
-
-
-        public ChildListAdapter(Context context) {
-            this.context = context;
-
-            // TODO - These are example children to show the list.
-            childrenManager.addChild("Hello","world");
-            childrenManager.addChild("Sally","Smith");
-            childrenManager.addChild("Brenden","Johnson");
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            TextView titleCreationName;
-            CardView childCard;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-
-                // Find all the components of the view.
-                titleCreationName =  itemView.findViewById(R.id.childNameDisplay);
-                childCard = itemView.findViewById(R.id.childCard);
-            }
-        }
-
-        @NonNull
-        @Override
-        public ChildListAdapter.ViewHolder onCreateViewHolder(
-            @NonNull
-                ViewGroup parent,
-            int viewType
-        ) {
-            View view = LayoutInflater.from(context).inflate(
-                R.layout.child_row_layout,
-                parent,
-                false
-            );
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(
-            @NonNull
-                ChildListAdapter.ViewHolder holder,
-            int position
-        ) {
-            // get child object from index
-            Child child = childrenManager.getChildFromIndex(position);
-
-            // change the text to display childs name
-            holder.titleCreationName.setText(child.getFullName());
-
-            // make the list item clickable
-            // TODO - change to edit activity.
-            holder.itemView.setOnClickListener((View view) -> {
-
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return childrenManager.getAllChildren().size();
-        }
-    }
 
 }
