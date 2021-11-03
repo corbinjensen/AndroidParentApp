@@ -2,6 +2,8 @@ package ca.sfu.fluorine.parentapp.model;
 
 import java.time.LocalDateTime;
 
+import ca.sfu.fluorine.parentapp.model.children.Child;
+
 
 public class CoinResult {
     // Use enum to store the sides of the coin
