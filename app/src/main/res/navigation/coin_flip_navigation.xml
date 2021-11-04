@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coin_flip_navigation"
+    app:startDestination="@id/newCoinFlipFragment">
+
+    <fragment
+        android:id="@+id/newCoinFlipFragment"
+        android:name="ca.sfu.fluorine.parentapp.NewCoinFlipFragment"
+        android:label="fragment_new_coin_flip"
+        tools:layout="@layout/fragment_new_coin_flip" >
+        <action
+            android:id="@+id/action_newCoinFlipFragment_to_coinAnimationFragment"
+            app:destination="@id/coinAnimationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coinAnimationFragment"
+        android:name="ca.sfu.fluorine.parentapp.CoinAnimationFragment"
+        android:label="fragment_coin_animation"
+        tools:layout="@layout/fragment_coin_animation" >
+        <action
+            android:id="@+id/action_coinAnimationFragment_to_newCoinFlipFragment"
+            app:destination="@id/newCoinFlipFragment" />
+        <argument
+            android:name="childId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="coinSide"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
+</navigation>

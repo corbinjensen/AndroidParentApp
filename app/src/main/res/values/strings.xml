@@ -57,4 +57,7 @@
 
     <string name="save_button_title">Save</string>
     <string name="add_new_child">Add new child</string>
+
+    <string name="new_flip">New Flip</string>
+    <string name="done">Done</string>
 </resources>
