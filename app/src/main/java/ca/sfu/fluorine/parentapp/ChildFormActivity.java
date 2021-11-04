@@ -42,6 +42,7 @@ public class ChildFormActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(titleId)
                 .setMessage(messageId)
+                .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, (dialog, i) -> {
                     confirmAction.run();
                 })
