@@ -27,7 +27,6 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
-
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
  */
