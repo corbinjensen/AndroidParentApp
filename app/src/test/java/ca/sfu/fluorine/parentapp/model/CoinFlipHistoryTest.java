@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import ca.sfu.fluorine.parentapp.model.children.Child;
+
 class CoinFlipHistoryTest {
     private final String TEST_CHILD_FIRST = "FIRST";
     private final String TEST_CHILD_LAST = "LAST";
 
-    CoinFlipHistory listFlipHistory = new CoinFlipHistory();
     Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
 
     final CoinResult.CoinSide childGuess1 = CoinResult.CoinSide.HEAD;
@@ -26,12 +27,14 @@ class CoinFlipHistoryTest {
 
     @Test
     void addCoinResultToHistory() {
+        CoinFlipHistory listFlipHistory = new CoinFlipHistory();
         listFlipHistory.addCoinResultToHistory(flipHistory1);
-        assertEquals(listFlipHistory.coinResultHistory.getFirst(), flipHistory1);
+        assertEquals(listFlipHistory.getCoinFlipAtIndex(0), flipHistory1);
     }
 
     @Test
     void removeCoinResultFromHistory() {
+        CoinFlipHistory listFlipHistory = new CoinFlipHistory();
         final int INDEX_TO_REMOVE = 1;
         final int INDEX_OF_EMPTY = -1;
 
