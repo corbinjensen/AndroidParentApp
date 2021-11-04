@@ -20,7 +20,6 @@ import ca.sfu.fluorine.parentapp.ChildFormActivity;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 
-
 /**
  * ChildrenFragment.java - represents the UI of the configure children
  */
