@@ -56,7 +56,6 @@ public class ChildrenFragment extends Fragment {
 
     /** Called when the user taps the Send button */
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
