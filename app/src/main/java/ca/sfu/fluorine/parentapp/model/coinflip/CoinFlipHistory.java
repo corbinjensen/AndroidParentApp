@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.model;
+package ca.sfu.fluorine.parentapp.model.coinflip;
 
 import android.content.Context;
 import android.content.SharedPreferences;
