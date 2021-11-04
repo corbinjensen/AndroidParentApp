@@ -20,6 +20,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ImageView heads;
     private ImageView tails;
     private Button btn;
+    Random random = new Random();
 
 
     @Override
@@ -38,14 +39,16 @@ public class CoinFlipActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flipCoin(true).start();
+                flipCoin(random.nextBoolean()).start();
             }
         });
     }
 
     private AnimatorSet flipCoin(boolean result) {
         ArrayList<Animator> animationSequence = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        int randomInt = random.nextInt(10) + 10;
+
+        for (int i = 0; i < randomInt; i++) {
             animationSequence.add(halfRotation(heads, tails));
             animationSequence.add(halfRotation(tails, heads));
         }
