@@ -8,9 +8,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
 
@@ -34,4 +36,5 @@ public class MainActivity extends AppCompatActivity {
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(binding.navView, navController);
 	}
+
 }
