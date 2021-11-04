@@ -1,30 +1,20 @@
 package ca.sfu.fluorine.parentapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
-import ca.sfu.fluorine.parentapp.model.Child;
-import ca.sfu.fluorine.parentapp.model.ChildrenManager;
 
 public class MainActivity extends AppCompatActivity {
 
 	private ActivityMainBinding binding;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
-
-		ChildrenFragment childrenFragment = new ChildrenFragment();
-
 
 		// Passing each menu ID as a set of Ids because each
 		// menu should be considered as top level destinations.
@@ -44,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
 		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(binding.navView, navController);
-
-
-
 	}
 
 }
