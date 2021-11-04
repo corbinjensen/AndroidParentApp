@@ -1,8 +1,11 @@
 package ca.sfu.fluorine.parentapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
 
 /**
  *  ChildFormActivity.java - represents a user input form
@@ -10,10 +13,21 @@ import android.os.Bundle;
  */
 
 public class ChildFormActivity extends AppCompatActivity {
+    private ActivityChildFormBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child_form);
+        binding = ActivityChildFormBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setupActionBar();
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle(R.string.add_new_child);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }
