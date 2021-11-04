@@ -1,6 +1,9 @@
 package ca.sfu.fluorine.parentapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -55,5 +58,21 @@ public class ChildFormActivity extends AppCompatActivity {
         Log.d(null, firstName);
         Log.d(null, lastName);
         return !firstName.isEmpty() && !lastName.isEmpty();
+    }
+
+    // The confirm action is lambda expression () -> { some code }
+    private void makeConfirmDialog(@StringRes int titleId,
+                                   @StringRes int messageId,
+                                   @NonNull Runnable confirmAction) {
+        new AlertDialog.Builder(this)
+                .setTitle(titleId)
+                .setMessage(messageId)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, (dialog, i) -> {
+                    confirmAction.run();
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, i) -> {
+                    dialog.dismiss();
+                }).show();
     }
 }

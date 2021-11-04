@@ -6,34 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".CoinFlipActivity">
 
-    <TextView
-        android:id="@+id/coin"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="80dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Coin" />
-
-    <Button
-        android:id="@+id/btn"
+    <ImageView
+        android:id="@+id/heads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="158dp"
-        android:layout_below="@id/coin"
-        android:text="Flip"
+        android:contentDescription="@string/heads_desc"
+        android:src="@drawable/heads"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/coin"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="DuplicateClickableBoundsCheck"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/tails"
+        android:alpha="0.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/tails_desc"
+        android:src="@drawable/tails"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/flip_coin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text="@string/flip_coin_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
