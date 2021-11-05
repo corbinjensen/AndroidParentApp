@@ -18,6 +18,8 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
+import ca.sfu.fluorine.parentapp.model.CoinResult;
+import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
@@ -32,6 +34,8 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Retrieve the arguments
 		CoinAnimationFragmentArgs arguments =
 				CoinAnimationFragmentArgs.fromBundle(getArguments());
 		childId = arguments.getChildId();
@@ -99,11 +103,18 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 
 			@Override
 			public void onAnimationEnd(Animator animator) {
+				// Show the button
 				binding.buttonDone.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setEnabled(childId >= 0);
 				binding.resultTitle.setVisibility(View.VISIBLE);
 				binding.resultTitle.setText(resultIsHead ? R.string.head : R.string.tail);
+
+				// Save the result if possible
+				if (childId < 0) return;
+				Child child = ChildrenManager
+						.getInstance(requireContext()).getChildByIndex(childId);
+				CoinResult newResult = new CoinResult(child, selectionIsHead, resultIsHead);
 			}
 
 			@Override
