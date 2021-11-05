@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/newCoinFlipFragment"
-        android:name="ca.sfu.fluorine.parentapp.NewCoinFlipFragment"
+        android:name="ca.sfu.fluorine.parentapp.view.coin.NewCoinFlipFragment"
         android:label="fragment_new_coin_flip"
         tools:layout="@layout/fragment_new_coin_flip" >
         <action
-            android:id="@+id/action_newCoinFlipFragment_to_coinAnimationFragment"
+            android:id="@+id/flipping_coin_action"
             app:destination="@id/coinAnimationFragment" />
     </fragment>
     <fragment
         android:id="@+id/coinAnimationFragment"
-        android:name="ca.sfu.fluorine.parentapp.CoinAnimationFragment"
+        android:name="ca.sfu.fluorine.parentapp.view.coin.CoinAnimationFragment"
         android:label="fragment_coin_animation"
         tools:layout="@layout/fragment_coin_animation" >
         <action
-            android:id="@+id/action_coinAnimationFragment_to_newCoinFlipFragment"
+            android:id="@+id/new_coin_flip_action"
             app:destination="@id/newCoinFlipFragment" />
         <argument
             android:name="childId"

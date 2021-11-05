@@ -70,7 +70,7 @@ public class ChildrenManager {
 
     private void loadChildrenFromPreferences() {
         children.clear();
-        String jsonData = preferences.getString(KEY, "");
+        String jsonData = preferences.getString(KEY, "[]");
         children = gson.fromJson(jsonData, CHILDREN_LIST);
     }
 
