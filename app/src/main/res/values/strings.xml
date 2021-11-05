@@ -63,4 +63,6 @@
 
     <string name="head">HEAD</string>
     <string name="tail">TAIL</string>
+    <string name="pick_a_child">Pick a child</string>
+    <string name="pick_a_side">Pick a side</string>
 </resources>

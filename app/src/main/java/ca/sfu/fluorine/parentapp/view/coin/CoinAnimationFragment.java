@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,20 @@ import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
+	private int childId;
+	private boolean selectionIsHead;
+
 	private static final Random random = new Random();
-	private final boolean isHead = random.nextBoolean();
+	private final boolean resultIsHead = random.nextBoolean();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		CoinAnimationFragmentArgs arguments =
+				CoinAnimationFragmentArgs.fromBundle(getArguments());
+		childId = arguments.getChildId();
+		Log.d(null, ""+childId);
+		selectionIsHead = arguments.getCoinSide();
 	}
 
 	@Override
@@ -35,6 +44,12 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentCoinAnimationBinding.inflate(inflater, container, false);
+		return binding.getRoot();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 
 		// Set up camera distance
 		float scale = requireContext().getResources()
@@ -44,20 +59,16 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 
 		// Add listeners to the buttons
 		binding.buttonDone.setOnClickListener(btnView ->
-			requireActivity().finish()
+				requireActivity().finish()
 		);
 
 		binding.buttonNewTurn.setOnClickListener(btnView ->
-			NavHostFragment.findNavController(this)
-					.navigate(R.id.new_coin_flip_action)
+				NavHostFragment.findNavController(this)
+						.navigate(R.id.new_coin_flip_action)
 		);
-		return binding.getRoot();
-	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		flipCoin(isHead).start();
+		// Start the animation
+		flipCoin(resultIsHead).start();
 	}
 
 	private AnimatorSet flipCoin(boolean result) {
@@ -90,11 +101,9 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 			public void onAnimationEnd(Animator animator) {
 				binding.buttonDone.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setVisibility(View.VISIBLE);
-				boolean hasChildren = !ChildrenManager.getInstance(requireContext())
-						.getChildren().isEmpty();
-				binding.buttonNewTurn.setEnabled(hasChildren);
+				binding.buttonNewTurn.setEnabled(childId >= 0);
 				binding.resultTitle.setVisibility(View.VISIBLE);
-				binding.resultTitle.setText(isHead ? R.string.head : R.string.tail);
+				binding.resultTitle.setText(resultIsHead ? R.string.head : R.string.tail);
 			}
 
 			@Override
