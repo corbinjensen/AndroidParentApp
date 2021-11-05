@@ -6,23 +6,16 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 
 
 public class CoinResult {
-    // Use enum to store the sides of the coin
-    public enum CoinSide {
-        HEAD,
-        TAIL
-    }
-
     final private LocalDateTime dateTimeOfFlip; // Sets time to creation of CoinResult
-    final private CoinSide flipResult;
+    final private boolean resultIsHead, guessIsHead;
     final private Child whoPicked;
-    final private CoinSide childGuess;
 
     //Constructor
-    public CoinResult(Child childWhoPicked, CoinSide childGuess, CoinSide flipResult){
+    public CoinResult(Child childWhoPicked, boolean guessIsHead, boolean resultIsHead){
         this.dateTimeOfFlip = LocalDateTime.now();
-        this.flipResult = flipResult;
+        this.resultIsHead = resultIsHead;
         this.whoPicked = childWhoPicked;
-        this.childGuess = childGuess;
+        this.guessIsHead = guessIsHead;
 
     }
 
@@ -30,19 +23,19 @@ public class CoinResult {
         return this.dateTimeOfFlip;
     }
 
-    public CoinSide getFlipResult() {
-        return this.flipResult;
+    public boolean getResultIsHead() {
+        return resultIsHead;
     }
 
-    public CoinSide getChildGuess(){
-        return this.childGuess;
+    public boolean getGuessIsHead(){
+        return guessIsHead;
     }
 
     public Child getWhoPicked() {
-        return this.whoPicked;
+        return whoPicked;
     }
 
     public boolean didPickerWin(){
-        return (this.childGuess.equals(this.flipResult));
+        return guessIsHead == resultIsHead;
     }
 }
