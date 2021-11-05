@@ -18,7 +18,7 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
-import ca.sfu.fluorine.parentapp.model.CoinResult;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;

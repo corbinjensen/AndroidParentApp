@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
 class CoinResultTest {
