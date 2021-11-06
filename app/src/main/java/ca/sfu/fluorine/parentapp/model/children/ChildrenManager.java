@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.model.children;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -72,6 +73,7 @@ public class ChildrenManager {
 
     private void saveChildrenToPreferences() {
         String jsonData = gson.toJson(children);
+        Log.d("data", jsonData);
         preferences.edit().putString(KEY, jsonData).apply();
     }
 

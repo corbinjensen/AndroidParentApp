@@ -50,7 +50,9 @@
     <!--  Add child activity  -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="add_child">Add Child</string>
+    <string name="save_child">Save Child</string>
+    <string name="delete_child">Delete Child</string>
+    <string name="addChild">Do you want to save this child?</string>
     <string name="add_a_child">add a child</string>
     <string name="flip_coin_btn">Flip Coin</string>
     <string name="tails_desc">Tails side</string>
@@ -58,6 +60,7 @@
 
     <string name="save_button_title">Save</string>
     <string name="add_new_child">Add new child</string>
+    <string name="edit_child">Edit child</string>
 
     <string name="new_flip">New Flip</string>
     <string name="done">Done</string>
