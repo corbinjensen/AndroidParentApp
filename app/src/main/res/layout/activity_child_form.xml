@@ -43,7 +43,7 @@
         android:layout_width="206dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
-        android:text="@string/add_child"
+        android:text="@string/save_child"
         android:enabled="false"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_last_name"
         app:layout_constraintStart_toStartOf="@+id/edit_text_last_name"
