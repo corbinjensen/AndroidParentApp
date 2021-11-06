@@ -47,7 +47,7 @@ public class CoinFlipHistory {
     }
 
     //remove coinFlip from list at index
-    public void removeCoinResultFromHistory(int index){
+    private void removeCoinResultFromHistory(int index){
         this.coinResultHistory.remove(index);
         saveCoinResultToPreferences();
     }
