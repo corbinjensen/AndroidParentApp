@@ -1,12 +1,18 @@
 package ca.sfu.fluorine.parentapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActionMenuView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
 
@@ -30,4 +36,5 @@ public class MainActivity extends AppCompatActivity {
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(binding.navView, navController);
 	}
+
 }

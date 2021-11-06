@@ -1,10 +1,14 @@
 package ca.sfu.fluorine.parentapp.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import ca.sfu.fluorine.parentapp.model.CoinResult.CoinSide;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
+import ca.sfu.fluorine.parentapp.model.children.Child;
 
 class CoinResultTest {
     //local constants
@@ -12,44 +16,25 @@ class CoinResultTest {
     private final String TEST_CHILD_LAST = "LAST";
 
     Child dummyChild = new Child(TEST_CHILD_FIRST, TEST_CHILD_LAST);
-    CoinSide dummyChildGuess = CoinSide.HEAD;
-    CoinSide dummyFlipResult = CoinSide.TAIL;
-    CoinResult expectedCoinResult = new CoinResult(dummyChild, dummyChildGuess, dummyFlipResult);
 
     @Test
-    public void CoinResult(){
-        assertNotNull(expectedCoinResult.getDateTimeOfFlip());
-        assertEquals(expectedCoinResult.getWhoPicked(), dummyChild);
-        assertEquals(expectedCoinResult.getChildGuess(), dummyChildGuess);
-        assertEquals(expectedCoinResult.getFlipResult(), dummyFlipResult);
-        assertEquals(expectedCoinResult.didPickerWin(), (dummyChildGuess.equals(dummyFlipResult)));
-
-    }
-
-
-    @Test
-    public void getDateTimeOfFlip() {
-        assertNotNull(expectedCoinResult.getDateTimeOfFlip());
+    public void testCoinResultCreation() {
+        CoinResult coinResult = new CoinResult(dummyChild, true, true);
+        assertNotNull(coinResult.getDateTimeOfFlip());
+        assertEquals(coinResult.getWhoPicked(), dummyChild);
+        assertTrue(coinResult.getGuessIsHead());
+        assertTrue(coinResult.getResultIsHead());
     }
 
     @Test
-    public void getFlipResult() {
-        assertEquals(expectedCoinResult.getFlipResult(), dummyFlipResult);
-    }
-
-    @Test
-    public void getChildGuess() {
-        assertEquals(expectedCoinResult.getChildGuess(),dummyChildGuess);
-    }
-
-    @Test
-    public void getWhoPicked() {
-        assertEquals(expectedCoinResult.getWhoPicked(), dummyChild);
-    }
-
-    @Test
-    public void getDidPickerWin() {
-        assertEquals(expectedCoinResult.didPickerWin(), (dummyChildGuess.equals(dummyFlipResult)));
-
+    public void testGuessValidation() {
+        CoinResult coinResult = new CoinResult(dummyChild, true, true);
+        assertTrue(coinResult.didPickerWin());
+        coinResult = new CoinResult(dummyChild, false, false);
+        assertTrue(coinResult.didPickerWin());
+        coinResult = new CoinResult(dummyChild, true, false);
+        assertFalse(coinResult.didPickerWin());
+        coinResult = new CoinResult(dummyChild, false, true);
+        assertFalse(coinResult.didPickerWin());
     }
 }

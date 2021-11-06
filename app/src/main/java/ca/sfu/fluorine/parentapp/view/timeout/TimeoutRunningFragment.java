@@ -3,7 +3,6 @@ package ca.sfu.fluorine.parentapp.view.timeout;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Calendar;
@@ -24,11 +22,12 @@ import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
+import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
  * Represents the screen of the timer counting down
  */
-public class TimeoutRunningFragment extends Fragment {
+public class TimeoutRunningFragment extends NoActionBarFragment {
 	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
 	private TimeoutSetting timeoutSetting;
@@ -90,8 +89,6 @@ public class TimeoutRunningFragment extends Fragment {
 	// Discard the timer when the fragment is no longer visible
 	@Override
 	public void onStop() {
-		super.onStop();
-
 		TimerState state = timer.getState();
 		// Save the timer if it's not finished
 		if (state != TimerState.FINISHED) {
@@ -103,6 +100,8 @@ public class TimeoutRunningFragment extends Fragment {
 			timeoutSetting.clear();
 		}
 		timer.discard();
+
+		super.onStop();
 	}
 
 	private void toggleTimer() {
