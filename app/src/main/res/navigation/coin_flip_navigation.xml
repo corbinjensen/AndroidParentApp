@@ -21,7 +21,9 @@
         tools:layout="@layout/fragment_coin_animation" >
         <action
             android:id="@+id/new_coin_flip_action"
-            app:destination="@id/newCoinFlipFragment" />
+            app:destination="@id/newCoinFlipFragment"
+            app:popUpTo="@id/newCoinFlipFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="childId"
             app:argType="integer"

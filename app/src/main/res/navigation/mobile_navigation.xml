@@ -76,5 +76,4 @@
                 app:destination="@id/custom_timer_dialog" />
         </fragment>
     </navigation>
-    <action android:id="@+id/action_global_timeout" app:destination="@id/navigation_timeout" />
 </navigation>
