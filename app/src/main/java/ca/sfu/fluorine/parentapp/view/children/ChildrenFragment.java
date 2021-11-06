@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view;
+package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import ca.sfu.fluorine.parentapp.ChildFormActivity;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
