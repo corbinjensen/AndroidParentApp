@@ -59,7 +59,7 @@ public class CoinFlipHistory {
 
     private void loadCoinFlipFromPreferences() {
         coinResultHistory.clear();
-        String jsonData = preferences.getString(KEY, "");
+        String jsonData = preferences.getString(KEY, "[]");
         coinResultHistory = gson.fromJson(jsonData, COIN_FLIP_LIST);
     }
 }
