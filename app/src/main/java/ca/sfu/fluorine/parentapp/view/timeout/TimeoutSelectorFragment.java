@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.button.MaterialButton;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
@@ -27,13 +29,18 @@ import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.
  * or start their own custom timer
  */
 public class TimeoutSelectorFragment extends Fragment {
+	private static final LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+			LinearLayout.LayoutParams.MATCH_PARENT,
+			LinearLayout.LayoutParams.WRAP_CONTENT,
+			1.0f
+	);
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Navigate away to running timer when a timer is active
-		TimeoutSetting setting = TimeoutSetting.getInstance(getContext());
+		TimeoutSetting setting = TimeoutSetting.getInstance(requireContext());
 		Long expiredTime = setting.getExpiredTime();
 		if (expiredTime != null) {
 			NavHostFragment.findNavController(this)
@@ -60,34 +67,37 @@ public class TimeoutSelectorFragment extends Fragment {
 		// Add buttons for preset durations
 		int[] presetDurations = getResources().getIntArray(R.array.preset_durations);
 		for (final int duration : presetDurations) {
-			buttonList.addView(createPresetButton(view, duration));
+			String buttonLabel = getResources()
+					.getQuantityString(R.plurals.duration_in_minutes, duration, duration);
+			View.OnClickListener listener = btnView -> {
+				// Set up action and pass data upon navigation
+				StartPresetTimerAction action =
+						TimeoutSelectorFragmentDirections.startPresetTimerAction();
+				long expiredTime = Calendar.getInstance().getTimeInMillis()
+						+ duration * TimeoutTimer.MINUTES_TO_MILLIS;
+				action.setExpiredTime(expiredTime);
+				Navigation.findNavController(view)
+						.navigate(action);
+			};
+
+			buttonList.addView(createButton(buttonLabel, listener));
 		}
 
 		// Add a button for custom data
-		Button customButton = new Button(getContext());
-		customButton.setText(R.string.custom_timer);
-		customButton.setOnClickListener(btnView ->
+		Button customButton = createButton(getString(R.string.custom_timer), btnView ->
 			Navigation.findNavController(view).navigate(R.id.show_custom_dialog_action)
 		);
 		buttonList.addView(customButton);
 	}
 
-	public Button createPresetButton(View view, int minutes) {
-		Button button = new Button(getContext());
-		String buttonLabel = getResources()
-				.getQuantityString(R.plurals.duration_in_minutes, minutes, minutes);
+	public Button createButton(String buttonLabel, View.OnClickListener listener) {
+		Button button = new MaterialButton(
+				requireContext(),
+				null,
+				R.attr.materialButtonOutlinedStyle);
+		button.setLayoutParams(param);
 		button.setText(buttonLabel);
-		button.setOnClickListener(btnView -> {
-			StartPresetTimerAction action =
-					TimeoutSelectorFragmentDirections.startPresetTimerAction();
-			long expiredTime = Calendar.getInstance().getTimeInMillis()
-					+ minutes * TimeoutTimer.MINUTES_TO_MILLIS;
-			action.setExpiredTime(expiredTime);
-			Navigation.findNavController(view)
-					.navigate(action);
-		});
+		button.setOnClickListener(listener);
 		return button;
 	}
-
-	// TODO: Make this screen more beautiful
 }
