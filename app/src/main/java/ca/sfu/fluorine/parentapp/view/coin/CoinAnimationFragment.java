@@ -18,6 +18,7 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinFlipHistory;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
@@ -115,6 +116,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				Child child = ChildrenManager
 						.getInstance(requireContext()).getChildByIndex(childId);
 				CoinResult newResult = new CoinResult(child, selectionIsHead, resultIsHead);
+				CoinFlipHistory.getInstance(requireContext()).addCoinResultToHistory(newResult);
 			}
 
 			@Override
