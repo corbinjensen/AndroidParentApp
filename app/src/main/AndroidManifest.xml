@@ -14,9 +14,11 @@
         android:theme="@style/Theme.ParentApp">
         <activity
             android:name=".ChildFormActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".CoinFlipActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
