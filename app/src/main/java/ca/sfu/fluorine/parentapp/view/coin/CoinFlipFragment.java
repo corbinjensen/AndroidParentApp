@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view;
+package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -53,8 +51,14 @@ public class CoinFlipFragment extends Fragment {
 				startActivity(add);
 			}
 		});
-		binding.listCoinFlip.setAdapter(new CoinHistoryAdapter(requireContext(), this));
 		binding.listCoinFlip.setLayoutManager(new LinearLayoutManager(requireContext()));
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		binding.listCoinFlip.setAdapter(new CoinHistoryAdapter(requireContext(), this));
+
 	}
 
 	@Override
