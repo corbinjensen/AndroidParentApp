@@ -41,14 +41,18 @@ public class ChildFormActivity extends AppCompatActivity {
 
         childIndex = getIntent().getIntExtra(CHILD_INDEX, -1);
         if (childIndex >= 0) {
-            // Populate the field
+            // Edit mode
             Child child = manager.getChildByIndex(childIndex);
             binding.editTextFirstName.setText(child.getFirstName());
             binding.editTextLastName.setText(child.getLastName());
 
             setupActionBar(R.string.edit_child);
             binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
+
+            binding.buttonDeleteChild.setVisibility(View.VISIBLE);
+            binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);
         } else {
+            // Add mode
             setupActionBar(R.string.add_new_child);
             binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
