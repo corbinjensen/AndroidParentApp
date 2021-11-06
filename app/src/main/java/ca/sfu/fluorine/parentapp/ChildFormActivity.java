@@ -6,12 +6,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
+import ca.sfu.fluorine.parentapp.view.ChildrenFragment;
 
 /**
  *  ChildFormActivity.java - represents a user input form
@@ -69,7 +71,7 @@ public class ChildFormActivity extends AppCompatActivity {
                 .setMessage(messageId)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, (dialog, i) -> {
-                    confirmAction.run();
+                    confirmAction.run(); // add lambda
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, i) -> {
                     dialog.dismiss();
