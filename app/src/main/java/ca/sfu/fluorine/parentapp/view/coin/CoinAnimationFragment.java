@@ -78,7 +78,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 
 	private AnimatorSet flipCoin(boolean result) {
 		ArrayList<Animator> animationSequence = new ArrayList<>();
-		int randomInt = random.nextInt(10) + 10;
+		int randomInt = random.nextInt(5) + 5;
 
 		for (int i = 0; i < randomInt; i++) {
 			animationSequence.add(halfRotation(binding.heads, binding.tails));
