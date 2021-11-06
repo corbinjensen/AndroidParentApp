@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view;
+package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import ca.sfu.fluorine.parentapp.ChildFormActivity;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -33,14 +27,6 @@ import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
 	private ChildrenManager manager;
-	private Context context;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-        manager = ChildrenManager.getInstance(context);
-    }
 
     @Override
 	public View onCreateView(
@@ -53,23 +39,26 @@ public class ChildrenFragment extends Fragment {
 		return binding.getRoot();
 
     }
-
-    /** Called when the user taps the Send button */
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        manager = ChildrenManager.getInstance(requireContext());
+
         // floating action button
         binding.buttonAddChild.setOnClickListener(
-            btnView -> {
-                Intent intent = new Intent(getContext(), ChildFormActivity.class);
-            startActivity(intent);
-            });
+            btnView ->
+                startActivity(ChildFormActivity.makeIntent(requireContext(), ChildFormActivity.ADD_CHILD))
+            );
 
         // Populate the list
-        binding.childrenList.setAdapter(new ChildListAdapter(this, context));
-        binding.childrenList.setLayoutManager(new LinearLayoutManager(context));
+        binding.childrenList.setLayoutManager(new LinearLayoutManager(requireContext()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.childrenList.setAdapter(new ChildListAdapter(this, requireContext()));
     }
 
     @Override
@@ -83,10 +72,6 @@ public class ChildrenFragment extends Fragment {
 
         public ChildListAdapter(ChildrenFragment childrenFragment, Context context) {
             this.childrenFragment = childrenFragment;
-            // TODO - These are example children to show the list.
-            childrenFragment.manager.addChild("Hello","world");
-            childrenFragment.manager.addChild("Sally","Smith");
-            childrenFragment.manager.addChild("Brenden","Johnson");
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -109,7 +94,7 @@ public class ChildrenFragment extends Fragment {
                 ViewGroup parent,
             int viewType
         ) {
-            View view = LayoutInflater.from(context).inflate(
+            View view = LayoutInflater.from(requireContext()).inflate(
                 R.layout.child_row_layout,
                 parent,
                 false
@@ -132,7 +117,8 @@ public class ChildrenFragment extends Fragment {
             // make the list item clickable
             // TODO - change to edit activity.
             holder.itemView.setOnClickListener((View view) -> {
-
+                Intent intent = new Intent(ChildFormActivity.makeIntent(requireContext(), position));
+                startActivity(intent);
             });
         }
 

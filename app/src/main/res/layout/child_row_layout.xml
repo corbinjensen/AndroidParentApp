@@ -2,14 +2,17 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/childCard"
-    android:layout_width="409dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    app:layout_constraintStart_toStartOf="parent"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="410dp"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
         <TextView
             android:id="@+id/childNameDisplay"
