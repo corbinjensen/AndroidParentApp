@@ -23,6 +23,7 @@ public class ChildrenManager {
     private static final Type CHILDREN_LIST = new TypeToken<ArrayList<Child>>(){}.getType();
 
     private static final String KEY = "children";
+    private static final String LAST_CHILD = "last_child";
 
     private List<Child> children = new ArrayList<>();
 
@@ -59,6 +60,12 @@ public class ChildrenManager {
     }
 
     public void deleteChild(int id) {
+        int lastChildId = getLastChildId();
+        if (lastChildId == id) {
+            preferences.edit().remove(LAST_CHILD).apply();
+        } else if (lastChildId > id) {
+            saveLastChildId(--lastChildId);
+        }
         children.remove(id);
         saveChildrenToPreferences();
     }
@@ -74,4 +81,11 @@ public class ChildrenManager {
         children = gson.fromJson(jsonData, CHILDREN_LIST);
     }
 
+    public int getLastChildId() {
+        return preferences.getInt(LAST_CHILD, -1);
+    }
+
+    public void saveLastChildId(int childId) {
+        preferences.edit().putInt(LAST_CHILD, childId).apply();
+    }
 }

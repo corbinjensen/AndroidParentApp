@@ -48,14 +48,17 @@ public class NewCoinFlipFragment extends Fragment {
 	private void setupMenu() {
 		// Create the content for the menu
 		List<Child> childrenList = manager.getChildren();
+		int lastChildId = manager.getLastChildId();
 		childIndices = new ArrayList<>();
 		List<String> childNames = new ArrayList<>();
 		for (int i = 0; i < childrenList.size(); i++) {
-			childIndices.add(i);
-			Child child = childrenList.get(i);
-			String childName = requireContext()
-					.getString(R.string.full_name, child.getFirstName(), child.getLastName());
-			childNames.add(childName);
+			if (lastChildId != i) {
+				childIndices.add(i);
+				Child child = childrenList.get(i);
+				String childName = requireContext()
+						.getString(R.string.full_name, child.getFirstName(), child.getLastName());
+				childNames.add(childName);
+			}
 		}
 
 		// Attach the content to the dropdown menu

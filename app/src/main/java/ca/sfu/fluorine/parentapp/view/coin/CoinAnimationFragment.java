@@ -113,8 +113,9 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 
 				// Save the result if possible
 				if (childId < 0) return;
-				Child child = ChildrenManager
-						.getInstance(requireContext()).getChildByIndex(childId);
+				ChildrenManager manager = ChildrenManager.getInstance(requireContext());
+				Child child = manager.getChildByIndex(childId);
+				manager.saveLastChildId(childId);
 				CoinResult newResult = new CoinResult(child, selectionIsHead, resultIsHead);
 				CoinFlipHistory.getInstance(requireContext()).addCoinResultToHistory(newResult);
 			}
