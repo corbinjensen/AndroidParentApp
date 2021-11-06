@@ -32,7 +32,7 @@
         <item>5</item>
         <item>10</item>
     </integer-array>
-    <string name="time_up">Time\'s up!</string>
+    <string name="time_up">Time is up</string>
     <string name="dismiss">Dismiss</string>
 
     <!--  Timeout notification  -->
@@ -58,4 +58,14 @@
 
     <string name="save_button_title">Save</string>
     <string name="add_new_child">Add new child</string>
+
+    <string name="new_flip">New Flip</string>
+    <string name="done">Done</string>
+
+    <string name="head">HEAD</string>
+    <string name="tail">TAIL</string>
+    <string name="pick_a_child">Pick a child</string>
+    <string name="pick_a_side">Pick a side</string>
+
+    <string name="full_name">%1$s %2$s</string>
 </resources>

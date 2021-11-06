@@ -14,11 +14,12 @@ import androidx.navigation.Navigation;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
-public class TimeoutFinishFragment extends Fragment {
+public class TimeoutFinishFragment extends NoActionBarFragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container,
