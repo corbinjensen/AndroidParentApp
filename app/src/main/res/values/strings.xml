@@ -68,4 +68,14 @@
     <string name="pick_a_side">Pick a side</string>
 
     <string name="full_name">%1$s %2$s</string>
+
+    <!-- Coin flip -->
+    <string name="navigates_to_coin_flip">Navigates to Coin Flip</string>
+    <string name="date_flip">date</string>
+    <string name="time_flip">time flip</string>
+    <string name="child_who_picked_flip">child who picked flip</string>
+    <string name="actual_flip_result">actual flip result</string>
+    <string name="did_picker_win">Did picker win</string>
+
+
 </resources>
