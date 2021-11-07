@@ -29,7 +29,6 @@ public class TimeoutSetting {
 					.putBoolean(RUNNING, timer.getState() == TimeoutTimer.TimerState.RUNNING)
 					.apply();
 		}
-
 	}
 
 	public Long getExpiredTime() {
