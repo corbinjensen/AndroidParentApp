@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 
 public class TimeoutExpiredReceiver extends BroadcastReceiver {
 

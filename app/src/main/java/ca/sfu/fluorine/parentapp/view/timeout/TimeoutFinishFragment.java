@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,11 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 

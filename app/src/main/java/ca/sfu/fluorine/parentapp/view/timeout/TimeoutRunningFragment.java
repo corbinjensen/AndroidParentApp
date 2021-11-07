@@ -11,9 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer.TimerState;
 import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;

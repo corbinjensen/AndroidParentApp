@@ -6,7 +6,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 
 public class BackgroundTimeoutService {
 	public static void setAlarm(Context context, @NonNull TimeoutTimer timeoutTimer) {
