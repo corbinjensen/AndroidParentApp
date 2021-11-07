@@ -30,11 +30,12 @@ public class TimeoutExpiredNotification {
 				.setContentTitle(context.getString(R.string.timeout_notification_title))
 				.setContentText(context.getString(R.string.timeout_notification_content))
 				.setPriority(NotificationCompat.PRIORITY_HIGH)
-				.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+				.setCategory(NotificationCompat.CATEGORY_CALL)
 				.setShowWhen(false)
 				.setContentIntent(pendingIntent)
 				.setAutoCancel(true)
 				.build();
+		notification.flags |= Notification.FLAG_INSISTENT;
 		NotificationManagerCompat.from(context)
 				.notify(NOTIFICATION_ID, notification);
 	}

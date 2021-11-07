@@ -1,7 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +16,8 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
-import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
@@ -47,7 +45,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		removeAlarm();
+		BackgroundTimeoutService.removeAlarm(requireContext());
 		TimeoutExpiredNotification.hideNotification(requireContext());
 
 		// Set up the timer
@@ -85,7 +83,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 		if (state != TimerState.FINISHED) {
 			timeoutSetting.saveTimer(timer);
 			if (state == TimerState.RUNNING) {
-				setAlarm(timer);
+				BackgroundTimeoutService.setAlarm(requireContext(), timer);
 			}
 		} else {
 			timeoutSetting.clear();
@@ -124,16 +122,5 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 			expiredTime = remainingTime + Calendar.getInstance().getTimeInMillis();
 		}
 		return new TimeoutTimer(expiredTime);
-	}
-
-	private void setAlarm(@NonNull TimeoutTimer timeoutTimer) {
-		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(requireContext());
-		requireContext().getSystemService(AlarmManager.class)
-				.setExact(AlarmManager.RTC_WAKEUP, timeoutTimer.expiredTime, intent);
-	}
-
-	private void removeAlarm() {
-		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(requireContext());
-		requireContext().getSystemService(AlarmManager.class).cancel(intent);
 	}
 }
