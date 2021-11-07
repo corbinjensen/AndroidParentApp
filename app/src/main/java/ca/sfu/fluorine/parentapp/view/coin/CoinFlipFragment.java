@@ -1,9 +1,13 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
+import android.icu.text.DateFormat;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,14 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import java.util.Date;
-import java.util.Locale;
 
 import ca.sfu.fluorine.parentapp.CoinFlipActivity;
 import ca.sfu.fluorine.parentapp.R;
@@ -44,12 +41,9 @@ public class CoinFlipFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		binding.navigationCoinFlip.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent add = new Intent(getContext(), CoinFlipActivity.class);
-				startActivity(add);
-			}
+		binding.navigationCoinFlip.setOnClickListener(v -> {
+			Intent add = new Intent(getContext(), CoinFlipActivity.class);
+			startActivity(add);
 		});
 		binding.listCoinFlip.setLayoutManager(new LinearLayoutManager(requireContext()));
 	}
@@ -57,8 +51,7 @@ public class CoinFlipFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		binding.listCoinFlip.setAdapter(new CoinHistoryAdapter(requireContext(), this));
-
+		binding.listCoinFlip.setAdapter(new CoinHistoryAdapter());
 	}
 
 	@Override
@@ -67,9 +60,7 @@ public class CoinFlipFragment extends Fragment {
 		binding = null;
 	}
 
-	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinHistoryAdapter.CoinFlipViewHolder>{
-		public CoinHistoryAdapter(Context ct, CoinFlipFragment coinFlipFragment) { }
-
+	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinHistoryAdapter.CoinFlipViewHolder> {
 		@NonNull
 		@Override
 		public CoinFlipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,20 +74,15 @@ public class CoinFlipFragment extends Fragment {
 			CoinResult result = flipHistory.getCoinFlipAtIndex(position);
 
 
-			String formatDateTime = new SimpleDateFormat("dd MM, yyyy hh:mm", Locale.CANADA).format(
-					new Date(result.getDateTimeOfFlip())
-			);
+			String formatDateTime = DateFormat
+					.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+					.format(new Date(result.getDateTimeOfFlip()));
 
 			holder.dateTimeView.setText(formatDateTime);
-			//set child's name in view
 			holder.childNameView.setText(result.getWhoPicked().getFirstName());
-
-			// set view if picker win/lose
-			holder.didPickerWinView.setText(result.didPickerWin() ? "WIN" : "LOSE" );
-
-			//set image of coin if the flip result is head/tails.
-			holder.coinResultView.setImageResource(result.getResultIsHead() ?
-					R.drawable.heads : R.drawable.tails);
+			holder.didPickerWinView.setText(result.didPickerWin() ? R.string.win : R.string.lose);
+			holder.coinResultView.setImageResource(
+					result.getResultIsHead() ? R.drawable.ic_heads : R.drawable.ic_tails);
 		}
 
 		@Override
@@ -120,6 +106,4 @@ public class CoinFlipFragment extends Fragment {
 			}
 		}
 	}
-
-
 }

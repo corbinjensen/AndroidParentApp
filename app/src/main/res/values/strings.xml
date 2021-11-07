@@ -79,6 +79,8 @@
     <string name="child_who_picked_flip">child who picked flip</string>
     <string name="actual_flip_result">actual flip result</string>
     <string name="did_picker_win">Did picker win</string>
+    <string name="win">WIN</string>
+    <string name="lose">LOSE</string>
 
 
 </resources>
