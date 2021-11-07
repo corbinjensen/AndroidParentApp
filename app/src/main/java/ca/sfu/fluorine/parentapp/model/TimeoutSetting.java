@@ -48,4 +48,14 @@ public class TimeoutSetting {
 	public void clear() {
 		preferences.edit().clear().apply();
 	}
+
+	public TimeoutTimer makeTimer() {
+		Long expiredTime = getExpiredTime();
+		if (expiredTime == null) return null;
+		if (!isTimerRunning()) {
+			long remainingTime = getRemainingTime();
+			expiredTime = remainingTime + System.currentTimeMillis();
+		}
+		return new TimeoutTimer(expiredTime);
+	}
 }

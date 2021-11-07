@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Calendar;
-
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
@@ -49,7 +47,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 		TimeoutExpiredNotification.hideNotification(requireContext());
 
 		// Set up the timer
-		timer = makeTimerFromSettings();
+		timer = timeoutSetting.makeTimer();
 		if (timer == null) {
 			long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
 			timer = new TimeoutTimer(millis);
@@ -107,20 +105,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	}
 
 	private void updateButtonUI() {
-		if (timer.getState() == TimerState.PAUSED) {
-			binding.playButton.setText(R.string.resume);
-		} else {
-			binding.playButton.setText(R.string.pause);
-		}
-	}
-
-	private TimeoutTimer makeTimerFromSettings() {
-		Long expiredTime = timeoutSetting.getExpiredTime();
-		if (expiredTime == null) return null;
-		if (!timeoutSetting.isTimerRunning()) {
-			long remainingTime = timeoutSetting.getRemainingTime();
-			expiredTime = remainingTime + Calendar.getInstance().getTimeInMillis();
-		}
-		return new TimeoutTimer(expiredTime);
+		binding.playButton.setText(
+				timer.getState() == TimerState.PAUSED ? R.string.resume : R.string.pause);
 	}
 }
