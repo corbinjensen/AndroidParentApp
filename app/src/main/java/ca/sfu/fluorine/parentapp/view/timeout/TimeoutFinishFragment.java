@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,15 @@ import androidx.navigation.Navigation;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
 import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
 public class TimeoutFinishFragment extends NoActionBarFragment {
+	private RingtoneController ringtoneController;
+
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container,
@@ -40,7 +44,19 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 			TimeoutSetting.getInstance(getContext()).clear();
 			Navigation.findNavController(view).navigate(R.id.return_to_timeout);
 		});
+
+		// Play the sound
+		ringtoneController = new RingtoneController(requireContext(), R.raw.jingle);
+		ringtoneController.playSound();
+		ringtoneController.vibrate();
 	}
 
-	// TODO: Play music and vibrate the phone when this fragment appear
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (ringtoneController != null) {
+			ringtoneController.cancelAll();
+			ringtoneController = null;
+		}
+	}
 }
