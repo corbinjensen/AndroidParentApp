@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +46,13 @@ public class CoinFlipFragment extends Fragment {
 			Intent add = new Intent(getContext(), CoinFlipActivity.class);
 			startActivity(add);
 		});
-		binding.listCoinFlip.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+		// Set up layout for the list
+		LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+		binding.listCoinFlip.setLayoutManager(layoutManager);
+		DividerItemDecoration dividerItemDecoration =
+				new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+		binding.listCoinFlip.addItemDecoration(dividerItemDecoration);
 	}
 
 	@Override
@@ -73,14 +80,19 @@ public class CoinFlipFragment extends Fragment {
 		public void onBindViewHolder(@NonNull CoinFlipViewHolder holder, int position) {
 			CoinResult result = flipHistory.getCoinFlipAtIndex(position);
 
-
+			// Populate data for each row
 			String formatDateTime = DateFormat
 					.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
 					.format(new Date(result.getDateTimeOfFlip()));
-
 			holder.dateTimeView.setText(formatDateTime);
 			holder.childNameView.setText(result.getWhoPicked().getFirstName());
 			holder.didPickerWinView.setText(result.didPickerWin() ? R.string.win : R.string.lose);
+			int color = getResources().getColor(
+					result.didPickerWin()
+							? android.R.color.holo_green_dark
+							: android.R.color.holo_red_dark,
+					null);
+			holder.didPickerWinView.setTextColor(color);
 			holder.coinResultView.setImageResource(
 					result.getResultIsHead() ? R.drawable.ic_heads : R.drawable.ic_tails);
 		}
