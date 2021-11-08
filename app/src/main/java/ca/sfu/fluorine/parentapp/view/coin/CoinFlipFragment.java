@@ -23,7 +23,11 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinFlipHistory;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 
-
+/**
+ * CoinFlipFragment
+ *
+ * Represents the UI for the coin flip animation and user input.
+ */
 public class CoinFlipFragment extends Fragment {
 	private FragmentCoinFlipBinding binding;
 	private CoinFlipHistory flipHistory;

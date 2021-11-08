@@ -24,6 +24,11 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
+/**
+ * CoinAnimationFragment
+ *
+ * Represents the UI for the coin flip animation.
+ */
 public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
 	private int childId;

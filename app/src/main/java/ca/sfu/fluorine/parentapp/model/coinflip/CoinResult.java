@@ -5,7 +5,11 @@ import java.util.Calendar;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
-
+/**
+ * CoinResult.java
+ *
+ * This class represents a coin flip.
+ */
 public class CoinResult {
     final private long dateTimeOfFlip; // Sets time to creation of CoinResult
     final private boolean resultIsHead, guessIsHead;

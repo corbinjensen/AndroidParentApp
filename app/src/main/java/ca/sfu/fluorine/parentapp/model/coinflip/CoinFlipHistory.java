@@ -10,6 +10,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  CoinFlipHistory.java
+ *
+ *  This class represents a collection of CoinResults
+ */
 public class CoinFlipHistory {
     private static CoinFlipHistory instance;
     private SharedPreferences preferences;
