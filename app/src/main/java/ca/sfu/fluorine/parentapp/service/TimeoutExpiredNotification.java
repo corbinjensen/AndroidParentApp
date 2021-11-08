@@ -16,6 +16,11 @@ import androidx.core.app.NotificationManagerCompat;
 import ca.sfu.fluorine.parentapp.MainActivity;
 import ca.sfu.fluorine.parentapp.R;
 
+/**
+ * TimeoutExpiredNotification
+ *
+ * Represents a service to let the user know when the timeout timer expired.
+ */
 public class TimeoutExpiredNotification {
 	public final static String CHANNEL_ID = "TimeoutExpiredNotification";
 	public final static int NOTIFICATION_ID = 0;

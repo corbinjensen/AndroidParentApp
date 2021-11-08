@@ -3,6 +3,11 @@ package ca.sfu.fluorine.parentapp.model.timeout;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * TimeoutSetting.java
+ *
+ * Represents the settings of the timeout function
+ */
 public class TimeoutSetting {
 	private static TimeoutSetting instance;
 	private final static String KEY = "timeout";

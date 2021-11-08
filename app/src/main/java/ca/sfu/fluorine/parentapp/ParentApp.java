@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 
+/**
+ * ParentApp.java
+ *
+ * Class for the ParentApp Android App.
+ */
 public class ParentApp extends Application {
 	@Override
 	public void onCreate() {

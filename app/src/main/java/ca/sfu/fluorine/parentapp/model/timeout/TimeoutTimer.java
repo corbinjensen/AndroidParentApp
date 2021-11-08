@@ -3,6 +3,11 @@ package ca.sfu.fluorine.parentapp.model.timeout;
 import android.icu.util.Calendar;
 import android.os.CountDownTimer;
 
+/**
+ * TimeoutTimer.java
+ *
+ * Represents the timeout timer.
+ */
 public class TimeoutTimer {
 	public final static long MINUTES_TO_MILLIS = 60000;
 	private final static long INTERVAL = 1000;
