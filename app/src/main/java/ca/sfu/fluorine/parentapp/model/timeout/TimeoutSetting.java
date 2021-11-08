@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.model;
+package ca.sfu.fluorine.parentapp.model.timeout;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,7 +29,6 @@ public class TimeoutSetting {
 					.putBoolean(RUNNING, timer.getState() == TimeoutTimer.TimerState.RUNNING)
 					.apply();
 		}
-
 	}
 
 	public Long getExpiredTime() {
@@ -47,5 +46,15 @@ public class TimeoutSetting {
 
 	public void clear() {
 		preferences.edit().clear().apply();
+	}
+
+	public TimeoutTimer makeTimer() {
+		Long expiredTime = getExpiredTime();
+		if (expiredTime == null) return null;
+		if (!isTimerRunning()) {
+			long remainingTime = getRemainingTime();
+			expiredTime = remainingTime + System.currentTimeMillis();
+		}
+		return new TimeoutTimer(expiredTime);
 	}
 }
