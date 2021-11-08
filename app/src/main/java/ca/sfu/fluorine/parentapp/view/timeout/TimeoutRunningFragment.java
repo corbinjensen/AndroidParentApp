@@ -1,5 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +26,7 @@ import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 /**
  * Represents the screen of the timer counting down
@@ -56,6 +60,8 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		binding.pulsator.start();
+
 		removeAlarm();
 		TimeoutExpiredNotification.hideNotification(context);
 
@@ -145,4 +151,6 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
 		context.getSystemService(AlarmManager.class).cancel(intent);
 	}
+
+
 }
