@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -91,10 +92,8 @@ public class TimeoutSelectorFragment extends Fragment {
 	}
 
 	public Button createButton(String buttonLabel, View.OnClickListener listener) {
-		Button button = new MaterialButton(
-				requireContext(),
-				null,
-				R.attr.materialButtonOutlinedStyle);
+		MaterialButton button = new MaterialButton(
+				new ContextThemeWrapper(requireContext(), R.style.CustomButton_Outline_White));
 		button.setLayoutParams(param);
 		button.setText(buttonLabel);
 		button.setOnClickListener(listener);

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/time_up"
         android:textStyle="bold"
-        android:textColorHighlight="@color/primary_300"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="56sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
