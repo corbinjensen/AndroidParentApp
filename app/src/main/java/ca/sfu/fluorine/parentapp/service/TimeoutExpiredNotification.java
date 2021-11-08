@@ -29,7 +29,7 @@ public class TimeoutExpiredNotification {
 		Notification notification = new NotificationCompat
 				.Builder(context, CHANNEL_ID)
 				.setDefaults(NotificationCompat.DEFAULT_VIBRATE)
-				.setSmallIcon(R.drawable.ic_stopwatch_solid)
+				.setSmallIcon(R.drawable.ic_noun_parent)
 				.setContentTitle(context.getString(R.string.timeout_notification_title))
 				.setContentText(context.getString(R.string.timeout_notification_content))
 				.setPriority(NotificationCompat.PRIORITY_HIGH)
