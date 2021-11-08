@@ -1,9 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
-import android.content.res.ColorStateList;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +95,6 @@ public class TimeoutSelectorFragment extends Fragment {
 		MaterialButton button = new MaterialButton(
 				new ContextThemeWrapper(requireContext(), R.style.CustomButton_Outline_White));
 		button.setLayoutParams(param);
-		ColorStateList color = requireContext().getColorStateList(R.color.white);
 		button.setText(buttonLabel);
 		button.setOnClickListener(listener);
 		return button;
