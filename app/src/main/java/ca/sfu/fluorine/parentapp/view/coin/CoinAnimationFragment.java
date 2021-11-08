@@ -28,7 +28,6 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
 	private int childId;
 	private boolean selectionIsHead;
-
 	private static final Random random = new Random();
 	private final boolean resultIsHead = random.nextBoolean();
 
@@ -76,17 +75,17 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		flipCoin(resultIsHead).start();
 	}
 
-	private AnimatorSet flipCoin(boolean result) {
+	private AnimatorSet flipCoin(boolean resultIsHead) {
 		ArrayList<Animator> animationSequence = new ArrayList<>();
 		int randomInt = random.nextInt(5) + 5;
 
 		for (int i = 0; i < randomInt; i++) {
-			animationSequence.add(halfRotation(binding.heads, binding.tails));
-			animationSequence.add(halfRotation(binding.tails, binding.heads));
+			animationSequence.add(flipView(binding.heads, binding.tails));
+			animationSequence.add(flipView(binding.tails, binding.heads));
 		}
 
-		if (result) {
-			animationSequence.add(halfRotation(binding.heads, binding.tails));
+		if (!resultIsHead) {
+			animationSequence.add(flipView(binding.heads, binding.tails));
 		}
 
 		AnimatorSet flipAnimation = new AnimatorSet();
@@ -109,14 +108,14 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				binding.buttonNewTurn.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setEnabled(childId >= 0);
 				binding.resultTitle.setVisibility(View.VISIBLE);
-				binding.resultTitle.setText(resultIsHead ? R.string.head : R.string.tail);
+				binding.resultTitle.setText(CoinAnimationFragment.this.resultIsHead ? R.string.head : R.string.tail);
 
 				// Save the result if possible
 				if (childId < 0) return;
 				ChildrenManager manager = ChildrenManager.getInstance(requireContext());
 				Child child = manager.getChildByIndex(childId);
 				manager.saveLastChildId(childId);
-				CoinResult newResult = new CoinResult(child, selectionIsHead, resultIsHead);
+				CoinResult newResult = new CoinResult(child, selectionIsHead, CoinAnimationFragment.this.resultIsHead);
 				CoinFlipHistory.getInstance(requireContext()).addCoinResultToHistory(newResult);
 			}
 
@@ -132,7 +131,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		return flipAnimation;
 	}
 
-	private AnimatorSet halfRotation(View start, View end) {
+	private AnimatorSet flipView(View start, View end) {
 		Animator animationOut = AnimatorInflater.loadAnimator(requireContext(), R.animator.out_animator);
 		Animator animationIn = AnimatorInflater.loadAnimator(requireContext(), R.animator.in_animator);
 		animationOut.setTarget(start);
