@@ -1,5 +1,10 @@
 package ca.sfu.fluorine.parentapp.model.coinflip;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+
+import ca.sfu.fluorine.parentapp.model.children.Child;
+
 /**
  * CoinResult.java
  *

@@ -19,6 +19,11 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
+/**
+ * NewCoinFlipFragment
+ *
+ * Represents the UI to set up a new coin flip.
+ */
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenManager manager;

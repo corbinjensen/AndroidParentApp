@@ -5,6 +5,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * CoinFlipAcitivity.java
+ *
+ * Represents the UI for the coin flip activity.
+ */
 public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
