@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".view.timeout.TimeoutFinishFragment"
     android:background="@drawable/gradient_2">
-    <!--  TODO: Create beautiful end screen when timer reaches 0  -->
+
     <TextView
         android:id="@+id/finish_label"
         android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/analogous1_700"
         android:text="@string/dismiss"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

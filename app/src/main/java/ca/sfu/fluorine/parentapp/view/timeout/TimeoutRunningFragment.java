@@ -45,6 +45,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 		super.onResume();
 		BackgroundTimeoutService.removeAlarm(requireContext());
 		TimeoutExpiredNotification.hideNotification(requireContext());
+		binding.pulsator.start();
 
 		// Set up the timer
 		timer = timeoutSetting.makeTimer();
