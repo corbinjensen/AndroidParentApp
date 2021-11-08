@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,13 +52,18 @@ public class ChildrenFragment extends Fragment {
                 startActivity(ChildFormActivity.makeIntent(requireContext(), ChildFormActivity.ADD_CHILD))
             );
 
-        // Populate the list
-        binding.childrenList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        // Style this list
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        binding.childrenList.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+        binding.childrenList.addItemDecoration(dividerItemDecoration);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        // Populate data on the list
         binding.childrenList.setAdapter(new ChildListAdapter(this, requireContext()));
     }
 
