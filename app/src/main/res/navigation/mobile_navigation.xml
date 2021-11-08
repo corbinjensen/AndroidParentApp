@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_children"
-        android:name="ca.sfu.fluorine.parentapp.view.ChildrenFragment"
+        android:name="ca.sfu.fluorine.parentapp.view.children.ChildrenFragment"
         android:label="@string/title_children"
         tools:layout="@layout/fragment_children" />
 
     <fragment
         android:id="@+id/navigation_coin_flip"
-        android:name="ca.sfu.fluorine.parentapp.view.CoinFlipFragment"
+        android:name="ca.sfu.fluorine.parentapp.view.coin.CoinFlipFragment"
         android:label="@string/title_coin_flip"
         tools:layout="@layout/fragment_coin_flip" />
 
@@ -76,5 +76,4 @@
                 app:destination="@id/custom_timer_dialog" />
         </fragment>
     </navigation>
-    <action android:id="@+id/action_global_timeout" app:destination="@id/navigation_timeout" />
 </navigation>

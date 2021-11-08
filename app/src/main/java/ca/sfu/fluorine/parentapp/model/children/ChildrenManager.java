@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.model.children;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +24,7 @@ public class ChildrenManager {
     private static final Type CHILDREN_LIST = new TypeToken<ArrayList<Child>>(){}.getType();
 
     private static final String KEY = "children";
+    private static final String LAST_CHILD = "last_child";
 
     private List<Child> children = new ArrayList<>();
 
@@ -59,19 +61,33 @@ public class ChildrenManager {
     }
 
     public void deleteChild(int id) {
+        int lastChildId = getLastChildId();
+        if (lastChildId == id) {
+            preferences.edit().remove(LAST_CHILD).apply();
+        } else if (lastChildId > id) {
+            saveLastChildId(--lastChildId);
+        }
         children.remove(id);
         saveChildrenToPreferences();
     }
 
     private void saveChildrenToPreferences() {
         String jsonData = gson.toJson(children);
+        Log.d("data", jsonData);
         preferences.edit().putString(KEY, jsonData).apply();
     }
 
     private void loadChildrenFromPreferences() {
         children.clear();
-        String jsonData = preferences.getString(KEY, "");
+        String jsonData = preferences.getString(KEY, "[]");
         children = gson.fromJson(jsonData, CHILDREN_LIST);
     }
 
+    public int getLastChildId() {
+        return preferences.getInt(LAST_CHILD, -1);
+    }
+
+    public void saveLastChildId(int childId) {
+        preferences.edit().putInt(LAST_CHILD, childId).apply();
+    }
 }
