@@ -16,7 +16,7 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
 /**
  * MainActivity.java
  *
- * Represents the main activity of the Parenting App.
+ * Represents the UI for main activity of the Parenting App.
  */
 public class MainActivity extends AppCompatActivity {
 
