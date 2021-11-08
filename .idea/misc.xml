@@ -3,13 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21480263157894736" />
-        <entry key="app/src/main/res/drawable/gradient.xml" value="0.21480263157894736" />
         <entry key="app/src/main/res/drawable/gradient_1.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/gradient_2.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/ic_child_solid.xml" value="0.5796875" />
-        <entry key="app/src/main/res/drawable/ic_gradient_background.xml" value="0.2848684210526316" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2848684210526316" />
         <entry key="app/src/main/res/drawable/ic_noun_coin_flip.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_noun_parent.xml" value="0.21480263157894736" />
         <entry key="app/src/main/res/drawable/ic_stopwatch_solid.xml" value="0.5796875" />
