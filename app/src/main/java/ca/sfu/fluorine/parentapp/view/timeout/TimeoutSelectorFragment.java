@@ -1,7 +1,9 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
+import android.content.res.ColorStateList;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -91,11 +94,10 @@ public class TimeoutSelectorFragment extends Fragment {
 	}
 
 	public Button createButton(String buttonLabel, View.OnClickListener listener) {
-		Button button = new MaterialButton(
-				requireContext(),
-				null,
-				R.attr.materialButtonOutlinedStyle);
+		MaterialButton button = new MaterialButton(
+				new ContextThemeWrapper(requireContext(), R.style.CustomButton_Outline_White));
 		button.setLayoutParams(param);
+		ColorStateList color = requireContext().getColorStateList(R.color.white);
 		button.setText(buttonLabel);
 		button.setOnClickListener(listener);
 		return button;
