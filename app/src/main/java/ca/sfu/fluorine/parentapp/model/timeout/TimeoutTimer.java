@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.model;
+package ca.sfu.fluorine.parentapp.model.timeout;
 
 import android.icu.util.Calendar;
 import android.os.CountDownTimer;
@@ -17,11 +17,7 @@ public class TimeoutTimer {
 	private CountDownTimer timer;
 	private Runnable actionOnTick, actionOnFinish;
 
-	public enum TimerState {
-		RUNNING,
-		PAUSED,
-		FINISHED
-	}
+	public enum TimerState {RUNNING, PAUSED, FINISHED}
 
 	public TimeoutTimer(long expiredTime) {
 		this.expiredTime = expiredTime;

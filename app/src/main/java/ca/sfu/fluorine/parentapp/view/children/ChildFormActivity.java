@@ -1,11 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +7,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
@@ -46,27 +45,20 @@ public class ChildFormActivity extends AppCompatActivity {
             binding.editTextFirstName.setText(child.getFirstName());
             binding.editTextLastName.setText(child.getLastName());
 
-            setupActionBar(R.string.edit_child);
+            setTitle(R.string.edit_child);
             binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
 
             binding.buttonDeleteChild.setVisibility(View.VISIBLE);
             binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);
         } else {
             // Add mode
-            setupActionBar(R.string.add_new_child);
+            setTitle(R.string.add_new_child);
             binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
         }
 
         binding.editTextFirstName.addTextChangedListener(watcher);
         binding.editTextLastName.addTextChangedListener(watcher);
-    }
-
-    private void setupActionBar(@StringRes int titleId) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(titleId);
-        }
     }
 
     private final TextWatcher watcher = new TextWatcher() {
@@ -96,9 +88,8 @@ public class ChildFormActivity extends AppCompatActivity {
                 .setMessage(messageId)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, confirmAction)
-                .setNegativeButton(android.R.string.cancel, (dialog, i) -> {
-                    dialog.dismiss();
-                }).show();
+                .setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.dismiss())
+                .show();
     }
 
     public static Intent makeIntent(Context context, int index) {
@@ -107,8 +98,7 @@ public class ChildFormActivity extends AppCompatActivity {
         return intent;
     }
 
-    private final View.OnClickListener addChildrenDialogListener = (btnView) -> {
-        makeConfirmDialog(
+    private final View.OnClickListener addChildrenDialogListener = (btnView) -> makeConfirmDialog(
             R.string.addChild,
             R.string.addChild,
             (dialogInterface, i) -> {
@@ -118,7 +108,6 @@ public class ChildFormActivity extends AppCompatActivity {
                 finish();
             }
         );
-    };
 
     private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
         R.string.edit_child,

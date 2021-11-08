@@ -76,6 +76,7 @@
     <string name="navigates_to_coin_flip">Navigates to Coin Flip</string>
     <string name="win">WIN</string>
     <string name="lose">LOSE</string>
+    <string name="new_coin_flip">New coin flip</string>
 
 
 </resources>

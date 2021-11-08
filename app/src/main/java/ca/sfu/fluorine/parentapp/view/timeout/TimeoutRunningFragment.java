@@ -1,32 +1,22 @@
 package ca.sfu.fluorine.parentapp.view.timeout;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
-import java.util.Calendar;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer.TimerState;
+import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
-import ca.sfu.fluorine.parentapp.service.TimeoutExpiredReceiver;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
-import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 /**
  * Represents the screen of the timer counting down
@@ -35,14 +25,6 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	private FragmentTimeoutRunningBinding binding;
 	private TimeoutTimer timer;
 	private TimeoutSetting timeoutSetting;
-	private Context context;
-
-	@Override
-	public void onAttach(@NonNull Context context) {
-		super.onAttach(context);
-		this.context = context;
-		timeoutSetting = TimeoutSetting.getInstance(context);
-	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -55,18 +37,18 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		timeoutSetting = TimeoutSetting.getInstance(requireContext());
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		BackgroundTimeoutService.removeAlarm(requireContext());
+		TimeoutExpiredNotification.hideNotification(requireContext());
 		binding.pulsator.start();
 
-		removeAlarm();
-		TimeoutExpiredNotification.hideNotification(context);
-
 		// Set up the timer
-		timer = makeTimerFromSettings();
+		timer = timeoutSetting.makeTimer();
 		if (timer == null) {
 			long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
 			timer = new TimeoutTimer(millis);
@@ -100,7 +82,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 		if (state != TimerState.FINISHED) {
 			timeoutSetting.saveTimer(timer);
 			if (state == TimerState.RUNNING) {
-				setAlarm(timer);
+				BackgroundTimeoutService.setAlarm(requireContext(), timer);
 			}
 		} else {
 			timeoutSetting.clear();
@@ -124,33 +106,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 	}
 
 	private void updateButtonUI() {
-		if (timer.getState() == TimerState.PAUSED) {
-			binding.playButton.setText(R.string.resume);
-		} else {
-			binding.playButton.setText(R.string.pause);
-		}
+		binding.playButton.setText(
+				timer.getState() == TimerState.PAUSED ? R.string.resume : R.string.pause);
 	}
-
-	private TimeoutTimer makeTimerFromSettings() {
-		Long expiredTime = timeoutSetting.getExpiredTime();
-		if (expiredTime == null) return null;
-		if (!timeoutSetting.isTimerRunning()) {
-			long remainingTime = timeoutSetting.getRemainingTime();
-			expiredTime = remainingTime + Calendar.getInstance().getTimeInMillis();
-		}
-		return new TimeoutTimer(expiredTime);
-	}
-
-	private void setAlarm(@NonNull TimeoutTimer timeoutTimer) {
-		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
-		context.getSystemService(AlarmManager.class)
-				.setExact(AlarmManager.RTC_WAKEUP, timeoutTimer.expiredTime, intent);
-	}
-
-	private void removeAlarm() {
-		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
-		context.getSystemService(AlarmManager.class).cancel(intent);
-	}
-
-
 }

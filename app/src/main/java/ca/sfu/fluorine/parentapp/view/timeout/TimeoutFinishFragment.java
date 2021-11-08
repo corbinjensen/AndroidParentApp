@@ -8,18 +8,30 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
+import ca.sfu.fluorine.parentapp.service.RingtoneController;
+import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
 public class TimeoutFinishFragment extends NoActionBarFragment {
+	private RingtoneController ringtoneController;
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		TimeoutExpiredNotification.hideNotification(requireContext());
+		BackgroundTimeoutService.removeAlarm(requireContext());
+	}
+
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container,
@@ -34,13 +46,29 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		// Add listener to the button
+		// Clear out the saved timer and navigate away
 		Button dismissButton = FragmentTimeoutFinishBinding.bind(view).button;
 		dismissButton.setOnClickListener(btnView -> {
 			TimeoutSetting.getInstance(getContext()).clear();
-			Navigation.findNavController(view).navigate(R.id.return_to_timeout);
+			NavHostFragment.findNavController(this).navigate(R.id.return_to_timeout);
 		});
 	}
 
-	// TODO: Play music and vibrate the phone when this fragment appear
+	@Override
+	public void onStart() {
+		super.onStart();
+		// Play the sound
+		ringtoneController = new RingtoneController(requireContext(), R.raw.jingle);
+		ringtoneController.playSound();
+		ringtoneController.vibrate();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (ringtoneController != null) {
+			ringtoneController.cancelAll();
+			ringtoneController = null;
+		}
+	}
 }

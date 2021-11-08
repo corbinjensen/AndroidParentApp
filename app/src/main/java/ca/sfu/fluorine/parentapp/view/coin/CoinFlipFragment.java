@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
 
-import ca.sfu.fluorine.parentapp.CoinFlipActivity;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinFlipHistory;

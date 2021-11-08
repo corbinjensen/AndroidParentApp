@@ -18,8 +18,8 @@ import com.google.android.material.button.MaterialButton;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
-import ca.sfu.fluorine.parentapp.model.TimeoutSetting;
-import ca.sfu.fluorine.parentapp.model.TimeoutTimer;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
 /**

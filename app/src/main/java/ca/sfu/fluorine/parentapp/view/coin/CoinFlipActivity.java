@@ -1,25 +1,17 @@
-package ca.sfu.fluorine.parentapp;
+package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * CoinFlipAcitivity.java
- *
- * Represents the UI for the coin flip activity.
- */
+import ca.sfu.fluorine.parentapp.R;
+
 public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-
-        // Set up the action bar
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle("New coin flip");
-        }
+        setTitle(R.string.new_coin_flip);
     }
 }
