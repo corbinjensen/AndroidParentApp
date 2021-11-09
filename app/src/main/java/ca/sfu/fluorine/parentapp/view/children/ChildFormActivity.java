@@ -111,7 +111,7 @@ public class ChildFormActivity extends AppCompatActivity {
 
     private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
         R.string.edit_child,
-        R.string.edit_child,
+        R.string.edit_child_confirm,
         (dialogInterface, i) -> {
             String firstName = binding.editTextFirstName.getText().toString();
             String lastName = binding.editTextLastName.getText().toString();
@@ -121,7 +121,7 @@ public class ChildFormActivity extends AppCompatActivity {
 
     private final View.OnClickListener deleteChildDialogListener = (btnView) -> makeConfirmDialog(
         R.string.delete_child,
-        R.string.delete_child,
+        R.string.delete_child_confirm,
         (dialogInterface, i) -> {
             manager.deleteChild(childIndex);
             finish();
