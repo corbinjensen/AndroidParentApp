@@ -27,7 +27,6 @@ import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenManager manager;
-	private ArrayList<Integer> childIndices;
 	private int childId = -1;
 
 	@Override
@@ -54,26 +53,27 @@ public class NewCoinFlipFragment extends Fragment {
 		// Create the content for the menu
 		List<Child> childrenList = manager.getChildren();
 		int lastChildId = manager.getLastChildId();
-		childIndices = new ArrayList<>();
-		List<String> childNames = new ArrayList<>();
+		List<String> menuItems = new ArrayList<>();
 		for (int i = 0; i < childrenList.size(); i++) {
-			if (lastChildId != i) {
-				childIndices.add(i);
-				Child child = childrenList.get(i);
-				String childName = requireContext()
-						.getString(R.string.full_name, child.getFirstName(), child.getLastName());
-				childNames.add(childName);
-			}
+			Child child = childrenList.get(i);
+			String itemName = requireContext()
+					.getString(
+							(lastChildId == i)
+									? R.string.full_name_with_indicator
+									: R.string.full_name,
+							child.getFirstName(),
+							child.getLastName());
+			menuItems.add(itemName);
 		}
 
 		// Attach the content to the dropdown menu
 		ArrayAdapter<String> childArray = new ArrayAdapter<>(
 				requireContext(),
-				R.layout.children_menu_item, childNames);
+				R.layout.children_menu_item, menuItems);
 		binding.dropdownSelection.setAdapter(childArray);
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
 			binding.flipButton.setEnabled(true);
-			childId = childIndices.get(i);
+			childId = i;
 		});
 	}
 
