@@ -13,20 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="materialButtonStyle">@style/CustomButton</item>
-        <item name="materialButtonOutlinedStyle">@style/CustomButton.Outline</item>
     </style>
 
     <style name="CustomButton" parent="Widget.MaterialComponents.Button">
         <item name="shapeAppearance">@style/customContainedButtonTheme</item>
     </style>
 
-    <style name="CustomButton.Outline" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="shapeAppearance">@style/customContainedButtonTheme</item>
-    </style>
-
-    <style name="CustomButton.Outline.White">
+    <style name="CustomButton.WhiteOutlined">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="strokeColor">?attr/colorOnPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
