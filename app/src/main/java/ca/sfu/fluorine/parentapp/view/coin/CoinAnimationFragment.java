@@ -111,7 +111,6 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				// Show the button
 				binding.buttonDone.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setVisibility(View.VISIBLE);
-				binding.buttonNewTurn.setEnabled(childId >= 0);
 				binding.resultTitle.setVisibility(View.VISIBLE);
 				binding.resultTitle.setText(CoinAnimationFragment.this.resultIsHead ? R.string.head : R.string.tail);
 
