@@ -93,7 +93,7 @@ public class TimeoutSelectorFragment extends Fragment {
 
 	public Button createButton(String buttonLabel, View.OnClickListener listener) {
 		MaterialButton button = new MaterialButton(
-				new ContextThemeWrapper(requireContext(), R.style.CustomButton_Outline_White));
+				new ContextThemeWrapper(requireContext(), R.style.CustomButton_WhiteOutlined));
 		button.setLayoutParams(param);
 		button.setText(buttonLabel);
 		button.setOnClickListener(listener);
