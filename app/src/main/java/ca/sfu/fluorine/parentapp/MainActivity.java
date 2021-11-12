@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -7,13 +8,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
-import ca.sfu.fluorine.parentapp.databinding.ChildrenMenuItemBinding;
 
 /**
  * MainActivity.java
@@ -49,4 +50,13 @@ public class MainActivity extends AppCompatActivity {
 		getMenuInflater().inflate(R.menu.help_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+	    if(item.getItemId()==R.id.help) {
+            Intent helpLink = new Intent(this, HelpActivity.class);
+            startActivity(helpLink);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

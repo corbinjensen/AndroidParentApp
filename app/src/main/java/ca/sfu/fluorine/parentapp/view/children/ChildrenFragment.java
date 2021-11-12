@@ -41,7 +41,11 @@ public class ChildrenFragment extends Fragment {
         Bundle savedInstanceState
     ) {
 		// Inflate the layout for this fragment
-		binding = FragmentChildrenBinding.inflate(inflater, container, false);
+		binding = FragmentChildrenBinding.inflate(
+		    inflater,
+            container,
+            false
+        );
 		return binding.getRoot();
 
     }
