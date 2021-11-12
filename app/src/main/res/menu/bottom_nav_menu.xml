@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_stopwatch_solid"
         android:title="@string/title_timeout"/>
 
+    <item
+        android:id="@id/navigation_task"
+        android:icon="@drawable/ic_tasks_solid"
+        android:title="@string/tasks"/>
+
 </menu>

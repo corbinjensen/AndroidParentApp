@@ -8,20 +8,25 @@
         <entry key="app/src/main/res/drawable/ic_child_solid.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_noun_coin_flip.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_stopwatch_solid.xml" value="0.5796875" />
+        <entry key="app/src/main/res/drawable/ic_tasks_solid.xml" value="0.2802631578947368" />
         <entry key="app/src/main/res/layout/activity_child_form.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_coin_flip.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/children_menu_item.xml" value="0.2700657894736842" />
         <entry key="app/src/main/res/layout/dialog_custom_timer.xml" value="0.10511651469098278" />
         <entry key="app/src/main/res/layout/fragment_child_add_form.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_children.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_coin_animation.xml" value="0.13831967213114754" />
         <entry key="app/src/main/res/layout/fragment_coin_flip.xml" value="0.3375" />
+        <entry key="app/src/main/res/layout/fragment_task.xml" value="0.2700657894736842" />
+        <entry key="app/src/main/res/layout/fragment_task_list.xml" value="0.35592105263157897" />
         <entry key="app/src/main/res/layout/fragment_timeout.xml" value="0.3375" />
         <entry key="app/src/main/res/layout/fragment_timeout_finish.xml" value="0.2828125" />
         <entry key="app/src/main/res/layout/fragment_timeout_running.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_timeout_selector.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/menu/children_form_menu.xml" value="0.2868386870575981" />
+        <entry key="app/src/main/res/menu/help_menu.xml" value="0.2700657894736842" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.11118421052631579" />
       </map>
