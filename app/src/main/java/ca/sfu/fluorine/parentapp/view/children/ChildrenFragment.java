@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
@@ -26,8 +27,14 @@ import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
  * ChildrenFragment.java - represents the UI of the configure children feature.
  */
 public class ChildrenFragment extends Fragment {
+    private AppDatabase database;
 	private FragmentChildrenBinding binding;
-	private ChildrenManager manager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        database = AppDatabase.getInstance(requireContext().getApplicationContext());
+    }
 
     @Override
 	public View onCreateView(
@@ -43,9 +50,6 @@ public class ChildrenFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        manager = ChildrenManager.getInstance(requireContext());
-
         // floating action button
         binding.buttonAddChild.setOnClickListener(
             btnView ->
@@ -64,7 +68,7 @@ public class ChildrenFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Populate data on the list
-        binding.childrenList.setAdapter(new ChildListAdapter(this, requireContext()));
+        binding.childrenList.setAdapter(new ChildListAdapter());
     }
 
     @Override
@@ -73,29 +77,16 @@ public class ChildrenFragment extends Fragment {
 		binding = null;
 	}
 
-    class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.ViewHolder> {
-        private ChildrenFragment childrenFragment;
+    class ChildListAdapter extends RecyclerView.Adapter<ChildViewHolder> {
+        private final List<Child> children;
 
-        public ChildListAdapter(ChildrenFragment childrenFragment, Context context) {
-            this.childrenFragment = childrenFragment;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            TextView titleCreationName;
-            CardView childCard;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-
-                // Find all the components of the view.
-                titleCreationName =  itemView.findViewById(R.id.childNameDisplay);
-                childCard = itemView.findViewById(R.id.childCard);
-            }
+        public ChildListAdapter() {
+            children = database.childDao().getAllChildren();
         }
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(
+        public ChildViewHolder onCreateViewHolder(
             @NonNull
                 ViewGroup parent,
             int viewType
@@ -105,32 +96,31 @@ public class ChildrenFragment extends Fragment {
                 parent,
                 false
             );
-            return new ViewHolder(view);
+            return new ChildViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(
             @NonNull
-                ViewHolder holder,
+                    ChildViewHolder holder,
             int position
         ) {
             // get child object from index
-            Child child = childrenFragment.manager.getChildByIndex(position);
+            Child child = children.get(position);
 
-            // change the text to display childs name
+            // change the text to display child name
             holder.titleCreationName.setText(child.getFirstName());
 
             // make the list item clickable
-            // TODO - change to edit activity.
             holder.itemView.setOnClickListener((View view) -> {
-                Intent intent = new Intent(ChildFormActivity.makeIntent(requireContext(), position));
+                Intent intent = ChildFormActivity.makeIntent(requireContext(), child.getId());
                 startActivity(intent);
             });
         }
 
         @Override
         public int getItemCount() {
-            return childrenFragment.manager.getChildren().size();
+            return children.size();
         }
     }
 }

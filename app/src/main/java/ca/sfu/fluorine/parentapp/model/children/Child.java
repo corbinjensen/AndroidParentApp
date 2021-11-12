@@ -14,13 +14,13 @@ public class Child {
     private int id;
 
     @ColumnInfo(name = "first_name")
-    private final String firstName;
+    private String firstName;
 
     @ColumnInfo(name = "last_name")
-    private final String lastName;
+    private String lastName;
 
     @ColumnInfo(name = "created_time")
-    private final long createdTime;
+    private long createdTime;
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
@@ -36,6 +36,10 @@ public class Child {
         this.id = id;
     }
 
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -46,5 +50,10 @@ public class Child {
 
     public long getCreatedTime() {
         return createdTime;
+    }
+
+    public void updateName(@NonNull String firstName, @NonNull String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }
