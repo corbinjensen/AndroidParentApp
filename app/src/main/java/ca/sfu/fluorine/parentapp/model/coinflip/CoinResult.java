@@ -1,7 +1,9 @@
 package ca.sfu.fluorine.parentapp.model.coinflip;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
@@ -10,18 +12,31 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  *
  * This class represents a coin flip.
  */
+@Entity(
+        tableName = "coin_result",
+        foreignKeys = @ForeignKey(
+                entity = Child.class,
+                parentColumns = "child_id",
+                childColumns = "selected_child_id",
+                onDelete = ForeignKey.CASCADE
+        ))
 public class CoinResult {
-    final private long dateTimeOfFlip; // Sets time to creation of CoinResult
+    @ColumnInfo(name = "coin_result_id")
+    @PrimaryKey(autoGenerate = true)
+    int id;
+
+    long dateTimeOfFlip; // Sets time to creation of CoinResult
     final private boolean resultIsHead, guessIsHead;
-    final private Child whoPicked;
+
+    @ColumnInfo(name = "selected_child_id", index = true)
+    int childId;
 
     //Constructor
-    public CoinResult(Child childWhoPicked, boolean guessIsHead, boolean resultIsHead){
-        this.dateTimeOfFlip = Calendar.getInstance().getTimeInMillis();
+    public CoinResult(int childId, boolean guessIsHead, boolean resultIsHead){
+        this.dateTimeOfFlip = System.currentTimeMillis();
         this.resultIsHead = resultIsHead;
-        this.whoPicked = childWhoPicked;
         this.guessIsHead = guessIsHead;
-
+        this.childId = childId;
     }
 
     public long getDateTimeOfFlip() {
@@ -36,8 +51,8 @@ public class CoinResult {
         return guessIsHead;
     }
 
-    public Child getWhoPicked() {
-        return whoPicked;
+    public int getChildId() {
+        return childId;
     }
 
     public boolean didPickerWin(){
