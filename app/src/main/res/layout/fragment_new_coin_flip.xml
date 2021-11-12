@@ -113,7 +113,6 @@
         android:id="@+id/flip_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:text="@string/flip_coin_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"

@@ -1,20 +1,30 @@
 package ca.sfu.fluorine.parentapp.model.children;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 /**
  *  Child.java - represents a child
  */
+@Entity(tableName = "children")
 public class Child {
-    private final String firstName;
-    private final String lastName;
+    @ColumnInfo(name = "child_id")
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String firstName;
+    private String lastName;
+    private long createdTime;
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
-        if (firstName.isEmpty() || lastName.isEmpty()) {
-            throw new IllegalArgumentException("Input name should not be empty");
-        }
         this.firstName = firstName;
         this.lastName = lastName;
+        this.createdTime = System.currentTimeMillis(); // Current UNIX time
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -23,5 +33,23 @@ public class Child {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void updateName(@NonNull String firstName, @NonNull String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    // Setters is only serve Room database
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 }

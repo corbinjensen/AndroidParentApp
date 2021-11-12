@@ -13,22 +13,28 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
 /**
  *  ChildFormActivity.java - represents a user input form
  *  activity to add a new, or modify info on a child.
  */
-
 public class ChildFormActivity extends AppCompatActivity {
     private ActivityChildFormBinding binding;
-    private static final String CHILD_INDEX = "childIndex";
+
+    // For intent data
+    private static final String CHILD_ID = "childIndex";
     public static final int ADD_CHILD = -1;
-    private ChildrenManager manager;
-    private int childIndex = ADD_CHILD;
+
+    // For the database
+    private AppDatabase database;
+    private Child child = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +42,15 @@ public class ChildFormActivity extends AppCompatActivity {
         binding = ActivityChildFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        manager = ChildrenManager.getInstance(this);
+        // Set up the database
+        database = AppDatabase.getInstance(getApplicationContext());
 
-        childIndex = getIntent().getIntExtra(CHILD_INDEX, -1);
-        if (childIndex >= 0) {
+        List<Child> children = database.childDao().getChildById(
+                getIntent().getIntExtra(CHILD_ID, ADD_CHILD)
+        );
+        if (!children.isEmpty()) {
             // Edit mode
-            Child child = manager.getChildByIndex(childIndex);
+            child = children.get(0);
             binding.editTextFirstName.setText(child.getFirstName());
             binding.editTextLastName.setText(child.getLastName());
 
@@ -94,7 +103,7 @@ public class ChildFormActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, ChildFormActivity.class);
-        intent.putExtra(CHILD_INDEX, index);
+        intent.putExtra(CHILD_ID, index);
         return intent;
     }
 
@@ -104,7 +113,7 @@ public class ChildFormActivity extends AppCompatActivity {
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                manager.addChild(firstName, lastName);
+                database.childDao().addChild(new Child(firstName, lastName));
                 finish();
             }
         );
@@ -115,7 +124,8 @@ public class ChildFormActivity extends AppCompatActivity {
         (dialogInterface, i) -> {
             String firstName = binding.editTextFirstName.getText().toString();
             String lastName = binding.editTextLastName.getText().toString();
-            manager.modifyChild(childIndex, firstName, lastName);
+            child.updateName(firstName, lastName);
+            database.childDao().updateChild(child);
             finish();
         });
 
@@ -123,7 +133,7 @@ public class ChildFormActivity extends AppCompatActivity {
         R.string.delete_child,
         R.string.delete_child_confirm,
         (dialogInterface, i) -> {
-            manager.deleteChild(childIndex);
+            database.childDao().deleteChild(child);
             finish();
         });
 }

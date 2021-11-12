@@ -16,8 +16,8 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
 /**
  * NewCoinFlipFragment
@@ -26,14 +26,16 @@ import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
  */
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
-	private ChildrenManager manager;
-	private int childId = -1;
+	private final static int NO_CHILDREN_ID = -1;
+	private int childId = NO_CHILDREN_ID;
+	private List<Child> children;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		manager = ChildrenManager.getInstance(requireContext());
-		if (manager.getChildren().isEmpty()) {
+		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
+		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
 		}
@@ -51,30 +53,28 @@ public class NewCoinFlipFragment extends Fragment {
 
 	private void setupMenu() {
 		// Create the content for the menu
-		List<Child> childrenList = manager.getChildren();
-		int lastChildId = manager.getLastChildId();
-		List<String> menuItems = new ArrayList<>();
-		for (int i = 0; i < childrenList.size(); i++) {
-			Child child = childrenList.get(i);
+		List<String> childrenSelection = new ArrayList<>();
+		childrenSelection.add(getString(R.string.no_children));
+		for (final Child child: children) {
 			String itemName = requireContext()
-					.getString(
-							(lastChildId == i)
-									? R.string.full_name_with_indicator
-									: R.string.full_name,
-							child.getFirstName(),
-							child.getLastName());
-			menuItems.add(itemName);
+					.getString(R.string.full_name, child.getFirstName(), child.getLastName());
+			childrenSelection.add(itemName);
 		}
 
 		// Attach the content to the dropdown menu
 		ArrayAdapter<String> childArray = new ArrayAdapter<>(
 				requireContext(),
-				R.layout.children_menu_item, menuItems);
+				R.layout.children_menu_item, childrenSelection);
 		binding.dropdownSelection.setAdapter(childArray);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
-			binding.flipButton.setEnabled(true);
-			childId = i;
-		});
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
+				childId = (i == 0) ? NO_CHILDREN_ID : children.get(i-1).getId());
+
+		// Select the second values as default
+		if (children.size() > 1) {
+			childId = children.get(0).getId();
+			binding.dropdownSelection.setText(childrenSelection.get(1), false);
+		}
+
 	}
 
 	private void setupButton() {

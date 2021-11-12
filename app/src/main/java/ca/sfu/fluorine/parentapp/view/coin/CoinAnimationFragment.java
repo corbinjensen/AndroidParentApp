@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,8 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinFlipHistory;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
-import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 
 /**
@@ -44,7 +41,6 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		CoinAnimationFragmentArgs arguments =
 				CoinAnimationFragmentArgs.fromBundle(getArguments());
 		childId = arguments.getChildId();
-		Log.d(null, ""+childId);
 		selectionIsHead = arguments.getCoinSide();
 	}
 
@@ -114,13 +110,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				binding.resultTitle.setVisibility(View.VISIBLE);
 				binding.resultTitle.setText(CoinAnimationFragment.this.resultIsHead ? R.string.head : R.string.tail);
 
-				// Save the result if possible
-				if (childId < 0) return;
-				ChildrenManager manager = ChildrenManager.getInstance(requireContext());
-				Child child = manager.getChildByIndex(childId);
-				manager.saveLastChildId(childId);
-				CoinResult newResult = new CoinResult(child, selectionIsHead, CoinAnimationFragment.this.resultIsHead);
-				CoinFlipHistory.getInstance(requireContext()).addCoinResultToHistory(newResult);
+				saveCoinFlip();
 			}
 
 			@Override
@@ -144,5 +134,12 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.playTogether(animationIn, animationOut);
 		return animatorSet;
+	}
+
+	private void saveCoinFlip() {
+		if (childId < 0) return;
+		CoinResult newResult = new CoinResult(childId, selectionIsHead, resultIsHead);
+		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		database.coinResultDao().addNewCoinResult(newResult);
 	}
 }
