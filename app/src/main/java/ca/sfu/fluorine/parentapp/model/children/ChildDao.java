@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.model.children;
 
+import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -33,4 +34,22 @@ public abstract class ChildDao {
 
 	@Update
 	public abstract void updateChild(Child child);
+
+	@Query("SELECT child_id FROM children WHERE createdTime > :createdTime " +
+			"ORDER BY createdTime LIMIT 1")
+	abstract List<Integer> getFirstChildIdAfterCreationTime(long createdTime);
+
+	@Query("SELECT child_id FROM children " +
+			"ORDER BY createdTime LIMIT 1")
+	abstract List<Integer> getFirstCreatedChildId();
+
+	// Get the next child according to their creation time
+	// if the last child's turn is done, then returns the first created child
+	public Integer getNextChildId(@NonNull Child child) {
+		List<Integer> ids = getFirstChildIdAfterCreationTime(child.getCreatedTime());
+		if (ids.isEmpty()) {
+			ids = getFirstCreatedChildId();
+		}
+		return (ids.isEmpty()) ? null : ids.get(0);
+	}
 }
