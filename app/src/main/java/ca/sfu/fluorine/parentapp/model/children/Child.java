@@ -12,11 +12,10 @@ import androidx.room.PrimaryKey;
 public class Child {
     @ColumnInfo(name = "child_id")
     @PrimaryKey(autoGenerate = true)
-    private int id; // This field is only mutable within the same package
-
+    private int id;
     private String firstName;
     private String lastName;
-    private long createdTime; // This field is only mutable within the same package
+    private long createdTime;
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;

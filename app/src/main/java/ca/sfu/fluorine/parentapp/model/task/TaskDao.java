@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 /**
- * Represents a data access object to manipulate task data in the database
+ * Represents a data access object (DAO) to manipulate task data in the database
  */
 @Dao
 public abstract class TaskDao {
