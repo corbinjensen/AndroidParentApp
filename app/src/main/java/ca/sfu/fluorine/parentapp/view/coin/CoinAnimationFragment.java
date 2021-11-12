@@ -141,6 +141,5 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		CoinResult newResult = new CoinResult(childId, selectionIsHead, resultIsHead);
 		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
 		database.coinResultDao().addNewCoinResult(newResult);
-		database.childDao().updateChildLastCoinFlip(childId);
 	}
 }

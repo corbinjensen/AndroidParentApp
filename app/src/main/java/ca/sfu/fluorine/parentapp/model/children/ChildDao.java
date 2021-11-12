@@ -22,7 +22,10 @@ public abstract class ChildDao {
 	@Query("SELECT * FROM children ORDER BY createdTime DESC")
 	public abstract List<Child> getAllChildren();
 
-	@Query("SELECT * FROM children ORDER BY lastCoinFlip DESC")
+	// By the magic of SQL...
+	@Query("SELECT children.* FROM children LEFT JOIN coin_result " +
+			"ON child_id == selected_child_id " +
+			"GROUP BY child_id ORDER BY MAX(coin_result.dateTimeOfFlip)")
 	public abstract List<Child> getAllChildrenOrderByRecentCoinFlips();
 
 	@Query("SELECT * FROM children WHERE child_id = :id LIMIT 1")
@@ -30,11 +33,4 @@ public abstract class ChildDao {
 
 	@Update
 	public abstract void updateChild(Child child);
-
-	@Query("UPDATE children SET lastCoinFlip = :coinFlipTime WHERE child_id = :id")
-	abstract void updateLastCoinFlipById(int id, long coinFlipTime);
-
-	public void updateChildLastCoinFlip(int id) {
-		updateLastCoinFlipById(id, System.currentTimeMillis());
-	}
 }

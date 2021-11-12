@@ -16,14 +16,12 @@ public class Child {
 
     private String firstName;
     private String lastName;
-    long createdTime;
-    long lastCoinFlip; // This field is only mutable within the same package
+    long createdTime; // This field is only mutable within the same package
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.createdTime = System.currentTimeMillis(); // Current UNIX time
-        this.lastCoinFlip = Long.MAX_VALUE; // Maximum value means never doing coin flip before
     }
 
     public int getId() {
@@ -50,9 +48,5 @@ public class Child {
 
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
-    }
-
-    public void setLastCoinFlip(long lastCoinFlip) {
-        this.lastCoinFlip = lastCoinFlip;
     }
 }
