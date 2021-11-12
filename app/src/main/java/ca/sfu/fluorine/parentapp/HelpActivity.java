@@ -3,6 +3,7 @@ package ca.sfu.fluorine.parentapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class HelpActivity extends AppCompatActivity {
 
