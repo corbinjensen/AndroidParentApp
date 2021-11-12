@@ -88,6 +88,13 @@
 
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
+    <string name="developers">Developers:</string>
+    <string name="citations">Citations:</string>
+    <string name="grace_humer">Grace Humer</string>
+    <string name="viet_hung_nguyen">Viet-Hung Nguyen</string>
+    <string name="gavin_nagra">Gavin Nagra</string>
+    <string name="corbin_jensen">Corbin Jensen</string>
+    <string name="about_app">Created for SFU CMPT 276 by team Fluorine.</string>
 
 
 </resources>
