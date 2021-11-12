@@ -81,8 +81,11 @@
     <string name="lose">LOSE</string>
     <string name="new_coin_flip">New coin flip</string>
 
+    <!--  Help  -->
+    <string name="about_the_author">About the author</string>
+    <string name="resources">Resources</string>
+
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
-
 
 </resources>

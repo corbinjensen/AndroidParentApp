@@ -8,10 +8,12 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import android.os.Bundle;
-
+import android.view.Menu;
+import android.view.MenuInflater;
 
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
+import ca.sfu.fluorine.parentapp.databinding.ChildrenMenuItemBinding;
 
 /**
  * MainActivity.java
@@ -42,4 +44,9 @@ public class MainActivity extends AppCompatActivity {
 		NavigationUI.setupWithNavController(binding.navView, navController);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.help_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 }
