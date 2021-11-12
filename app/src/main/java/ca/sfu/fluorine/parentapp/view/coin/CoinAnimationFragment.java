@@ -111,7 +111,6 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				binding.resultTitle.setText(CoinAnimationFragment.this.resultIsHead ? R.string.head : R.string.tail);
 
 				saveCoinFlip();
-
 			}
 
 			@Override
@@ -139,8 +138,9 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 
 	private void saveCoinFlip() {
 		if (childId < 0) return;
-		CoinResult newResult = new CoinResult(childId, selectionIsHead, CoinAnimationFragment.this.resultIsHead);
+		CoinResult newResult = new CoinResult(childId, selectionIsHead, resultIsHead);
 		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
 		database.coinResultDao().addNewCoinResult(newResult);
+		database.childDao().updateChildLastCoinFlip(childId);
 	}
 }

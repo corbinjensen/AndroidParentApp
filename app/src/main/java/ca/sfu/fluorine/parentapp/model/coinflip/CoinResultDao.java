@@ -10,7 +10,8 @@ import java.util.List;
 @Dao
 public abstract class CoinResultDao {
 	@Transaction
-	@Query("SELECT * FROM coin_result JOIN children ON selected_child_id == children.child_id")
+	@Query("SELECT * FROM coin_result JOIN children" +
+			" ON selected_child_id == children.child_id ORDER BY dateTimeOfFlip DESC")
 	public abstract List<CoinResultAndChild> getAllCoinResultsWithChildren();
 
 	@Insert
