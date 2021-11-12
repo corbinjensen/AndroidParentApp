@@ -64,6 +64,7 @@
     <string name="edit_child">Edit child</string>
     <string name="edit_child_confirm">Do you want to save your changes?</string>
 
+    <!-- Coin flip -->
     <string name="new_flip">New Flip</string>
     <string name="done">Done</string>
 
@@ -75,11 +76,13 @@
     <string name="full_name">%1$s %2$s</string>
     <string name="full_name_with_indicator">%1$s %2$s (last picked)</string>
 
-    <!-- Coin flip -->
     <string name="navigates_to_coin_flip">Navigates to Coin Flip</string>
     <string name="win">WIN</string>
     <string name="lose">LOSE</string>
     <string name="new_coin_flip">New coin flip</string>
+
+    <!--  Tasks  -->
+    <string name="tasks">Tasks</string>
 
 
 </resources>
