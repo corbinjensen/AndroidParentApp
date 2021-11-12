@@ -7,6 +7,9 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
+/**
+ * Represents a data access object (DAO) to manipulate data about coin results in the database
+ */
 @Dao
 public abstract class CoinResultDao {
 	@Transaction

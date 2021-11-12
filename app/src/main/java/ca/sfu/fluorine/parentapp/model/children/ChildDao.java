@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 /**
- * Represents data access point for children data
+ * Represents a data access object (DAO) to manipulate data about children in the database
  */
 @Dao
 public abstract class ChildDao {
