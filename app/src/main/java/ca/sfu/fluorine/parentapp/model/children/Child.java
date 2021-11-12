@@ -16,7 +16,7 @@ public class Child {
 
     private String firstName;
     private String lastName;
-    long createdTime; // This field is only mutable within the same package
+    private long createdTime; // This field is only mutable within the same package
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
@@ -34,6 +34,10 @@ public class Child {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
     }
 
     public void updateName(@NonNull String firstName, @NonNull String lastName) {
