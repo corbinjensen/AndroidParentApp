@@ -22,7 +22,7 @@ public abstract class ChildDao {
 	@Query("SELECT * FROM children")
 	public abstract List<Child> getAllChildren();
 
-	@Query("SELECT * FROM children WHERE id = :id LIMIT 1")
+	@Query("SELECT * FROM children WHERE child_id = :id LIMIT 1")
 	public abstract List<Child> getChildById(int id);
 
 	@Update

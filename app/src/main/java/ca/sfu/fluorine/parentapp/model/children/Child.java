@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
  */
 @Entity(tableName = "children")
 public class Child {
+    @ColumnInfo(name = "child_id")
     @PrimaryKey(autoGenerate = true)
     int id; // This field is only mutable within the same package
 

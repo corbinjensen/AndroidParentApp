@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public abstract class CoinResultDao {
 	@Transaction
-	@Query("SELECT * FROM coin_result")
+	@Query("SELECT * FROM coin_result JOIN children ON selected_child_id == children.child_id")
 	public abstract List<CoinResultAndChild> getAllCoinResultsWithChildren();
 
 	@Insert

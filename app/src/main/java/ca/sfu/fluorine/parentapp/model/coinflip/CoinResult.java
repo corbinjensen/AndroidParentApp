@@ -15,15 +15,23 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  *
  * This class represents a coin flip.
  */
-@Entity(tableName = "coin_result")
+@Entity(
+        tableName = "coin_result",
+        foreignKeys = @ForeignKey(
+                entity = Child.class,
+                parentColumns = "child_id",
+                childColumns = "selected_child_id",
+                onDelete = ForeignKey.CASCADE
+        ))
 public class CoinResult {
+    @ColumnInfo(name = "coin_result_id")
     @PrimaryKey(autoGenerate = true)
     int id;
 
     long dateTimeOfFlip; // Sets time to creation of CoinResult
     final private boolean resultIsHead, guessIsHead;
 
-    @ColumnInfo(name = "child_id")
+    @ColumnInfo(name = "selected_child_id", index = true)
     int childId;
 
     //Constructor
