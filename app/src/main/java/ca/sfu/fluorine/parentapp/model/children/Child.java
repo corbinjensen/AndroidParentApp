@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "children")
 public class Child {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    int id; // This field is only mutable within the same package
 
     @ColumnInfo(name = "first_name")
     private String firstName;
@@ -20,7 +20,7 @@ public class Child {
     private String lastName;
 
     @ColumnInfo(name = "created_time")
-    private long createdTime;
+    long createdTime; // This field is only mutable within the same package
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
@@ -32,24 +32,12 @@ public class Child {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCreatedTime(long createdTime) {
-        this.createdTime = createdTime;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
     public String getLastName() {
         return lastName;
-    }
-
-    public long getCreatedTime() {
-        return createdTime;
     }
 
     public void updateName(@NonNull String firstName, @NonNull String lastName) {
