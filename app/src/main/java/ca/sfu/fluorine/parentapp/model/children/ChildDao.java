@@ -19,12 +19,22 @@ public abstract class ChildDao {
 	@Delete
 	public abstract void deleteChild(Child child);
 
-	@Query("SELECT * FROM children")
+	@Query("SELECT * FROM children ORDER BY createdTime DESC")
 	public abstract List<Child> getAllChildren();
+
+	@Query("SELECT * FROM children ORDER BY lastCoinFlip DESC")
+	public abstract List<Child> getAllChildrenOrderByRecentCoinFlips();
 
 	@Query("SELECT * FROM children WHERE child_id = :id LIMIT 1")
 	public abstract List<Child> getChildById(int id);
 
 	@Update
 	public abstract void updateChild(Child child);
+
+	@Query("UPDATE children SET lastCoinFlip = :coinFlipTime WHERE child_id = :id")
+	abstract void updateLastCoinFlipById(int id, long coinFlipTime);
+
+	public void updateChildLastCoinFlip(int id) {
+		updateLastCoinFlipById(id, System.currentTimeMillis());
+	}
 }
