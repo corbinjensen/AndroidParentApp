@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,7 +20,6 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.

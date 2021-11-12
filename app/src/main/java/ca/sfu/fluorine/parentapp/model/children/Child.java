@@ -13,13 +13,8 @@ public class Child {
     @PrimaryKey(autoGenerate = true)
     int id; // This field is only mutable within the same package
 
-    @ColumnInfo(name = "first_name")
     private String firstName;
-
-    @ColumnInfo(name = "last_name")
     private String lastName;
-
-    @ColumnInfo(name = "created_time")
     long createdTime; // This field is only mutable within the same package
 
     public Child(@NonNull String firstName, @NonNull String lastName) {
@@ -30,6 +25,10 @@ public class Child {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -43,5 +42,9 @@ public class Child {
     public void updateName(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 }

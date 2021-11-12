@@ -1,13 +1,10 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.content.Intent;
-import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +13,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Date;
+import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinFlipHistory;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
 
 /**
  * CoinFlipFragment
@@ -29,14 +26,19 @@ import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
  * Represents the UI for the coin flip animation and user input.
  */
 public class CoinFlipFragment extends Fragment {
+	private AppDatabase database;
 	private FragmentCoinFlipBinding binding;
-	private CoinFlipHistory flipHistory;
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		database = AppDatabase.getInstance(requireContext().getApplicationContext());
+	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		flipHistory = CoinFlipHistory.getInstance(requireContext());
 		binding = FragmentCoinFlipBinding.inflate(inflater, container, false);
 		return binding.getRoot();
 	}
@@ -70,7 +72,13 @@ public class CoinFlipFragment extends Fragment {
 		binding = null;
 	}
 
-	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinHistoryAdapter.CoinFlipViewHolder> {
+	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinFlipViewHolder> {
+		private final List<CoinResultAndChild> coinResultsWithChildren;
+
+		public CoinHistoryAdapter() {
+			coinResultsWithChildren = database.coinResultDao().getAllCoinResultsWithChildren();
+		}
+
 		@NonNull
 		@Override
 		public CoinFlipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -81,44 +89,14 @@ public class CoinFlipFragment extends Fragment {
 
 		@Override
 		public void onBindViewHolder(@NonNull CoinFlipViewHolder holder, int position) {
-			CoinResult result = flipHistory.getCoinFlipAtIndex(position);
-
-			// Populate data for each row
-			String formatDateTime = DateFormat
-					.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-					.format(new Date(result.getDateTimeOfFlip()));
-			holder.dateTimeView.setText(formatDateTime);
-			holder.childNameView.setText(result.getWhoPicked().getFirstName());
-			holder.didPickerWinView.setText(result.didPickerWin() ? R.string.win : R.string.lose);
-			int color = getResources().getColor(
-					result.didPickerWin()
-							? android.R.color.holo_green_dark
-							: android.R.color.holo_red_dark,
-					null);
-			holder.didPickerWinView.setTextColor(color);
-			holder.coinResultView.setImageResource(
-					result.getResultIsHead() ? R.drawable.ic_heads : R.drawable.ic_tails);
+			CoinResultAndChild coinResultWithChild = coinResultsWithChildren.get(position);
+			holder.populateData(requireContext(), coinResultWithChild);
 		}
 
 		@Override
 		public int getItemCount() {
-			return flipHistory.getCoinFlip().size();
+			return coinResultsWithChildren.size();
 		}
 
-		public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
-			TextView dateTimeView;
-			TextView childNameView;
-			TextView didPickerWinView;
-			ImageView coinResultView;
-
-			public CoinFlipViewHolder(@NonNull View itemView) {
-				super(itemView);
-
-				dateTimeView = itemView.findViewById(R.id.dateTimeFlip);
-				childNameView = itemView.findViewById(R.id.childNameCoinView);
-				didPickerWinView = itemView.findViewById(R.id.didPickerWin);
-				coinResultView = itemView.findViewById(R.id.imageView);
-			}
-		}
 	}
 }

@@ -2,7 +2,6 @@ package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.fluorine.parentapp.R;

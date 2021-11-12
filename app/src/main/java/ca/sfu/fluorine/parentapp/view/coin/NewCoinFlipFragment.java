@@ -16,8 +16,8 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
+import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
 
 /**
  * NewCoinFlipFragment
@@ -26,14 +26,15 @@ import ca.sfu.fluorine.parentapp.model.children.ChildrenManager;
  */
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
-	private ChildrenManager manager;
 	private int childId = -1;
+	private List<Child> children;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		manager = ChildrenManager.getInstance(requireContext());
-		if (manager.getChildren().isEmpty()) {
+		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		children = database.childDao().getAllChildren();
+		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
 		}
@@ -51,18 +52,10 @@ public class NewCoinFlipFragment extends Fragment {
 
 	private void setupMenu() {
 		// Create the content for the menu
-		List<Child> childrenList = manager.getChildren();
-		int lastChildId = manager.getLastChildId();
 		List<String> menuItems = new ArrayList<>();
-		for (int i = 0; i < childrenList.size(); i++) {
-			Child child = childrenList.get(i);
+		for (final Child child: children) {
 			String itemName = requireContext()
-					.getString(
-							(lastChildId == i)
-									? R.string.full_name_with_indicator
-									: R.string.full_name,
-							child.getFirstName(),
-							child.getLastName());
+					.getString(R.string.full_name, child.getFirstName(), child.getLastName());
 			menuItems.add(itemName);
 		}
 
@@ -73,7 +66,7 @@ public class NewCoinFlipFragment extends Fragment {
 		binding.dropdownSelection.setAdapter(childArray);
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
 			binding.flipButton.setEnabled(true);
-			childId = i;
+			childId = children.get(i).getId();
 		});
 	}
 
