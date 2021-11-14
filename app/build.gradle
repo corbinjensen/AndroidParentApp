@@ -45,10 +45,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'pl.bclogic:pulsator4droid:1.0.3'
 
-    def room_version = "2.3.0"
+    def room_version = "2.4.0-alpha03"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-
 }
 
 tasks.withType(Test) { useJUnitPlatform()}
