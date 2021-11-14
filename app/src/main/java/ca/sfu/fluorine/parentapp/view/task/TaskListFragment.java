@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 
+/**
+ * TaskListFragment.java - Represents a home screen and feed/list of tasks
+ *  user can create a new task, or edit existing ones.
+ */
 public class TaskListFragment extends Fragment {
 
 	@Override
