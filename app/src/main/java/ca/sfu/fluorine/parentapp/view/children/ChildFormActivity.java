@@ -179,7 +179,7 @@ public class ChildFormActivity extends AppCompatActivity {
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                Child newChild = new Child(firstName, lastName);
+                Child newChild = new Child(firstName, lastName, null);
                 persistIconData(newChild);
                 database.childDao().addChild(newChild);
                 finish();
@@ -217,14 +217,17 @@ public class ChildFormActivity extends AppCompatActivity {
     }
 
     public void persistIconData(@NonNull Child child) {
-        // TODO: Get the filename from the child model. If none exists, make a random name
-        // Right now, the filename is random
-        String filename = UUID.randomUUID().toString();
+        //Get the filename from the child model. If none exists, make a random name
+        String fileName = child.getPhotoFileName();
+
+        if(fileName == null){
+            fileName = UUID.randomUUID().toString();
+        }
 
         if (icon == null) {
-            imageStorage.deleteImage(filename);
+            imageStorage.deleteImage(fileName);
         } else {
-            imageStorage.saveImage(filename, icon);
+            imageStorage.saveImage(fileName, icon);
         }
     }
 }
