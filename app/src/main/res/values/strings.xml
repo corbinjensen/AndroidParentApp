@@ -133,6 +133,7 @@
     <string name="icons">Icons:</string>
     <string name="external_libraries">External Libraries:</string>
     <string name="crop_image">Crop image</string>
+    <string name="add_a_task">Add a Task</string>
 
 
 </resources>
