@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_timeout_finish.xml" value="0.2828125" />
         <entry key="app/src/main/res/layout/fragment_timeout_running.xml" value="0.14375" />
         <entry key="app/src/main/res/layout/fragment_timeout_selector.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/task_row_layout.xml" value="0.17980072463768115" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.33229166666666665" />
       </map>
     </option>
