@@ -15,7 +15,10 @@
         android:theme="@style/Theme.ParentApp">
         <activity
             android:name=".view.task.TaskFormActivity"
-            android:exported="false" />
+            android:label="Task"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            />
         <activity
             android:name=".HelpActivity"
             android:exported="false"
