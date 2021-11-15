@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,11 +19,12 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
 import ca.sfu.fluorine.parentapp.view.children.ChildFormActivity;
-import ca.sfu.fluorine.parentapp.view.children.ChildViewHolder;
-import ca.sfu.fluorine.parentapp.view.coin.CoinFlipActivity;
+import ca.sfu.fluorine.parentapp.view.children.ChildrenFragment;
+import ca.sfu.fluorine.parentapp.view.coin.CoinFlipViewHolder;
+
 
 /**
  * TaskListFragment.java - Represents a home screen and feed/list of tasks
@@ -35,6 +38,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = AppDatabase.getInstance(requireContext().getApplicationContext());
     }
 
     @Override
@@ -56,11 +60,18 @@ public class TaskListFragment extends Fragment {
             startActivity(intent);
         });
 
+        // Set up layout for the list
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        binding.taskList.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration =
+            new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+        binding.taskList.addItemDecoration(dividerItemDecoration);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        binding.taskList.setAdapter(new TaskListAdapter());
     }
 
     @Override
@@ -94,18 +105,17 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onBindViewHolder(
             @NonNull
-                ChildViewHolder holder,
+                TaskViewHolder taskHolder,
             int position
         ) {
             // get child object from index
             TaskAndChild task = tasks.get(position);
 
-            // change the text to display child name
-            holder.taskNameDisplay.setText(task.getTask().getName());
+            taskHolder.populateData(requireContext().getApplicationContext(), task);
 
             // make the list item clickable
-            holder.itemView.setOnClickListener((View view) -> {
-                Intent intent = ChildFormActivity.makeIntent(requireContext(), task.getTask().getId());
+            taskHolder.itemView.setOnClickListener((View view) -> {
+                Intent intent = new Intent(getContext(), TaskFormActivity.class);
                 startActivity(intent);
             });
         }
