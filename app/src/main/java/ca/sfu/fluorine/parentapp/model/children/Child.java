@@ -1,6 +1,7 @@
 package ca.sfu.fluorine.parentapp.model.children;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,11 +16,13 @@ public class Child {
     private int id;
     private String firstName;
     private String lastName;
-    private long createdTime;
+    private String photoFileName;
+    final private long createdTime;
 
-    public Child(@NonNull String firstName, @NonNull String lastName) {
+    public Child(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.photoFileName = photoFileName;
         this.createdTime = System.currentTimeMillis(); // Current UNIX time
     }
 
@@ -49,7 +52,12 @@ public class Child {
         this.id = id;
     }
 
-    public void setCreatedTime(long createdTime) {
-        this.createdTime = createdTime;
+
+    public String getPhotoFileName() {
+        return photoFileName;
+    }
+
+    public void updatePhotoFileName(@Nullable String photoFileName) {
+        this.photoFileName = photoFileName;
     }
 }
