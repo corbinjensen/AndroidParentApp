@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
-import ca.sfu.fluorine.parentapp.view.children.ChildFormActivity;
+import ca.sfu.fluorine.parentapp.view.coin.CoinFlipActivity;
 
 /**
  * TaskListFragment.java - Represents a home screen and feed/list of tasks
@@ -31,7 +31,7 @@ public class TaskListFragment extends Fragment {
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		FragmentTaskListBinding binding = FragmentTaskListBinding
+		binding = FragmentTaskListBinding
 				.inflate(inflater, container, false);
 		return binding.getRoot();
 	}
@@ -40,15 +40,11 @@ public class TaskListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // floating action button
-        // TODO add Intent to new taskForm Activity
-        binding.buttonAddTask.setOnClickListener(
-            btnView -> {
-                startActivity(
-                    ChildFormActivity.makeIntent(
-                        requireContext(),
-                        TaskFormActivity.ADD_TASK
-                    )
-                );
-            });
+
+        binding.buttonAddTask.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), TaskFormActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
