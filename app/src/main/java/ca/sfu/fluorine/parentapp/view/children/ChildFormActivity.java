@@ -3,22 +3,35 @@ package ca.sfu.fluorine.parentapp.view.children;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 import java.util.List;
+import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
  *  ChildFormActivity.java - represents a user input form
@@ -26,15 +39,16 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  */
 public class ChildFormActivity extends AppCompatActivity {
     private ActivityChildFormBinding binding;
+    private Bitmap icon = null;
 
     // For intent data
     private static final String CHILD_ID = "childIndex";
     public static final int ADD_CHILD = -1;
 
-    // For the database
+    // For the database and storage
     private AppDatabase database;
     private Child child = null;
-
+    private ImageInternalStorage imageStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +59,10 @@ public class ChildFormActivity extends AppCompatActivity {
         // Set up the database
         database = AppDatabase.getInstance(getApplicationContext());
 
+        // Set up the image storage
+        imageStorage = ImageInternalStorage.getInstance(getApplicationContext());
+
+        // Populate the data
         List<Child> children = database.childDao().getChildById(
                 getIntent().getIntExtra(CHILD_ID, ADD_CHILD)
         );
@@ -56,23 +74,71 @@ public class ChildFormActivity extends AppCompatActivity {
 
             setTitle(R.string.edit_child);
             binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
-
             binding.buttonDeleteChild.setVisibility(View.VISIBLE);
             binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);
+
+            // TODO: Set up the icon
+
         } else {
             // Add mode
             setTitle(R.string.add_new_child);
             binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
-
         }
 
         binding.editTextFirstName.addTextChangedListener(watcher);
         binding.editTextLastName.addTextChangedListener(watcher);
+
+        // Set up launcher for Crop Image Activity
+        cropImageActivityLauncher =
+                registerForActivityResult(cropImageActivityContract, cropImageActivityCallback);
     }
+
+    // For the image selection
+    private ActivityResultLauncher<Object> cropImageActivityLauncher;
+    private final ActivityResultContract<Object, Uri> cropImageActivityContract
+            = new ActivityResultContract<Object, Uri>() {
+        @NonNull
+        @Override
+        public Intent createIntent(@NonNull Context context, Object input) {
+            return CropImage.activity()
+                    .setAspectRatio(1, 1)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setAllowFlipping(false)
+                    .setAllowRotation(false)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .getIntent(context);
+        }
+
+        @Override
+        public Uri parseResult(int resultCode, @Nullable Intent intent) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(intent);
+            if (result == null) return null;
+            return result.getUri();
+        }
+    };
+
+
+    private final ActivityResultCallback<Uri> cropImageActivityCallback = (Uri uri) -> {
+        // Tasks after getting cropped image
+        try {
+            icon = MediaStore.Images.Media.
+                    getBitmap(getApplicationContext().getContentResolver(), uri);
+            binding.buttonAddChild.setEnabled(areAllFieldsFilled());
+            // TODO: Update the icon image view only
+
+        } catch (Exception e) {
+            Toast.makeText(
+                    ChildFormActivity.this,
+                    R.string.fetch_error,
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
+    };
 
     private final TextWatcher watcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -108,32 +174,57 @@ public class ChildFormActivity extends AppCompatActivity {
     }
 
     private final View.OnClickListener addChildrenDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.addChild,
-            R.string.addChild,
+            R.string.add_new_child,
+            R.string.edit_child_confirm,
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                database.childDao().addChild(new Child(firstName, lastName));
+                Child newChild = new Child(firstName, lastName);
+                persistIconData(newChild);
+                database.childDao().addChild(newChild);
                 finish();
             }
-        );
+    );
 
     private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
-        R.string.edit_child,
-        R.string.edit_child_confirm,
-        (dialogInterface, i) -> {
-            String firstName = binding.editTextFirstName.getText().toString();
-            String lastName = binding.editTextLastName.getText().toString();
-            child.updateName(firstName, lastName);
-            database.childDao().updateChild(child);
-            finish();
-        });
+            R.string.edit_child,
+            R.string.edit_child_confirm,
+            (dialogInterface, i) -> {
+                String firstName = binding.editTextFirstName.getText().toString();
+                String lastName = binding.editTextLastName.getText().toString();
+                child.updateName(firstName, lastName);
+                persistIconData(child);
+                database.childDao().updateChild(child);
+                finish();
+            });
 
     private final View.OnClickListener deleteChildDialogListener = (btnView) -> makeConfirmDialog(
-        R.string.delete_child,
-        R.string.delete_child_confirm,
-        (dialogInterface, i) -> {
-            database.childDao().deleteChild(child);
-            finish();
-        });
+            R.string.delete_child,
+            R.string.delete_child_confirm,
+            (dialogInterface, i) -> {
+                database.childDao().deleteChild(child);
+                finish();
+            });
+
+    // Listeners for user choose image from camera or gallery
+    public void onChangeIconButtonClicked(View view) {
+        cropImageActivityLauncher.launch(null);
+    }
+
+    public void onDeleteIconButtonClicked(View view) {
+        icon = null;
+        // TODO: Change the image view to default only
+    }
+
+    public void persistIconData(@NonNull Child child) {
+        // TODO: Get the filename from the child model. If none exists, make a random name
+        // Right now, the filename is random
+        String filename = UUID.randomUUID().toString();
+
+        if (icon == null) {
+            imageStorage.deleteImage(filename);
+        } else {
+            imageStorage.saveImage(filename, icon);
+        }
+    }
 }
