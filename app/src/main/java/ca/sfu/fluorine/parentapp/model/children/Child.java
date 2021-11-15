@@ -17,7 +17,7 @@ public class Child {
     private String firstName;
     private String lastName;
     private String photoFileName;
-    final private long createdTime;
+    private long createdTime;
 
     public Child(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
         this.firstName = firstName;
@@ -52,6 +52,9 @@ public class Child {
         this.id = id;
     }
 
+    public void setCreatedTime(long createdTime){
+        this.createdTime = createdTime;
+    }
 
     public String getPhotoFileName() {
         return photoFileName;
