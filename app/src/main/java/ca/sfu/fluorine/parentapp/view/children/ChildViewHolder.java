@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ca.sfu.fluorine.parentapp.R;
@@ -42,7 +39,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
 
         // make the list item clickable
         itemView.setOnClickListener((View view) -> {
-            Intent intent = ChildFormActivity.makeIntent(context, child.getId());
+            Intent intent = AddChildActivity.makeIntent(context, child.getId());
             context.startActivity(intent);
         });
     }

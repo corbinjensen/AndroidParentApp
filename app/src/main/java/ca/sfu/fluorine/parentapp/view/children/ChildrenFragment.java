@@ -1,7 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +19,6 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
@@ -57,7 +54,7 @@ public class ChildrenFragment extends Fragment {
         // floating action button
         binding.buttonAddChild.setOnClickListener(
             btnView ->
-                startActivity(ChildFormActivity.makeIntent(requireContext(), ChildFormActivity.ADD_CHILD))
+                startActivity(AddChildActivity.makeIntent(requireContext(), AddChildActivity.ADD_CHILD))
             );
 
         // Style this list

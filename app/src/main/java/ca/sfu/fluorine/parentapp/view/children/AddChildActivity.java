@@ -34,10 +34,10 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
- *  ChildFormActivity.java - represents a user input form
+ *  AddChildActivity.java - represents a user input form
  *  activity to add a new, or modify info on a child.
  */
-public class ChildFormActivity extends AppCompatActivity {
+public class AddChildActivity extends AppCompatActivity {
     private ActivityChildFormBinding binding;
     private Bitmap icon = null;
 
@@ -128,7 +128,7 @@ public class ChildFormActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(
-                    ChildFormActivity.this,
+                    AddChildActivity.this,
                     R.string.fetch_error,
                     Toast.LENGTH_SHORT)
                     .show();
@@ -168,7 +168,7 @@ public class ChildFormActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context, int index) {
-        Intent intent = new Intent(context, ChildFormActivity.class);
+        Intent intent = new Intent(context, AddChildActivity.class);
         intent.putExtra(CHILD_ID, index);
         return intent;
     }

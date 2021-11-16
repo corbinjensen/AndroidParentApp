@@ -19,11 +19,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
-import ca.sfu.fluorine.parentapp.view.children.ChildFormActivity;
-import ca.sfu.fluorine.parentapp.view.children.ChildrenFragment;
-import ca.sfu.fluorine.parentapp.view.coin.CoinFlipViewHolder;
 
 
 /**
