@@ -136,6 +136,8 @@
     <string name="save_task">Save Task</string>
     <string name="delete_task">Delete Task</string>
     <string name="task_name">Task Name</string>
+    <string name="add_new_task">Add new task</string>
+    <string name="edit_task_confirm">Do you want to save your changes?</string>
 
 
 </resources>

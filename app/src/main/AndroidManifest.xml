@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
-            android:name=".view.task.TaskFormActivity"
+            android:name=".view.task.AddTaskActivity"
             android:exported="false" />
         <activity
             android:name=".HelpActivity"

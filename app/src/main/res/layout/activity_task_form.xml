@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
-    tools:context=".view.task.TaskFormActivity">
+    tools:context=".view.task.AddTaskActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/task_name"
@@ -21,6 +21,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

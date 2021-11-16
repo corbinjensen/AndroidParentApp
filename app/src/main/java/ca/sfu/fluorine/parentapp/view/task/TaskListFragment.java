@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
-import ca.sfu.fluorine.parentapp.view.coin.CoinFlipActivity;
 
 /**
  * TaskListFragment.java - Represents a home screen and feed/list of tasks
@@ -42,7 +41,7 @@ public class TaskListFragment extends Fragment {
         // floating action button
 
         binding.buttonAddTask.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), TaskFormActivity.class);
+            Intent intent = new Intent(getContext(), AddTaskActivity.class);
             startActivity(intent);
         });
 
