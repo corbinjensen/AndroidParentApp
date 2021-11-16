@@ -18,6 +18,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 /**
  * NewCoinFlipFragment
@@ -26,8 +27,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  */
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
-	private final static int NO_CHILDREN_ID = -1;
-	private int childId = NO_CHILDREN_ID;
+	private int childId = -1;
 	private List<Child> children;
 
 	@Override
@@ -38,6 +38,8 @@ public class NewCoinFlipFragment extends Fragment {
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
+		} else {
+			children.add(Child.getUnspecifiedChild());
 		}
 	}
 
@@ -46,7 +48,7 @@ public class NewCoinFlipFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentNewCoinFlipBinding.inflate(inflater, container, false);
-		setupMenu();
+		setupMenuWithImages();
 		setupButton();
 		return binding.getRoot();
 	}
@@ -67,14 +69,21 @@ public class NewCoinFlipFragment extends Fragment {
 				R.layout.children_menu_item, childrenSelection);
 		binding.dropdownSelection.setAdapter(childArray);
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-				childId = (i == 0) ? NO_CHILDREN_ID : children.get(i-1).getId());
+				childId = children.get(i).getId());
 
 		// Select the second values as default
 		if (children.size() > 1) {
 			childId = children.get(0).getId();
 			binding.dropdownSelection.setText(childrenSelection.get(1), false);
 		}
+	}
 
+	public void setupMenuWithImages() {
+		ArrayAdapter<Child> childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
+				requireContext(), children);
+		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
+				childId = children.get(i).getId());
 	}
 
 	private void setupButton() {
