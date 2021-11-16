@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
@@ -109,15 +111,7 @@ public class ChildrenFragment extends Fragment {
         ) {
             // get child object from index
             Child child = children.get(position);
-
-            // change the text to display child name
-            holder.titleCreationName.setText(child.getFirstName());
-
-            // make the list item clickable
-            holder.itemView.setOnClickListener((View view) -> {
-                Intent intent = ChildFormActivity.makeIntent(requireContext(), child.getId());
-                startActivity(intent);
-            });
+            holder.populateData(requireContext().getApplicationContext(), child);
         }
 
         @Override
