@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,12 +54,20 @@ public class NewCoinFlipFragment extends Fragment {
 	public void setupMenuWithImages() {
 		ChildrenAutoCompleteAdapter childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
 				requireContext(), children);
+		// Pre-select the first choice
+		Child first = children.get(0);
+		childrenArrayAdapter.setSelectedChild(first);
+		binding.dropdownSelection.setText(
+				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
+				false);
+		childId = first.getId();
+
+		// Set up the adapter and listener for the dropdown menu
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
 			childId = children.get(i).getId();
 			childrenArrayAdapter.setSelectedChild(children.get(i));
 		});
-		binding.dropdownSelection.setSelection(0);
 	}
 
 	private void setupButton() {
