@@ -58,6 +58,8 @@
     <string name="tails_desc">Tails side</string>
     <string name="heads_desc">Heads side</string>
 
+    <string name="child_image_content_description">Image of Child</string>
+
     <string name="save_button_title">Save</string>
     <string name="add_new_child">Add new child</string>
     <string name="edit_child">Edit child</string>
@@ -138,6 +140,8 @@
     <string name="task_name">Task Name</string>
     <string name="add_new_task">Add new task</string>
     <string name="edit_task_confirm">Do you want to save your changes?</string>
+    <string name="add_a_task">Add a Task</string>
+    <string name="photo_of_child">Photo of child</string>
 
 
 </resources>
