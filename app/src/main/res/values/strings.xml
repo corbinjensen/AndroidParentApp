@@ -135,6 +135,8 @@
     <string name="icons">Icons:</string>
     <string name="external_libraries">External Libraries:</string>
     <string name="crop_image">Crop image</string>
+    <string name="add_a_task">Add a Task</string>
+    <string name="photo_of_child">Photo of child</string>
 
 
 </resources>
