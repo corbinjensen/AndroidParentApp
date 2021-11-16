@@ -43,6 +43,7 @@ public class AddChildActivity extends AppCompatActivity {
     // For the database and storage
     AppDatabase database;
     ImageInternalStorage imageStorage;
+    private CropImageService cropImageService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,52 +64,9 @@ public class AddChildActivity extends AppCompatActivity {
         setTitle(R.string.add_new_child);
         binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
-        // Set up launcher for Crop Image Activity
-        cropImageActivityLauncher =
-                registerForActivityResult(cropImageActivityContract, cropImageActivityCallback);
+        // Set up crop image service
+        cropImageService = new CropImageService();
     }
-
-    // For the image selection
-    private ActivityResultLauncher<Object> cropImageActivityLauncher;
-    private static final ActivityResultContract<Object, Uri> cropImageActivityContract
-            = new ActivityResultContract<Object, Uri>() {
-        @NonNull
-        @Override
-        public Intent createIntent(@NonNull Context context, Object input) {
-            return CropImage.activity()
-                    .setAspectRatio(1, 1)
-                    .setCropShape(CropImageView.CropShape.OVAL)
-                    .setAllowFlipping(false)
-                    .setAllowRotation(false)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .getIntent(context);
-        }
-
-        @Override
-        public Uri parseResult(int resultCode, @Nullable Intent intent) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(intent);
-            if (result == null) return null;
-            return result.getUri();
-        }
-    };
-
-
-    private final ActivityResultCallback<Uri> cropImageActivityCallback = (Uri uri) -> {
-        // Tasks after getting cropped image
-        try {
-            icon = MediaStore.Images.Media.
-                    getBitmap(getApplicationContext().getContentResolver(), uri);
-            binding.buttonAddChild.setEnabled(areAllFieldsFilled());
-            // TODO: Update the icon image view only
-
-        } catch (Exception e) {
-            Toast.makeText(
-                    AddChildActivity.this,
-                    R.string.fetch_error,
-                    Toast.LENGTH_SHORT)
-                    .show();
-        }
-    };
 
     final TextWatcher watcher = new TextWatcher() {
         @Override
@@ -157,7 +115,7 @@ public class AddChildActivity extends AppCompatActivity {
 
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View view) {
-        cropImageActivityLauncher.launch(null);
+        cropImageService.launch();
     }
 
     public void onDeleteIconButtonClicked(View view) {
@@ -178,6 +136,53 @@ public class AddChildActivity extends AppCompatActivity {
             imageStorage.deleteImage(fileName);
         } else {
             imageStorage.saveImage(fileName, icon);
+        }
+    }
+
+    class CropImageService {
+        private final ActivityResultContract<Object, Uri> cropImageActivityContract
+                = new ActivityResultContract<Object, Uri>() {
+            @NonNull
+            @Override
+            public Intent createIntent(@NonNull Context context, Object input) {
+                return CropImage.activity()
+                        .setAspectRatio(1, 1)
+                        .setCropShape(CropImageView.CropShape.OVAL)
+                        .setAllowFlipping(false)
+                        .setAllowRotation(false)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .getIntent(context);
+            }
+
+            @Override
+            public Uri parseResult(int resultCode, @Nullable Intent intent) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(intent);
+                if (result == null) return null;
+                return result.getUri();
+            }
+        };
+
+        private final ActivityResultCallback<Uri> cropImageActivityCallback = (Uri uri) -> {
+            // Tasks after getting cropped image
+            try {
+                icon = MediaStore.Images.Media.
+                        getBitmap(getApplicationContext().getContentResolver(), uri);
+                binding.buttonAddChild.setEnabled(areAllFieldsFilled());
+                // TODO: Update the icon image view only
+
+            } catch (Exception e) {
+                Toast.makeText(
+                        AddChildActivity.this,
+                        R.string.fetch_error,
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        };
+
+        private void launch() {
+            AddChildActivity.this.registerForActivityResult(
+                    cropImageActivityContract,
+                    cropImageActivityCallback).launch(null);
         }
     }
 }
