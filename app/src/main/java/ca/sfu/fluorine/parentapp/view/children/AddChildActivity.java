@@ -1,28 +1,16 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.UUID;
 
@@ -30,6 +18,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
@@ -65,7 +54,7 @@ public class AddChildActivity extends AppCompatActivity {
         binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
         // Set up crop image service
-        cropImageService = new CropImageService();
+        cropImageService = new CropImageService(this);
     }
 
     final TextWatcher watcher = new TextWatcher() {
@@ -115,7 +104,9 @@ public class AddChildActivity extends AppCompatActivity {
 
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View view) {
-        cropImageService.launch();
+        cropImageService.launch((Bitmap resultImage) -> {
+            // TODO: Replace current image with result image only (if image is not null)
+        });
     }
 
     public void onDeleteIconButtonClicked(View view) {
@@ -139,50 +130,4 @@ public class AddChildActivity extends AppCompatActivity {
         }
     }
 
-    class CropImageService {
-        private final ActivityResultContract<Object, Uri> cropImageActivityContract
-                = new ActivityResultContract<Object, Uri>() {
-            @NonNull
-            @Override
-            public Intent createIntent(@NonNull Context context, Object input) {
-                return CropImage.activity()
-                        .setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setAllowFlipping(false)
-                        .setAllowRotation(false)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .getIntent(context);
-            }
-
-            @Override
-            public Uri parseResult(int resultCode, @Nullable Intent intent) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(intent);
-                if (result == null) return null;
-                return result.getUri();
-            }
-        };
-
-        private final ActivityResultCallback<Uri> cropImageActivityCallback = (Uri uri) -> {
-            // Tasks after getting cropped image
-            try {
-                icon = MediaStore.Images.Media.
-                        getBitmap(getApplicationContext().getContentResolver(), uri);
-                binding.buttonAddChild.setEnabled(areAllFieldsFilled());
-                // TODO: Update the icon image view only
-
-            } catch (Exception e) {
-                Toast.makeText(
-                        AddChildActivity.this,
-                        R.string.fetch_error,
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
-        };
-
-        private void launch() {
-            AddChildActivity.this.registerForActivityResult(
-                    cropImageActivityContract,
-                    cropImageActivityCallback).launch(null);
-        }
-    }
 }
