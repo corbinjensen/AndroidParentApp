@@ -24,11 +24,10 @@ public class ImageInternalStorage {
 	private ImageInternalStorage() {
 	}
 
-	// WARNING: only pass the application context when getting this instance
 	public static ImageInternalStorage getInstance(Context context) {
 		if (INSTANCE == null) {
 			INSTANCE = new ImageInternalStorage();
-			INSTANCE.context = context;
+			INSTANCE.context = context.getApplicationContext();
 		}
 		return INSTANCE;
 	}

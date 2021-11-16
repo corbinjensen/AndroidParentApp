@@ -28,12 +28,21 @@ public class EditChildActivity extends AddChildActivity {
 		List<Child> children = database.childDao().getChildById(childId);
 		if (!children.isEmpty()) {
 			child = children.get(0);
+			// Remove watcher before set text
+			binding.editTextFirstName.removeTextChangedListener(watcher);
+			binding.editTextLastName.removeTextChangedListener(watcher);
+
 			binding.editTextFirstName.setText(child.getFirstName());
 			binding.editTextLastName.setText(child.getLastName());
 
-			setTitle(R.string.edit_child);
-			// TODO: Set up the icon
+			// Remove watcher before set text
+			binding.editTextFirstName.addTextChangedListener(watcher);
+			binding.editTextLastName.addTextChangedListener(watcher);
+
+			// TODO: Set up the icon (if possible)
 		}
+
+		// Activate more buttons
 		binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
 		binding.buttonDeleteChild.setVisibility(View.VISIBLE);
 		binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);

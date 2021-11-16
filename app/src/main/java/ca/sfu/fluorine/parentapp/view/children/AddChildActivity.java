@@ -70,7 +70,7 @@ public class AddChildActivity extends AppCompatActivity {
 
     // For the image selection
     private ActivityResultLauncher<Object> cropImageActivityLauncher;
-    private final ActivityResultContract<Object, Uri> cropImageActivityContract
+    private static final ActivityResultContract<Object, Uri> cropImageActivityContract
             = new ActivityResultContract<Object, Uri>() {
         @NonNull
         @Override
@@ -110,7 +110,7 @@ public class AddChildActivity extends AppCompatActivity {
         }
     };
 
-    private final TextWatcher watcher = new TextWatcher() {
+    final TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
