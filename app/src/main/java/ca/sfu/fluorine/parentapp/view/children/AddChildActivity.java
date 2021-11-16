@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.List;
 import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
@@ -34,21 +33,16 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
- *  AddChildActivity.java - represents a user input form
- *  activity to add a new, or modify info on a child.
+ * AddChildActivity.java - represents a user input form
+ * activity to add a new, or modify info on a child.
  */
 public class AddChildActivity extends AppCompatActivity {
-    private ActivityChildFormBinding binding;
-    private Bitmap icon = null;
-
-    // For intent data
-    private static final String CHILD_ID = "childIndex";
-    public static final int ADD_CHILD = -1;
+    ActivityChildFormBinding binding;
+    Bitmap icon = null;
 
     // For the database and storage
-    private AppDatabase database;
-    private Child child = null;
-    private ImageInternalStorage imageStorage;
+    AppDatabase database;
+    ImageInternalStorage imageStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,31 +56,12 @@ public class AddChildActivity extends AppCompatActivity {
         // Set up the image storage
         imageStorage = ImageInternalStorage.getInstance(getApplicationContext());
 
-        // Populate the data
-        List<Child> children = database.childDao().getChildById(
-                getIntent().getIntExtra(CHILD_ID, ADD_CHILD)
-        );
-        if (!children.isEmpty()) {
-            // Edit mode
-            child = children.get(0);
-            binding.editTextFirstName.setText(child.getFirstName());
-            binding.editTextLastName.setText(child.getLastName());
-
-            setTitle(R.string.edit_child);
-            binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
-            binding.buttonDeleteChild.setVisibility(View.VISIBLE);
-            binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);
-
-            // TODO: Set up the icon
-
-        } else {
-            // Add mode
-            setTitle(R.string.add_new_child);
-            binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
-        }
-
+        // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);
         binding.editTextLastName.addTextChangedListener(watcher);
+
+        setTitle(R.string.add_new_child);
+        binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
         // Set up launcher for Crop Image Activity
         cropImageActivityLauncher =
@@ -155,9 +130,9 @@ public class AddChildActivity extends AppCompatActivity {
         return !firstName.isEmpty() && !lastName.isEmpty();
     }
 
-    private void makeConfirmDialog(@StringRes int titleId,
-                                   @StringRes int messageId,
-                                   @NonNull DialogInterface.OnClickListener confirmAction) {
+    void makeConfirmDialog(@StringRes int titleId,
+                           @StringRes int messageId,
+                           @NonNull DialogInterface.OnClickListener confirmAction) {
         new AlertDialog.Builder(this)
                 .setTitle(titleId)
                 .setMessage(messageId)
@@ -165,12 +140,6 @@ public class AddChildActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.ok, confirmAction)
                 .setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.dismiss())
                 .show();
-    }
-
-    public static Intent makeIntent(Context context, int index) {
-        Intent intent = new Intent(context, AddChildActivity.class);
-        intent.putExtra(CHILD_ID, index);
-        return intent;
     }
 
     private final View.OnClickListener addChildrenDialogListener = (btnView) -> makeConfirmDialog(
@@ -186,26 +155,6 @@ public class AddChildActivity extends AppCompatActivity {
             }
     );
 
-    private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.edit_child,
-            R.string.edit_child_confirm,
-            (dialogInterface, i) -> {
-                String firstName = binding.editTextFirstName.getText().toString();
-                String lastName = binding.editTextLastName.getText().toString();
-                child.updateName(firstName, lastName);
-                persistIconData(child);
-                database.childDao().updateChild(child);
-                finish();
-            });
-
-    private final View.OnClickListener deleteChildDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.delete_child,
-            R.string.delete_child_confirm,
-            (dialogInterface, i) -> {
-                database.childDao().deleteChild(child);
-                finish();
-            });
-
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View view) {
         cropImageActivityLauncher.launch(null);
@@ -217,10 +166,11 @@ public class AddChildActivity extends AppCompatActivity {
     }
 
     public void persistIconData(@NonNull Child child) {
-        //Get the filename from the child model. If none exists, make a random name
+        // Get the filename from the child model. If none exists, make a random name
         String fileName = child.getPhotoFileName();
 
-        if(fileName == null){
+        // If no such file exists, make a random one
+        if(fileName == null && icon != null) {
             fileName = UUID.randomUUID().toString();
         }
 

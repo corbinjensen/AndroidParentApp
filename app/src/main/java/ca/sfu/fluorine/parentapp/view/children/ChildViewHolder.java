@@ -39,7 +39,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
 
         // make the list item clickable
         itemView.setOnClickListener((View view) -> {
-            Intent intent = AddChildActivity.makeIntent(context, child.getId());
+            Intent intent = EditChildActivity.makeIntent(context, child.getId());
             context.startActivity(intent);
         });
     }
