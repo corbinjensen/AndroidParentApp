@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -42,6 +44,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
         // Add mode
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
+
+        binding.editTaskName.addTextChangedListener(watcher);
+        binding.dropdownSelection.addTextChangedListener(watcher);
+
     }
 
     final View.OnClickListener addTaskDialogListener = (btnView) -> makeConfirmDialog(
@@ -90,5 +96,25 @@ public class AddTaskActivity extends AppCompatActivity {
             binding.dropdownSelection.setText(childrenSelection.get(1), false);
         }
 
+    }
+
+    private final TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            binding.buttonSaveTask.setEnabled(areAllFieldsFilled());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) { }
+    };
+
+    private boolean areAllFieldsFilled() {
+        String taskName = binding.editTaskName.getText().toString();
+        String child = binding.dropdownSelection.getText().toString();
+        return !taskName.isEmpty() && !child.isEmpty();
     }
 }

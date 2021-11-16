@@ -35,6 +35,7 @@
         android:enabled="false"
         android:text="@string/save_task"
         app:layout_constraintEnd_toEndOf="@id/task_name"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/task_name"
         app:layout_constraintTop_toBottomOf="@id/dropdown_menu" />
 

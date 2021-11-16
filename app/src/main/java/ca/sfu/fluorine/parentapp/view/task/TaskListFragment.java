@@ -115,7 +115,7 @@ public class TaskListFragment extends Fragment {
 
             // make the list item clickable
             taskHolder.itemView.setOnClickListener((View view) -> {
-                Intent intent = new Intent(getContext(), TaskFormActivity.class);
+                Intent intent = new Intent(getContext(), EditTaskActivity.class);
                 startActivity(intent);
             });
         }
