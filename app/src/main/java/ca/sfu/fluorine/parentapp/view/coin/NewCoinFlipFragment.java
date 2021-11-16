@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
@@ -53,37 +52,15 @@ public class NewCoinFlipFragment extends Fragment {
 		return binding.getRoot();
 	}
 
-	private void setupMenu() {
-		// Create the content for the menu
-		List<String> childrenSelection = new ArrayList<>();
-		childrenSelection.add(getString(R.string.no_children));
-		for (final Child child: children) {
-			String itemName = requireContext()
-					.getString(R.string.full_name, child.getFirstName(), child.getLastName());
-			childrenSelection.add(itemName);
-		}
-
-		// Attach the content to the dropdown menu
-		ArrayAdapter<String> childArray = new ArrayAdapter<>(
-				requireContext(),
-				R.layout.children_menu_item, childrenSelection);
-		binding.dropdownSelection.setAdapter(childArray);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-				childId = children.get(i).getId());
-
-		// Select the second values as default
-		if (children.size() > 1) {
-			childId = children.get(0).getId();
-			binding.dropdownSelection.setText(childrenSelection.get(1), false);
-		}
-	}
-
 	public void setupMenuWithImages() {
-		ArrayAdapter<Child> childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
+		ChildrenAutoCompleteAdapter childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
 				requireContext(), children);
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-				childId = children.get(i).getId());
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
+			childId = children.get(i).getId();
+			childrenArrayAdapter.setSelectedChild(children.get(i));
+		});
+		binding.dropdownSelection.setSelection(0);
 	}
 
 	private void setupButton() {

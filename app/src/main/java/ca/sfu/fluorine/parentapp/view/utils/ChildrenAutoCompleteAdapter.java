@@ -20,6 +20,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
+	private Child selectedChild = null;
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children) {
 		super(context, 0, children);
@@ -34,21 +35,15 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		}
 		TextView childName = convertView.findViewById(R.id.child_name);
 		ImageView childIcon = convertView.findViewById(R.id.child_icon);
+		ImageView checkmark = convertView.findViewById(R.id.selected_checkmark);
 
 		// Set up data
 		Child child = getItem(position);
 
 		// Empty child (or no child)
 		if (child == Child.getUnspecifiedChild()) {
-			childName.setText(R.string.no_children);
 			childIcon.setImageResource(R.drawable.ic_baseline_nothing);
 		} else {
-			childName.setText(
-					getContext().getString(
-							R.string.full_name,
-							child.getFirstName(),
-							child.getLastName())
-			);
 			Bitmap icon = ImageInternalStorage
 					.getInstance(getContext().getApplicationContext())
 					.loadImage(child.getPhotoFileName());
@@ -58,6 +53,8 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 				childIcon.setImageResource(R.drawable.robot);
 			}
 		}
+		childName.setText(getFullNameFromChild(child));
+		checkmark.setVisibility((child == selectedChild) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;
 	}
 
@@ -74,11 +71,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		@Override
 		public CharSequence convertResultToString(Object resultValue) {
 			Child child = (Child) resultValue;
-			if (child == Child.getUnspecifiedChild()) {
-				return getContext().getString(R.string.no_children);
-			}
-			return getContext().getString(
-					R.string.full_name, child.getFirstName(), child.getLastName());
+			return getFullNameFromChild(child);
 		}
 	};
 
@@ -86,5 +79,17 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	@Override
 	public Filter getFilter() {
 		return childrenFilter;
+	}
+
+	private String getFullNameFromChild(Child child) {
+		if (child == Child.getUnspecifiedChild()) {
+			return getContext().getString(R.string.no_children);
+		}
+		return getContext().getString(
+				R.string.full_name, child.getFirstName(), child.getLastName());
+	}
+
+	public void setSelectedChild(Child selectedChild) {
+		this.selectedChild = selectedChild;
 	}
 }
