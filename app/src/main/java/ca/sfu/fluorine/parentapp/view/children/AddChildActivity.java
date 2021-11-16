@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,39 +96,35 @@ public class AddChildActivity extends AppCompatActivity {
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                Child newChild = new Child(firstName, lastName, null);
-                persistIconData(newChild);
+                String savedImageFileName = persistIconData();
+                Child newChild = new Child(firstName, lastName, savedImageFileName);
                 database.childDao().addChild(newChild);
                 finish();
             }
     );
 
     // Listeners for user choose image from camera or gallery
-    public void onChangeIconButtonClicked(View view) {
+    public void onChangeIconButtonClicked(View btnView) {
         cropImageService.launch((Bitmap resultImage) -> {
             // TODO: Replace current image with result image only (if image is not null)
         });
     }
 
-    public void onDeleteIconButtonClicked(View view) {
+    public void onDeleteIconButtonClicked(View btnView) {
         icon = null;
         // TODO: Change the image view to default only
+
+        // Disabled this button
+        btnView.setEnabled(false);
     }
 
-    public void persistIconData(@NonNull Child child) {
-        // Get the filename from the child model. If none exists, make a random name
-        String fileName = child.getPhotoFileName();
-
-        // If no such file exists, make a random one
-        if(fileName == null && icon != null) {
-            fileName = UUID.randomUUID().toString();
+    // Return a saved image filename in the system
+    String persistIconData() {
+        if (icon != null) {
+            String filename = UUID.randomUUID().toString();
+            imageStorage.saveImage(filename, icon);
+            return filename;
         }
-
-        if (icon == null) {
-            imageStorage.deleteImage(fileName);
-        } else {
-            imageStorage.saveImage(fileName, icon);
-        }
+        return null;
     }
-
 }

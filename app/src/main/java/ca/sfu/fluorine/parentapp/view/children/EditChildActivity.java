@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
+import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -58,10 +61,10 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.edit_child,
 			R.string.edit_child_confirm,
 			(dialogInterface, i) -> {
+				String savedFile = persistIconData(child);
 				String firstName = binding.editTextFirstName.getText().toString();
 				String lastName = binding.editTextLastName.getText().toString();
-				child.updateName(firstName, lastName);
-				persistIconData(child);
+				child.updateName(firstName, lastName, savedFile);
 				database.childDao().updateChild(child);
 				finish();
 			});
@@ -70,7 +73,21 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.delete_child,
 			R.string.delete_child_confirm,
 			(dialogInterface, i) -> {
+				imageStorage.deleteImage(child.getPhotoFileName());
 				database.childDao().deleteChild(child);
 				finish();
 			});
+
+	String persistIconData(@NonNull Child child) {
+		String filename = child.getPhotoFileName();
+		if (icon == null) {
+			imageStorage.deleteImage(filename);
+			return null;
+		}
+		if (filename == null) {
+			filename = UUID.randomUUID().toString();
+		}
+		imageStorage.saveImage(filename, icon);
+		return filename;
+	}
 }

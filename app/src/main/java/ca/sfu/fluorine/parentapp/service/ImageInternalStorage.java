@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.FileInputStream;
@@ -32,7 +33,7 @@ public class ImageInternalStorage {
 		return INSTANCE;
 	}
 
-	public void saveImage(String fileName, Bitmap image) {
+	public void saveImage(@NonNull String fileName, @NonNull Bitmap image) {
 		FileOutputStream outputStream = null;
 		try {
 			outputStream = context.openFileOutput(fileName + FILE_EXT, Context.MODE_PRIVATE);

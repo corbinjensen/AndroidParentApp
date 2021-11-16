@@ -42,9 +42,10 @@ public class Child {
         return createdTime;
     }
 
-    public void updateName(@NonNull String firstName, @NonNull String lastName) {
+    public void updateName(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.photoFileName = photoFileName;
     }
 
     // Setters is only serve Room database
