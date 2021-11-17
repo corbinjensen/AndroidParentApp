@@ -20,7 +20,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
-	private Child selectedChild = null;
+	private Child selectedChild = Child.getUnspecifiedChild();
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children) {
 		super(context, 0, children);
@@ -87,6 +87,10 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		}
 		return getContext().getString(
 				R.string.full_name, child.getFirstName(), child.getLastName());
+	}
+
+	public Child getSelectedChild() {
+		return selectedChild;
 	}
 
 	public void setSelectedChild(Child selectedChild) {

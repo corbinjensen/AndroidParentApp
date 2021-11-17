@@ -1,8 +1,10 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,17 +13,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
@@ -56,9 +53,10 @@ public class ChildrenFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // floating action button
         binding.buttonAddChild.setOnClickListener(
-            btnView ->
-                startActivity(ChildFormActivity.makeIntent(requireContext(), ChildFormActivity.ADD_CHILD))
-            );
+                btnView -> {
+                    Intent intent = new Intent(requireContext(), AddChildActivity.class);
+                    startActivity(intent);
+                });
 
         // Style this list
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
@@ -111,7 +109,7 @@ public class ChildrenFragment extends Fragment {
         ) {
             // get child object from index
             Child child = children.get(position);
-            holder.populateData(requireContext().getApplicationContext(), child);
+            holder.populateData(requireContext(), child);
         }
 
         @Override
