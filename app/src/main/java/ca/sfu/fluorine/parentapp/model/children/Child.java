@@ -19,6 +19,9 @@ public class Child {
     private String photoFileName;
     private long createdTime;
 
+    // Singleton for unspecified child
+    private static Child UNSPECIFIED;
+
     public Child(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,6 +48,14 @@ public class Child {
     public void updateName(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public static Child getUnspecifiedChild() {
+        if (UNSPECIFIED == null) {
+            UNSPECIFIED = new Child("", "", null);
+            UNSPECIFIED.setId(-1);
+        }
+        return UNSPECIFIED;
     }
 
     // Setters is only serve Room database

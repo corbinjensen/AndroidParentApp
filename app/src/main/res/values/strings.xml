@@ -73,6 +73,7 @@
     <!-- Coin flip -->
     <string name="new_flip">New Flip</string>
     <string name="done">Done</string>
+    <string name="child_selected">Child selected</string>
 
     <string name="head">HEAD</string>
     <string name="tail">TAIL</string>
