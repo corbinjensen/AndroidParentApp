@@ -4,20 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 /**
  * NewCoinFlipFragment
@@ -26,8 +25,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  */
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
-	private final static int NO_CHILDREN_ID = -1;
-	private int childId = NO_CHILDREN_ID;
+	private int childId = -1;
 	private List<Child> children;
 
 	@Override
@@ -38,6 +36,8 @@ public class NewCoinFlipFragment extends Fragment {
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
+		} else {
+			children.add(Child.getUnspecifiedChild());
 		}
 	}
 
@@ -46,35 +46,28 @@ public class NewCoinFlipFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentNewCoinFlipBinding.inflate(inflater, container, false);
-		setupMenu();
+		setupMenuWithImages();
 		setupButton();
 		return binding.getRoot();
 	}
 
-	private void setupMenu() {
-		// Create the content for the menu
-		List<String> childrenSelection = new ArrayList<>();
-		childrenSelection.add(getString(R.string.no_children));
-		for (final Child child: children) {
-			String itemName = requireContext()
-					.getString(R.string.full_name, child.getFirstName(), child.getLastName());
-			childrenSelection.add(itemName);
-		}
+	public void setupMenuWithImages() {
+		ChildrenAutoCompleteAdapter childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
+				requireContext(), children);
+		// Pre-select the first choice
+		Child first = children.get(0);
+		childrenArrayAdapter.setSelectedChild(first);
+		binding.dropdownSelection.setText(
+				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
+				false);
+		childId = first.getId();
 
-		// Attach the content to the dropdown menu
-		ArrayAdapter<String> childArray = new ArrayAdapter<>(
-				requireContext(),
-				R.layout.children_menu_item, childrenSelection);
-		binding.dropdownSelection.setAdapter(childArray);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-				childId = (i == 0) ? NO_CHILDREN_ID : children.get(i-1).getId());
-
-		// Select the second values as default
-		if (children.size() > 1) {
-			childId = children.get(0).getId();
-			binding.dropdownSelection.setText(childrenSelection.get(1), false);
-		}
-
+		// Set up the adapter and listener for the dropdown menu
+		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
+			childId = children.get(i).getId();
+			childrenArrayAdapter.setSelectedChild(children.get(i));
+		});
 	}
 
 	private void setupButton() {
