@@ -27,10 +27,9 @@ import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     AppDatabase database;
-    TaskAndChild task = null;
     private List<Child> children;
     private final static int NO_CHILDREN_ID = -1;
-    private int childId = NO_CHILDREN_ID;
+    int childId = NO_CHILDREN_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class AddTaskActivity extends AppCompatActivity {
         children = database.childDao().getAllChildren();
         setupMenu();
 
-        // Add mode
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
 
         binding.editTaskName.addTextChangedListener(watcher);
@@ -61,7 +59,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
     );
 
-    private void makeConfirmDialog(@StringRes int titleId,
+    void makeConfirmDialog(@StringRes int titleId,
                                    @StringRes int messageId,
                                    @NonNull DialogInterface.OnClickListener confirmAction) {
         new AlertDialog.Builder(this)
@@ -98,7 +96,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
-    private final TextWatcher watcher = new TextWatcher() {
+     final TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
