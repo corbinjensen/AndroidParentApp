@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public abstract class ChildDao {
 
 	// Get the next child according to their creation time
 	// if the last child's turn is done, then returns the first created child
+	@Transaction
 	public Integer getNextChildId(@NonNull Child child) {
 		List<Integer> ids = getFirstChildIdAfterCreationTime(child.getCreatedTime());
 		if (ids.isEmpty()) {
