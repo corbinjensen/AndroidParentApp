@@ -37,6 +37,7 @@ import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
  *  ChildFormActivity.java - represents a user input form
  *  activity to add a new, or modify info on a child.
  */
+//TODO : Put the code changes from this code intoAddCChildActivity, delete this.
 public class ChildFormActivity extends AppCompatActivity {
     private ActivityChildFormBinding binding;
     private Bitmap icon = null;
