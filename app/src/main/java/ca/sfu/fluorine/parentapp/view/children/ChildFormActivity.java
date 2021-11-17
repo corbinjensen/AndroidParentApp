@@ -167,6 +167,29 @@ public class ChildFormActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void makeSelectImageDialogue(@StringRes int titleId,
+                                         @StringRes int arrayListedImageOptions,
+                                         @NonNull DialogInterface.OnClickListener selectAction){
+
+        // TODO : Create Dialogue box -> select one of 3 options(from phone, camera, cancel)
+        //TODO : implement list of options
+
+        new AlertDialog.Builder(this)
+                .setTitle(titleId)
+                .setItems(arrayListedImageOptions, selectAction){
+            public void onClick(selectAction, int which){
+                if (which == 0){
+                    //for index 0 action
+                }else if(which == 1){
+                    //for index 1 action
+                }else{
+                    //for index 2 action
+                }
+            }
+        }
+
+    }
+
     public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, ChildFormActivity.class);
         intent.putExtra(CHILD_ID, index);
@@ -208,6 +231,12 @@ public class ChildFormActivity extends AppCompatActivity {
 
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View view) {
+        // TODO : Dialogue - take pic, select from stored, cancel
+
+        // TODO : Open already loaded in-app images, option to select more from gallery
+        // TODO : Transfer image file(s) into in-app storage
+        // TODO : Save specific image into child. return to child form activity.
+
         cropImageActivityLauncher.launch(null);
     }
 
