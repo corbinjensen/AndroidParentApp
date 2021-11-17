@@ -58,8 +58,6 @@
     <string name="tails_desc">Tails side</string>
     <string name="heads_desc">Heads side</string>
 
-    <string name="child_image_content_description">Image of Child</string>
-
     <string name="save_button_title">Save</string>
     <string name="add_new_child">Add new child</string>
     <string name="edit_child">Edit child</string>
@@ -69,6 +67,11 @@
     <string name="crop_image_activity_title">Crop image</string>
     <string name="fetch_error">Cannot fetch the icon</string>
     <string name="save_error">Cannot save the icon</string>
+
+    <!-- Image -->
+    <string name="child_image_content_description">Image of Child</string>
+    <string name="edit_child_image_button"> Select New Image</string>
+    <string name="delete_child_image_button">Delete Image</string>
 
     <!-- Coin flip -->
     <string name="new_flip">New Flip</string>
