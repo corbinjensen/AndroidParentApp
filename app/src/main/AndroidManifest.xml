@@ -29,7 +29,11 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".view.children.ChildFormActivity"
+            android:name=".view.children.AddChildActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".view.children.EditChildActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity

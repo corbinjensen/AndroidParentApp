@@ -33,7 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 	public static AppDatabase getInstance(Context context) {
 		if (INSTANCE == null) {
-			INSTANCE = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
+			INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
 					.allowMainThreadQueries() // Allow database to run on the UI thread
 					.build();
 		}
