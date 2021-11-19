@@ -21,7 +21,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.view.children.AddChildActivity;
 
 public class CropImageService {
-	private AppCompatActivity activity;
+	private final AppCompatActivity activity;
 	public CropImageService(AppCompatActivity activity) {
 		this.activity = activity;
 	}

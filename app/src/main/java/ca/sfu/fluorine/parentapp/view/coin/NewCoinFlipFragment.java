@@ -31,7 +31,7 @@ public class NewCoinFlipFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		AppDatabase database = AppDatabase.getInstance(requireContext());
 		children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
@@ -63,9 +63,9 @@ public class NewCoinFlipFragment extends Fragment {
 
 		// Set up the adapter and listener for the dropdown menu
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
-			childrenArrayAdapter.setSelectedChild(children.get(i));
-		});
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
+			childrenArrayAdapter.setSelectedChild(children.get(i))
+		);
 	}
 
 	private void setupButton() {

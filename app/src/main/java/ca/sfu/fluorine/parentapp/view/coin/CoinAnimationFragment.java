@@ -139,7 +139,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	private void saveCoinFlip() {
 		if (childId < 0) return;
 		CoinResult newResult = new CoinResult(childId, selectionIsHead, resultIsHead);
-		AppDatabase database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		AppDatabase database = AppDatabase.getInstance(requireContext());
 		database.coinResultDao().addNewCoinResult(newResult);
 	}
 }
