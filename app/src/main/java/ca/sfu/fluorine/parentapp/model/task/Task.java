@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.model.task;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -50,6 +51,11 @@ public class Task {
 	}
 
 	public void setChildId(int childId) {
+		this.childId = childId;
+	}
+
+	public void update(@NonNull String taskName, int childId) {
+		this.name = taskName;
 		this.childId = childId;
 	}
 }
