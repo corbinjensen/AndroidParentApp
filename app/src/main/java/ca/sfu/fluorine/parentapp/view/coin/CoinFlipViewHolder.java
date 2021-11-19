@@ -50,6 +50,4 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		coinResultView.setImageResource(
 				result.getResultIsHead() ? R.drawable.ic_heads : R.drawable.ic_tails);
 	}
-
-
 }

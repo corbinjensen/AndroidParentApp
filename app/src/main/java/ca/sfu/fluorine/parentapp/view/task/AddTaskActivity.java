@@ -37,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
         binding = ActivityTaskFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        database = AppDatabase.getInstance(getApplicationContext());
+        database = AppDatabase.getInstance(this);
         children = database.childDao().getAllChildren();
         setupMenu();
 
