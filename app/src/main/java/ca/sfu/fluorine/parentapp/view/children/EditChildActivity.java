@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class EditChildActivity extends AddChildActivity {
 	// For intent data
@@ -31,6 +32,7 @@ public class EditChildActivity extends AddChildActivity {
 		List<Child> children = database.childDao().getChildById(childId);
 		if (!children.isEmpty()) {
 			child = children.get(0);
+			ImageInternalStorage imageInternalStorage = ImageInternalStorage.getInstance(getApplicationContext());
 			// Remove watcher before set text
 			binding.editTextFirstName.removeTextChangedListener(watcher);
 			binding.editTextLastName.removeTextChangedListener(watcher);
@@ -41,6 +43,8 @@ public class EditChildActivity extends AddChildActivity {
 			// Remove watcher before set text
 			binding.editTextFirstName.addTextChangedListener(watcher);
 			binding.editTextLastName.addTextChangedListener(watcher);
+
+			binding.displayChildImage.setImageBitmap(imageInternalStorage.loadImage(child.getPhotoFileName()));
 
 			// TODO: Set up the icon (if possible)
 		}
