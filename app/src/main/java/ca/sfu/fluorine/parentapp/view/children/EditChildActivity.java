@@ -64,7 +64,8 @@ public class EditChildActivity extends AddChildActivity {
 				String savedFile = persistIconData(child);
 				String firstName = binding.editTextFirstName.getText().toString();
 				String lastName = binding.editTextLastName.getText().toString();
-				child.updateName(firstName, lastName, savedFile);
+				child.updateName(firstName, lastName);
+				child.updatePhotoFileName(savedFile);
 				database.childDao().updateChild(child);
 				finish();
 			});

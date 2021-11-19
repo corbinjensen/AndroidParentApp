@@ -107,13 +107,14 @@ public class AddChildActivity extends AppCompatActivity {
     public void onChangeIconButtonClicked(View btnView) {
         cropImageService.launch((Bitmap resultImage) -> {
             // TODO: Replace current image with result image only (if image is not null)
-        });
+
+            });
     }
 
     public void onDeleteIconButtonClicked(View btnView) {
         icon = null;
         // TODO: Change the image view to default only
-
+        //imageStorage.deleteImage();
         // Disabled this button
         btnView.setEnabled(false);
     }
