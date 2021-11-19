@@ -42,17 +42,18 @@ public class EditTaskActivity extends AddTaskActivity {
             binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
 
+        // TODO: Add edit option for child selection
+
         setTitle("Edit Task");
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
-        binding.buttonCompleteTask.setVisibility(View.VISIBLE);
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
-        binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
 
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
     }
 
+    // TODO: Fix update task & child for task
     private final View.OnClickListener editTaskDialogListener = (btnView) -> makeConfirmDialog(
             R.string.edit_task,
             R.string.edit_task_confirm,
@@ -70,18 +71,6 @@ public class EditTaskActivity extends AddTaskActivity {
                 database.taskDao().deleteTask(taskAndChild.getTask());
                 finish();
             });
-
-    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.complete_task,
-            R.string.complete_task_message,
-            (dialogInterface, i) -> {
-                Task task = taskAndChild.getTask();
-                int nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
-                task.update(task.getName(), nextChildID);
-                database.taskDao().updateTask(task);
-                finish();
-            });
-
 
     @NonNull
     public static Intent makeIntent(Context context, int taskId) {
