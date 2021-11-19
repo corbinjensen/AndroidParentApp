@@ -6,12 +6,13 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="8dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/child_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/child_image_content_description"
         android:src="@drawable/robot"
+        app:shapeAppearanceOverlay="@style/icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
