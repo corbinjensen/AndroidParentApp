@@ -106,16 +106,15 @@ public class AddChildActivity extends AppCompatActivity {
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View btnView) {
         cropImageService.launch((Bitmap resultImage) -> {
-            // TODO: Replace current image with result image only (if image is not null)
-
+                if(resultImage != null){
+                    icon = resultImage;
+                }
             });
     }
 
     public void onDeleteIconButtonClicked(View btnView) {
         icon = null;
-        // TODO: Change the image view to default only
-        //imageStorage.deleteImage();
-        // Disabled this button
+        // Disabled this button as no photo to delete
         btnView.setEnabled(false);
     }
 
