@@ -63,9 +63,9 @@ public class ChildrenFragment extends Fragment {
         // Fetch from database
         List<Child> children = database.childDao().getAllChildren();
         if (children.isEmpty()) {
-            binding.childrenList.showEmptyStates();
+            binding.childrenList.showEmpty();
         } else {
-            binding.childrenList.showList(new ChildListAdapter(children));
+            binding.childrenList.useAdapter(new ChildListAdapter(children));
         }
     }
 

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -28,7 +26,6 @@ import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
  */
 public class TaskListFragment extends Fragment {
     private AppDatabase database;
-
     private FragmentTaskListBinding binding;
 
     @Override
@@ -49,25 +46,24 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // floating action button
 
+        // floating action button
         binding.buttonAddTask.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), AddTaskActivity.class);
             startActivity(intent);
         });
-
-        // Set up layout for the list
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        binding.taskList.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration =
-            new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
-        binding.taskList.addItemDecoration(dividerItemDecoration);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        binding.taskList.setAdapter(new TaskListAdapter());
+
+        List<TaskAndChild> tasks = database.taskDao().getAllTasksWithChildren();
+        if (tasks.isEmpty()) {
+            binding.taskList.showEmpty();
+        } else {
+            binding.taskList.useAdapter(new TaskListAdapter(tasks));
+        }
     }
 
     @Override
@@ -79,8 +75,8 @@ public class TaskListFragment extends Fragment {
     class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         private final List<TaskAndChild> tasks;
 
-        public TaskListAdapter() {
-            tasks = database.taskDao().getAllTasksWithChildren();
+        public TaskListAdapter(List<TaskAndChild> tasks) {
+            this.tasks = tasks;
         }
 
         @NonNull

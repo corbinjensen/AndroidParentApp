@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -48,22 +46,21 @@ public class CoinFlipFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		binding.navigationCoinFlip.setOnClickListener(v -> {
-			Intent add = new Intent(getContext(), CoinFlipActivity.class);
+			Intent add = new Intent(requireContext(), CoinFlipActivity.class);
 			startActivity(add);
 		});
-
-		// Set up layout for the list
-		LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-		binding.listCoinFlip.setLayoutManager(layoutManager);
-		DividerItemDecoration dividerItemDecoration =
-				new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
-		binding.listCoinFlip.addItemDecoration(dividerItemDecoration);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		binding.listCoinFlip.setAdapter(new CoinHistoryAdapter());
+		List<CoinResultAndChild> coinResultsWithChildren
+				= database.coinResultDao().getAllCoinResultsWithChildren();
+		if (coinResultsWithChildren.isEmpty()) {
+			binding.listCoinFlip.showEmpty();
+		} else {
+			binding.listCoinFlip.useAdapter(new CoinHistoryAdapter(coinResultsWithChildren));
+		}
 	}
 
 	@Override
@@ -75,8 +72,8 @@ public class CoinFlipFragment extends Fragment {
 	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinFlipViewHolder> {
 		private final List<CoinResultAndChild> coinResultsWithChildren;
 
-		public CoinHistoryAdapter() {
-			coinResultsWithChildren = database.coinResultDao().getAllCoinResultsWithChildren();
+		public CoinHistoryAdapter(List<CoinResultAndChild> coinResultsWithChildren) {
+			this.coinResultsWithChildren = coinResultsWithChildren;
 		}
 
 		@NonNull

@@ -47,14 +47,14 @@ public class RecyclerViewWithStates extends ConstraintLayout {
 		binding.recyclerView.addItemDecoration(dividerItemDecoration);
 	}
 
-	public void showEmptyStates() {
+	public void showEmpty() {
 		binding.emptyStateIcon.setVisibility(VISIBLE);
 		binding.emptyStateMessage.setVisibility(VISIBLE);
 		binding.recyclerView.setVisibility(GONE);
 		binding.recyclerView.setAdapter(null);
 	}
 
-	public void showList(RecyclerView.Adapter<?> adapter) {
+	public void useAdapter(RecyclerView.Adapter<?> adapter) {
 		binding.recyclerView.setVisibility(VISIBLE);
 		binding.recyclerView.setAdapter(adapter);
 		binding.emptyStateIcon.setVisibility(GONE);
