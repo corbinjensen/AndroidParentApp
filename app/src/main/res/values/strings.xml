@@ -136,8 +136,14 @@
     <string name="icons">Icons:</string>
     <string name="external_libraries">External Libraries:</string>
     <string name="crop_image">Crop image</string>
+    <string name="save_task">Save Task</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="add_new_task">Add new task</string>
+    <string name="edit_task_confirm">Do you want to save your changes?</string>
     <string name="add_a_task">Add a Task</string>
     <string name="photo_of_child">Photo of child</string>
+    <string name="edit_task">Edit Task</string>
 
 
 </resources>
