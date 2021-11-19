@@ -31,7 +31,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getInstance(requireContext().getApplicationContext());
+        database = AppDatabase.getInstance(requireContext());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class TaskListFragment extends Fragment {
             // get child object from index
             TaskAndChild task = tasks.get(position);
 
-            taskHolder.populateData(requireContext().getApplicationContext(), task);
+            taskHolder.populateData(requireContext(), task);
 
             // make the list item clickable
             taskHolder.itemView.setOnClickListener((View view) -> {

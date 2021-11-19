@@ -30,7 +30,7 @@ public class CoinFlipFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		database = AppDatabase.getInstance(requireContext().getApplicationContext());
+		database = AppDatabase.getInstance(requireContext());
 	}
 
 	@Override

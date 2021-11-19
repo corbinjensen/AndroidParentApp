@@ -9,7 +9,7 @@
     android:padding="16dp"
     tools:context=".view.children.AddChildActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/childPhoto"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/robot"
+        style="@style/icon"
         android:contentDescription="@string/child_image_content_description"/>
 
     <TextView

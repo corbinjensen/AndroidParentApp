@@ -20,8 +20,10 @@ public class TimeoutSetting {
 	public static TimeoutSetting getInstance(Context context) {
 		if (instance == null) {
 			instance = new TimeoutSetting();
+			instance.preferences = context
+					.getApplicationContext()
+					.getSharedPreferences(KEY, Context.MODE_PRIVATE);
 		}
-		instance.preferences = context.getSharedPreferences(KEY, Context.MODE_PRIVATE);
 		return instance;
 	}
 
