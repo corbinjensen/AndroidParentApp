@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".view.children.ChildrenFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ca.sfu.fluorine.parentapp.view.utils.RecyclerViewWithStates
         android:id="@+id/childrenList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:emptyStateImage="@drawable/empty_state_children"
+        app:emptyStateMessage="@string/empty_state_children_message"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_child"

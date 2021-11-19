@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -57,20 +55,18 @@ public class ChildrenFragment extends Fragment {
                     Intent intent = new Intent(requireContext(), AddChildActivity.class);
                     startActivity(intent);
                 });
-
-        // Style this list
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        binding.childrenList.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
-        binding.childrenList.addItemDecoration(dividerItemDecoration);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Populate data on the list
-        binding.childrenList.setAdapter(new ChildListAdapter());
+        // Fetch from database
+        List<Child> children = database.childDao().getAllChildren();
+        if (children.isEmpty()) {
+            binding.childrenList.showEmptyStates();
+        } else {
+            binding.childrenList.showList(new ChildListAdapter(children));
+        }
     }
 
     @Override
@@ -82,8 +78,8 @@ public class ChildrenFragment extends Fragment {
     class ChildListAdapter extends RecyclerView.Adapter<ChildViewHolder> {
         private final List<Child> children;
 
-        public ChildListAdapter() {
-            children = database.childDao().getAllChildren();
+        public ChildListAdapter(List<Child> children) {
+            this.children = children;
         }
 
         @NonNull
