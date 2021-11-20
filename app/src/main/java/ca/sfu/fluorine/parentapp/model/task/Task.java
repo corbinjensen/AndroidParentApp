@@ -50,10 +50,6 @@ public class Task {
 		this.name = name;
 	}
 
-	public void setChildId(int childId) {
-		this.childId = childId;
-	}
-
 	public void update(@NonNull String taskName, int childId) {
 		this.name = taskName;
 		this.childId = childId;
