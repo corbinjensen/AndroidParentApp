@@ -33,8 +33,13 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 	}
 
     public void populateData(Context context, TaskWithChild taskWithChild) {
-        childNameTask.setText(taskWithChild.getChild().getFirstName());
-	    taskName.setText(taskWithChild.getTask().getName());
+        if(taskWithChild.getChild() == null){
+        	childNameTask.setText(R.string.nullChildForTask);
+		}else {
+			childNameTask.setText(taskWithChild.getChild().getFirstName());
+		}
+
+        taskName.setText(taskWithChild.getTask().getName());
 
 	    Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
             .loadImage(taskWithChild.getChild().getPhotoFileName());

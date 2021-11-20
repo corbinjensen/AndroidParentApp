@@ -22,7 +22,7 @@ public class Task {
 
 	private String name;
 
-	@ColumnInfo(name = "child_turn_id", index = true, defaultValue = "-1")
+	@ColumnInfo(name = "child_turn_id", index = true, defaultValue = "0")
 	private int childId;
 
 	public Task(String name, int childId) {

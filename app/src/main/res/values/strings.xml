@@ -161,4 +161,5 @@
     <string name="empty_state_children_message">It\'s empty here</string>
     <string name="empty_state_coin_flip_message">It\'s empty here</string>
     <string name="empty_state_task_message">It\'s empty here</string>
+    <string name="nullChildForTask">No Children are assigned to this Task</string>
 </resources>
