@@ -42,10 +42,10 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Set up the database
-        database = AppDatabase.getInstance(getApplicationContext());
+        database = AppDatabase.getInstance(this);
 
         // Set up the image storage
-        imageStorage = ImageInternalStorage.getInstance(getApplicationContext());
+        imageStorage = ImageInternalStorage.getInstance(this);
 
         // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);

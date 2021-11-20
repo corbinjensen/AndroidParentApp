@@ -1,29 +1,23 @@
 package ca.sfu.fluorine.parentapp.service;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultCaller;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.view.children.AddChildActivity;
-
 public class CropImageService {
-	private AppCompatActivity activity;
-	public CropImageService(AppCompatActivity activity) {
-		this.activity = activity;
+	private final ActivityResultCaller resultCaller;
+
+	public CropImageService(ActivityResultCaller resultCaller) {
+		this.resultCaller = resultCaller;
 	}
 
 	private static final ActivityResultContract<Object, Bitmap> cropImageActivityContract
@@ -49,7 +43,7 @@ public class CropImageService {
 	};
 
 	public void launch(ActivityResultCallback<Bitmap> callback) {
-		activity.registerForActivityResult(
+		resultCaller.registerForActivityResult(
 				cropImageActivityContract,
 				callback).launch(null);
 	}

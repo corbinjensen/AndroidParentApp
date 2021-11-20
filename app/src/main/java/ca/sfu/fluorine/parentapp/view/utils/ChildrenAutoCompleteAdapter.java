@@ -45,7 +45,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 			childIcon.setImageResource(R.drawable.ic_baseline_nothing);
 		} else {
 			Bitmap icon = ImageInternalStorage
-					.getInstance(getContext().getApplicationContext())
+					.getInstance(getContext())
 					.loadImage(child.getPhotoFileName());
 			if (icon != null) {
 				childIcon.setImageBitmap(icon);
