@@ -16,7 +16,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:contentDescription="@string/navigates_to_coin_flip"
-        android:src="@drawable/ic_baseline_attach_money_24"
+        android:src="@drawable/ic_noun_coin_flip"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:emptyStateImage="@drawable/empty_state_coin_flip"
-        app:emptyStateMessage="@string/empty_state_children_message"/>
+        app:emptyStateMessage="@string/empty_state_coin_flip_message"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

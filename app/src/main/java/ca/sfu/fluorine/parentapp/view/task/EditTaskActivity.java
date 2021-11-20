@@ -34,10 +34,11 @@ public class EditTaskActivity extends AddTaskActivity {
         // Get the task id from intent then fetch from database
         List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
 
+        // Populate the data
         if (!tasks.isEmpty()) {
             taskAndChild = tasks.get(0);
             Child child = taskAndChild.getChild();
-            childId = child.getId();
+            childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
             binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
@@ -58,7 +59,7 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childId);
+                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
                 database.taskDao().updateTask(taskAndChild.getTask());
                 finish();
             });

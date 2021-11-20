@@ -23,13 +23,13 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     AppDatabase database;
     private List<Child> children;
-    private final static int NO_CHILDREN_ID = -1;
-    int childId = NO_CHILDREN_ID;
+    ChildrenAutoCompleteAdapter childrenArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
         database = AppDatabase.getInstance(this);
         children = database.childDao().getAllChildren();
-        setupMenu();
+        childrenArrayAdapter = new ChildrenAutoCompleteAdapter(this, children);
+        setupMenuWithImages();
 
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
 
@@ -53,7 +54,7 @@ public class AddTaskActivity extends AppCompatActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                Task newTask = new Task(taskName, childId);
+                Task newTask = new Task(taskName, childrenArrayAdapter.getSelectedChild().getId());
                 database.taskDao().addTask(newTask);
                 finish();
             }
@@ -71,29 +72,19 @@ public class AddTaskActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void setupMenu() {
-        // Create the content for the menu
-        List<String> childrenSelection = new ArrayList<>();
-        childrenSelection.add(getString(R.string.no_children));
-        for (final Child child: children) {
-            String itemName = getString(R.string.full_name, child.getFirstName(), child.getLastName());
-            childrenSelection.add(itemName);
-        }
+    public void setupMenuWithImages() {
+        // Pre-select the first choice
+        Child first = children.get(0);
+        childrenArrayAdapter.setSelectedChild(first);
+        binding.dropdownSelection.setText(
+                getString(R.string.full_name, first.getFirstName(), first.getLastName()),
+                false);
 
-        // Attach the content to the dropdown menu
-        ArrayAdapter<String> childArray = new ArrayAdapter<>(
-                this,
-                R.layout.children_menu_item, childrenSelection);
-        binding.dropdownSelection.setAdapter(childArray);
+        // Set up the adapter and listener for the dropdown menu
+        binding.dropdownSelection.setAdapter(childrenArrayAdapter);
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-                childId = (i == 0) ? NO_CHILDREN_ID : children.get(i-1).getId());
-
-        // Select the second values as default
-        if (children.size() > 1) {
-            childId = children.get(0).getId();
-            binding.dropdownSelection.setText(childrenSelection.get(1), false);
-        }
-
+                childrenArrayAdapter.setSelectedChild(children.get(i))
+        );
     }
 
      final TextWatcher watcher = new TextWatcher() {
