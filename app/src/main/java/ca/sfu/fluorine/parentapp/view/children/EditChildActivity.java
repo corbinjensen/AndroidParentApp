@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class EditChildActivity extends AddChildActivity {
 	// For intent data
@@ -32,6 +33,7 @@ public class EditChildActivity extends AddChildActivity {
 		List<Child> children = database.childDao().getChildById(childId);
 		if (!children.isEmpty()) {
 			child = children.get(0);
+			ImageInternalStorage imageInternalStorage = ImageInternalStorage.getInstance(getApplicationContext());
 			// Remove watcher before set text
 			binding.editTextFirstName.removeTextChangedListener(watcher);
 			binding.editTextLastName.removeTextChangedListener(watcher);
@@ -43,7 +45,14 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextFirstName.addTextChangedListener(watcher);
 			binding.editTextLastName.addTextChangedListener(watcher);
 
-			// TODO: Set up the icon (if possible)
+			// Initial display child image
+			if(child.getPhotoFileName() == null){
+				binding.displayChildImage.setImageResource(R.drawable.robot);
+				binding.deleteChildImage.setEnabled(false);
+			}else{
+				binding.displayChildImage.setImageBitmap(imageInternalStorage.loadImage(child.getPhotoFileName()));
+			}
+
 		}
 
 		// Activate more buttons
@@ -65,7 +74,8 @@ public class EditChildActivity extends AddChildActivity {
 				String savedFile = persistIconData(child);
 				String firstName = binding.editTextFirstName.getText().toString();
 				String lastName = binding.editTextLastName.getText().toString();
-				child.updateName(firstName, lastName, savedFile);
+				child.updateName(firstName, lastName);
+				child.updatePhotoFileName(savedFile);
 				database.childDao().updateChild(child);
 				finish();
 			});
