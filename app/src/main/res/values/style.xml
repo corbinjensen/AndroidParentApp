@@ -2,6 +2,7 @@
 <resources>
     <style name="icon">
         <item name="strokeWidth">4dp</item>
+        <item name="android:padding">2dp</item>
         <item name="strokeColor">?attr/colorPrimary</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.RoundImage</item>
     </style>
