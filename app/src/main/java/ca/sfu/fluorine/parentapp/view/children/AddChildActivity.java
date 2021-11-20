@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -33,7 +34,7 @@ public class AddChildActivity extends AppCompatActivity {
     // For the database and storage
     AppDatabase database;
     ImageInternalStorage imageStorage;
-    private CropImageService cropImageService;
+    private ActivityResultLauncher<?> cropImageServiceLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,15 @@ public class AddChildActivity extends AppCompatActivity {
         binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
 
         // Set up crop image service
-        cropImageService = new CropImageService(this);
+        cropImageServiceLauncher = new CropImageService(this).getServiceLauncher(
+                (Bitmap resultImage) -> {
+                    if (resultImage != null) {
+                        icon = resultImage;
+                        binding.displayChildImage.setImageBitmap(resultImage);
+                        binding.deleteChildImage.setEnabled(true);
+                        binding.buttonAddChild.setEnabled(areAllFieldsFilled());
+                    }
+                });
     }
 
     final TextWatcher watcher = new TextWatcher() {
@@ -105,11 +114,7 @@ public class AddChildActivity extends AppCompatActivity {
 
     // Listeners for user choose image from camera or gallery
     public void onChangeIconButtonClicked(View btnView) {
-        cropImageService.launch((Bitmap resultImage) -> {
-                if(resultImage != null){
-                    binding.displayChildImage.setImageBitmap(resultImage);
-                }
-            });
+        cropImageServiceLauncher.launch(null);
     }
 
     public void onDeleteIconButtonClicked(View btnView) {

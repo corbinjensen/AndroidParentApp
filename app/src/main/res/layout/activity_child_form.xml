@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".view.children.AddChildActivity">
 
     <EditText
@@ -18,8 +19,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintVertical_bias="0.1"
         tools:ignore="TextContrastCheck" />
 
     <EditText
@@ -59,52 +60,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_add_child" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/display_child_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        style="@style/icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/child_image_content_description"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/robot"
-        android:contentDescription="@string/child_image_content_description"/>
+        app:srcCompat="@drawable/robot" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="206dp" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <Button
         android:id="@+id/edit_child_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:onClick="onChangeIconButtonClicked"
         android:text="@string/edit_child_image_button"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/delete_child_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:onClick="onDeleteIconButtonClicked"
         android:text="@string/delete_child_image_button"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/edit_child_image" />
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
@@ -118,6 +111,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="104dp" />
+        app:layout_constraintGuide_percent="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

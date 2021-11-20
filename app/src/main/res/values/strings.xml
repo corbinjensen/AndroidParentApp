@@ -70,7 +70,7 @@
 
     <!-- Image -->
     <string name="child_image_content_description">Image of Child</string>
-    <string name="edit_child_image_button">Select New Image</string>
+    <string name="edit_child_image_button">Edit Image</string>
     <string name="delete_child_image_button">Delete Image</string>
 
     <!-- Coin flip -->
