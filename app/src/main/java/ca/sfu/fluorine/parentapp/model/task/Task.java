@@ -13,7 +13,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 				entity = Child.class,
 				parentColumns = "child_id",
 				childColumns = "child_turn_id",
-				onDelete = ForeignKey.CASCADE
+				onDelete = ForeignKey.SET_DEFAULT
 		))
 public class Task {
 	@ColumnInfo(name = "task_id")
@@ -22,7 +22,7 @@ public class Task {
 
 	private String name;
 
-	@ColumnInfo(name = "child_turn_id", index = true)
+	@ColumnInfo(name = "child_turn_id", index = true, defaultValue = "-1")
 	private int childId;
 
 	public Task(String name, int childId) {

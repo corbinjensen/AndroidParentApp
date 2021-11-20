@@ -1,44 +1,35 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.model.task.TaskWithChild;
 
 public class EditTaskActivity extends AddTaskActivity {
     private static final String TASK_ID = "taskIndex";
-    private TaskAndChild taskAndChild;
+    private TaskWithChild taskWithChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Get the task id from intent then fetch from database
-        List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
+        List<TaskWithChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
 
         if (!tasks.isEmpty()) {
-            taskAndChild = tasks.get(0);
-            Child child = taskAndChild.getChild();
+            taskWithChild = tasks.get(0);
+            Child child = taskWithChild.getChild();
             childId = child.getId();
-            binding.editTaskName.setText(taskAndChild.getTask().getName());
+            binding.editTaskName.setText(taskWithChild.getTask().getName());
             binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
 
@@ -58,8 +49,8 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childId);
-                database.taskDao().updateTask(taskAndChild.getTask());
+                taskWithChild.getTask().update(taskName, childId);
+                database.taskDao().updateTask(taskWithChild.getTask());
                 finish();
             });
 
@@ -67,7 +58,7 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.delete_task,
             R.string.delete_child_confirm,
             (dialogInterface, i) -> {
-                database.taskDao().deleteTask(taskAndChild.getTask());
+                database.taskDao().deleteTask(taskWithChild.getTask());
                 finish();
             });
 
@@ -75,8 +66,8 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.complete_task,
             R.string.complete_task_message,
             (dialogInterface, i) -> {
-                Task task = taskAndChild.getTask();
-                int nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
+                Task task = taskWithChild.getTask();
+                int nextChildID = database.childDao().getNextChildId(taskWithChild.getChild());
                 task.update(task.getName(), nextChildID);
                 database.taskDao().updateTask(task);
                 finish();

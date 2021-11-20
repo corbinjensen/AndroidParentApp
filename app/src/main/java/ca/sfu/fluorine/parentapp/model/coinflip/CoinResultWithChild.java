@@ -8,7 +8,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  * Intermediate data class to represents one-to-one relationship
  * between CoinResult and Child models
  */
-public class CoinResultAndChild {
+public class CoinResultWithChild {
 	@Embedded CoinResult coinResult;
 	@Embedded Child child;
 

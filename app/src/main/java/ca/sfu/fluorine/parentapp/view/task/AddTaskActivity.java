@@ -1,7 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +20,6 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
@@ -45,7 +42,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
-
     }
 
     final View.OnClickListener addTaskDialogListener = (btnView) -> makeConfirmDialog(

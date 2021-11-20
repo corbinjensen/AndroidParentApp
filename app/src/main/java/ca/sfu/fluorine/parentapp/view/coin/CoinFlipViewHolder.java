@@ -14,7 +14,7 @@ import java.util.Date;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
+import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultWithChild;
 
 public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 	TextView dateTimeView;
@@ -30,9 +30,9 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		coinResultView = itemView.findViewById(R.id.imageView);
 	}
 
-	public void populateData(Context context, CoinResultAndChild coinResultAndChild) {
-		CoinResult result = coinResultAndChild.getCoinResult();
-		Child child = coinResultAndChild.getChild();
+	public void populateData(Context context, CoinResultWithChild coinResultWithChild) {
+		CoinResult result = coinResultWithChild.getCoinResult();
+		Child child = coinResultWithChild.getChild();
 
 		String formatDateTime = DateFormat
 				.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
