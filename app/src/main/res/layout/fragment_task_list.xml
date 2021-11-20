@@ -7,14 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".view.task.TaskListFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ca.sfu.fluorine.parentapp.view.utils.RecyclerViewWithStates
         android:id="@+id/taskList"
-        android:layout_width="409dp"
-        android:layout_height="657dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyStateImage="@drawable/empty_state_task"
+        app:emptyStateMessage="@string/empty_state_task_message" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonAddTask"
