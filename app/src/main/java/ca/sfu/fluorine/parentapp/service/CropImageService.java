@@ -16,9 +16,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class CropImageService {
 	private final ActivityResultCaller resultCaller;
 
-	public CropImageService(ActivityResultCaller resultCaller) {
-		this.resultCaller = resultCaller;
-	}
+	public CropImageService(ActivityResultCaller resultCaller) { this.resultCaller = resultCaller; }
 
 	private static final ActivityResultContract<Object, Bitmap> cropImageActivityContract
 			= new ActivityResultContract<Object, Bitmap>() {

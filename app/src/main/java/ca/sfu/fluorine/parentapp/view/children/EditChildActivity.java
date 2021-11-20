@@ -45,9 +45,14 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextFirstName.addTextChangedListener(watcher);
 			binding.editTextLastName.addTextChangedListener(watcher);
 
-			binding.displayChildImage.setImageBitmap(imageInternalStorage.loadImage(child.getPhotoFileName()));
+			// Initial display child image
+			if(child.getPhotoFileName() == null){
+				binding.displayChildImage.setImageResource(R.drawable.robot);
+				binding.deleteChildImage.setEnabled(false);
+			}else{
+				binding.displayChildImage.setImageBitmap(imageInternalStorage.loadImage(child.getPhotoFileName()));
+			}
 
-			// TODO: Set up the icon (if possible)
 		}
 
 		// Activate more buttons

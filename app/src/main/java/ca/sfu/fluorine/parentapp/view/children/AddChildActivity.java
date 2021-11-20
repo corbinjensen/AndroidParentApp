@@ -107,13 +107,14 @@ public class AddChildActivity extends AppCompatActivity {
     public void onChangeIconButtonClicked(View btnView) {
         cropImageService.launch((Bitmap resultImage) -> {
                 if(resultImage != null){
-                    icon = resultImage;
+                    binding.displayChildImage.setImageBitmap(resultImage);
                 }
             });
     }
 
     public void onDeleteIconButtonClicked(View btnView) {
         icon = null;
+        binding.displayChildImage.setImageResource(R.drawable.robot);
         // Disabled this button as no photo to delete
         btnView.setEnabled(false);
     }
