@@ -134,6 +134,12 @@
         </a>
     </string>
 
+    <string name="robot_empty_image_citation">Robot by Adrien Coquet from
+        <a href="https://thenounproject.com/search/?q=robot&amp;i=1749583">
+            thenounproject.com
+        </a>
+    </string>
+
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
     <string name="icons">Icons:</string>
