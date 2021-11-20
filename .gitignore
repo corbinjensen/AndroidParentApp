@@ -169,7 +169,7 @@ obj/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 .idea/deploymentTargetDropDown.xml
-
+.idea/git_toolbox_prj.xml
 # OS-specific files
 .DS_Store
 .DS_Store?
