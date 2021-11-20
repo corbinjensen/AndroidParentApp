@@ -45,10 +45,9 @@ public class Child {
         return createdTime;
     }
 
-    public void updateName(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
+    public void updateName(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.photoFileName = photoFileName;
     }
 
     public static Child getUnspecifiedChild() {
