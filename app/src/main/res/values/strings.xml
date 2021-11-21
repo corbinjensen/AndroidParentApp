@@ -163,4 +163,5 @@
     <string name="empty_state_children_message">Tap the button on the bottom right to add a child</string>
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
+    <string name="current_child">Current Child</string>
 </resources>
