@@ -9,6 +9,12 @@ import androidx.room.PrimaryKey;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
+/**
+ * Represents Task table in the database.
+ *
+ * This table has foreign key pointing to the child table.
+ * If the referenced child get deleted, then the foreign key will set to NULL
+ */
 @Entity(tableName = "tasks",
 		foreignKeys = @ForeignKey(
 				entity = Child.class,
@@ -23,6 +29,7 @@ public class Task {
 
 	private String name;
 
+	// This filed will automatically set to NULL when the referenced child get deleted
 	@ColumnInfo(name = "child_turn_id", defaultValue = "'NULL'")
 	private Integer childId;
 

@@ -10,6 +10,8 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 /**
  * Intermediate data class to represents one-to-one relationship
  * between Task and Child models
+ *
+ * Each task either associate with 0 or 1 child
  */
 public class TaskAndChild {
 	@Embedded Task task;
