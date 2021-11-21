@@ -1,6 +1,9 @@
 package ca.sfu.fluorine.parentapp.model.task;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Embedded;
+import androidx.room.Relation;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
@@ -12,10 +15,12 @@ public class TaskAndChild {
 	@Embedded Task task;
 	@Embedded Child child;
 
+	@NonNull
 	public Task getTask() {
 		return task;
 	}
 
+	@Nullable
 	public Child getChild() {
 		return child;
 	}

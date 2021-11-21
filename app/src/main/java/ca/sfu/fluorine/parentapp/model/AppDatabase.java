@@ -38,6 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
 							context.getApplicationContext(),
 							AppDatabase.class,
 							DATABASE_NAME)
+					.fallbackToDestructiveMigration()
 					.allowMainThreadQueries() // Allow database to run on the UI thread
 					.build();
 		}

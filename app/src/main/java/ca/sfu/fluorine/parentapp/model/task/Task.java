@@ -1,6 +1,7 @@
 package ca.sfu.fluorine.parentapp.model.task;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -13,7 +14,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 				entity = Child.class,
 				parentColumns = "child_id",
 				childColumns = "child_turn_id",
-				onDelete = ForeignKey.CASCADE
+				onDelete = ForeignKey.SET_NULL
 		))
 public class Task {
 	@ColumnInfo(name = "task_id")
@@ -22,10 +23,10 @@ public class Task {
 
 	private String name;
 
-	@ColumnInfo(name = "child_turn_id", index = true)
-	private int childId;
+	@ColumnInfo(name = "child_turn_id", defaultValue = "'NULL'")
+	private Integer childId;
 
-	public Task(String name, int childId) {
+	public Task(String name, Integer childId) {
 		this.name = name;
 		this.childId = childId;
 	}
@@ -42,7 +43,8 @@ public class Task {
 		return name;
 	}
 
-	public int getChildId() {
+	@Nullable
+	public Integer getChildId() {
 		return childId;
 	}
 
@@ -50,7 +52,7 @@ public class Task {
 		this.name = name;
 	}
 
-	public void setChildId(int childId) {
+	public void setChildId(@Nullable Integer childId) {
 		this.childId = childId;
 	}
 
