@@ -31,16 +31,22 @@ public class AddTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Binding views
         binding = ActivityTaskFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.new_task);
 
+        // Set up database
         database = AppDatabase.getInstance(this);
         children = database.childDao().getAllChildren();
+
+        // Set up the menu
         childrenArrayAdapter = new ChildrenAutoCompleteAdapter(this, children);
         setupMenuWithImages();
 
+        // Add listeners
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
-
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
 

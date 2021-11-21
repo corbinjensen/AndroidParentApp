@@ -38,6 +38,7 @@ public class NewCoinFlipFragment extends Fragment {
 		} else {
 			children.add(Child.getUnspecifiedChild());
 		}
+		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children);
 	}
 
 	@Override

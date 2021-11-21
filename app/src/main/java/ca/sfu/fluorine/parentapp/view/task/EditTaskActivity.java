@@ -30,6 +30,7 @@ public class EditTaskActivity extends AddTaskActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.task_details);
 
         // Get the task id from intent then fetch from database
         List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
@@ -50,13 +51,12 @@ public class EditTaskActivity extends AddTaskActivity {
             binding.editTaskName.setText(taskAndChild.getTask().getName());
         }
 
-        setTitle("Edit Task");
+        // Show the hidden buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
         binding.buttonCompleteTask.setVisibility(View.VISIBLE);
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
         binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
-
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
     }
