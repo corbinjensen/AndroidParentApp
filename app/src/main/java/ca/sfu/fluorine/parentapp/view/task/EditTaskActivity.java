@@ -38,9 +38,16 @@ public class EditTaskActivity extends AddTaskActivity {
         if (!tasks.isEmpty()) {
             taskAndChild = tasks.get(0);
             Child child = taskAndChild.getChild();
+            if (child == null) {
+                child = Child.getUnspecifiedChild();
+                binding.dropdownSelection.setText(R.string.no_children);
+            } else {
+                binding.dropdownSelection.setText(
+                        getString(R.string.full_name, child.getFirstName(), child.getLastName()),
+                        false);
+            }
             childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
-            binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
 
         setTitle("Edit Task");

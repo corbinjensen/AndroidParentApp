@@ -26,13 +26,12 @@ import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;
-	private List<Child> children;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppDatabase database = AppDatabase.getInstance(requireContext());
-		children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
+		List<Child> children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
@@ -52,20 +51,12 @@ public class NewCoinFlipFragment extends Fragment {
 	}
 
 	public void setupMenuWithImages() {
-		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
-				requireContext(), children);
 		// Pre-select the first choice
-		Child first = children.get(0);
+		Child first = childrenArrayAdapter.getItem(0);
 		childrenArrayAdapter.setSelectedChild(first);
 		binding.dropdownSelection.setText(
 				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
 				false);
-
-		// Set up the adapter and listener for the dropdown menu
-		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-			childrenArrayAdapter.setSelectedChild(children.get(i))
-		);
 	}
 
 	private void setupButton() {
