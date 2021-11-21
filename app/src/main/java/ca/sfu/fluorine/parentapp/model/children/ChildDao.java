@@ -47,7 +47,7 @@ public abstract class ChildDao {
 	// Get the next child according to their creation time
 	// if the last child's turn is done, then returns the first created child
 	@Transaction
-	public int getNextChildId(@NonNull Child child) {
+	public int getNextChildId(Child child) {
 		List<Integer> ids = getFirstChildIdAfterCreationTime(child.getCreatedTime());
 		if (ids.isEmpty()) {
 			ids = getFirstCreatedChildId();

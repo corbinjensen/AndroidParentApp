@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
 /**
- * CoinResult.java
+ * Represent the coin results table in the database.
  *
- * This class represents a coin flip.
+ * This table has foreign key pointing to child data.
  */
 @Entity(
         tableName = "coin_result",

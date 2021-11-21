@@ -29,6 +29,6 @@ public abstract class TaskDao {
 	public abstract void deleteTask(Task task);
 
 
-	@Query("SELECT * FROM tasks JOIN children ON child_turn_id == child_id")
+	@Query("SELECT * FROM tasks LEFT JOIN children ON child_turn_id == child_id")
 	public abstract List<TaskAndChild> getAllTasksWithChildren();
 }
