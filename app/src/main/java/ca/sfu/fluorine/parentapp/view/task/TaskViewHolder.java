@@ -41,10 +41,16 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
         taskName.setText(taskAndChild.getTask().getName());
 
-	    Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
-            .loadImage(taskAndChild.getChild().getPhotoFileName());
-	    if(childTaskPhoto != null) {
-            childPhotoTask.setImageBitmap(childTaskPhoto);
-        }
+	    if (taskAndChild.getChild() != null){
+			Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
+					.loadImage(taskAndChild.getChild().getPhotoFileName());
+			if(childTaskPhoto != null) {
+				childPhotoTask.setImageBitmap(childTaskPhoto);
+			}
+		}else{
+	    	childPhotoTask.setImageResource(R.drawable.robot);
+	    }
+
+
     }
 }
