@@ -15,7 +15,7 @@ public abstract class CoinResultDao {
 	@Transaction
 	@Query("SELECT * FROM coin_result JOIN children" +
 			" ON selected_child_id == children.child_id ORDER BY dateTimeOfFlip DESC")
-	public abstract List<CoinResultWithChild> getAllCoinResultsWithChildren();
+	public abstract List<CoinResultAndChild> getAllCoinResultsWithChildren();
 
 	@Insert
 	public abstract void addNewCoinResult(CoinResult coinResult);

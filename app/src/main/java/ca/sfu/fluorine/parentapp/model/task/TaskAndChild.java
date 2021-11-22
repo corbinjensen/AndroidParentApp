@@ -13,7 +13,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  *
  * Each task either associate with 0 or 1 child
  */
-public class TaskWithChild {
+public class TaskAndChild {
 	@Embedded Task task;
 	@Embedded Child child;
 

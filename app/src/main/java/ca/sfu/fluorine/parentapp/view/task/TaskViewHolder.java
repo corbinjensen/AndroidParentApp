@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.model.task.TaskWithChild;
+import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
@@ -32,17 +32,17 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
 	}
 
-    public void populateData(Context context, TaskWithChild taskWithChild) {
-        if(taskWithChild.getChild() == null){
+    public void populateData(Context context, TaskAndChild taskAndChild) {
+        if(taskAndChild.getChild() == null){
         	childNameTask.setText(R.string.nullChildForTask);
 		}else {
-			childNameTask.setText(taskWithChild.getChild().getFirstName());
+			childNameTask.setText(taskAndChild.getChild().getFirstName());
 		}
 
-        taskName.setText(taskWithChild.getTask().getName());
+        taskName.setText(taskAndChild.getTask().getName());
 
 	    Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
-            .loadImage(taskWithChild.getChild().getPhotoFileName());
+            .loadImage(taskAndChild.getChild().getPhotoFileName());
 	    if(childTaskPhoto != null) {
             childPhotoTask.setImageBitmap(childTaskPhoto);
         }

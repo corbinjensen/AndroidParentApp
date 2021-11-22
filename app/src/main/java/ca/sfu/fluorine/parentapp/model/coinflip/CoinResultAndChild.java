@@ -11,7 +11,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
  *
  * Each coin result associate with exactly one child
  */
-public class CoinResultWithChild {
+public class CoinResultAndChild {
 	@Embedded CoinResult coinResult;
 	@Embedded Child child;
 
