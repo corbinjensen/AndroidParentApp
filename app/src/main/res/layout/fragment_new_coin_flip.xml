@@ -117,7 +117,7 @@
         style="@style/icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="@string/current_child"
+        android:contentDescription="@string/next_turn"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="@+id/coin_side_selection"
         app:layout_constraintTop_toTopOf="@+id/textView3"

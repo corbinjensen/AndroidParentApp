@@ -23,8 +23,13 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
 
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
-									   @NonNull List<Child> children) {
+									   @NonNull List<Child> children,
+									   boolean hasUnassignedChild) {
 		super(context, 0, children);
+		if (hasUnassignedChild) {
+			add(Child.getUnspecifiedChild());
+		}
+
 	}
 
 	@NonNull

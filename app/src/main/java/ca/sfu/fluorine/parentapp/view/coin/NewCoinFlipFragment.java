@@ -38,10 +38,8 @@ public class NewCoinFlipFragment extends Fragment {
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
-		} else {
-			children.add(Child.getUnspecifiedChild());
 		}
-		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children);
+		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, true);
 		storage = ImageInternalStorage.getInstance(requireContext());
 	}
 
