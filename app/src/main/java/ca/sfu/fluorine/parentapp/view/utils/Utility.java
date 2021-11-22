@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -61,5 +63,24 @@ public class Utility {
         } else {
             return context.getString(R.string.full_name, child.getFirstName(), child.getLastName());
         }
+    }
+
+    public static TextWatcher makeTextWatcher(Runnable callbackOnChange) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                callbackOnChange.run();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
     }
 }

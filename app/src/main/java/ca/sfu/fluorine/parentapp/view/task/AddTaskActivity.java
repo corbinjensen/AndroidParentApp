@@ -3,7 +3,6 @@ package ca.sfu.fluorine.parentapp.view.task;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
@@ -75,20 +74,8 @@ public class AddTaskActivity extends AppCompatActivity {
         });
     }
 
-    final TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            binding.buttonSaveTask.setEnabled(areAllFieldsFilled());
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-    };
+    final TextWatcher watcher = Utility.makeTextWatcher(() ->
+            binding.buttonSaveTask.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
         String taskName = binding.editTaskName.getText().toString();
