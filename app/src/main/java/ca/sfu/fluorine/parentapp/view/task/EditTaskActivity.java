@@ -3,6 +3,7 @@ package ca.sfu.fluorine.parentapp.view.task;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,8 +33,12 @@ public class EditTaskActivity extends AddTaskActivity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.task_details);
 
+        binding.editTaskName.removeTextChangedListener(watcher);
+        binding.dropdownSelection.removeTextChangedListener(watcher);
+
         // Get the task id from intent then fetch from database
-        List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
+        List<TaskAndChild> tasks = database.taskDao()
+                .getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
 
         // Populate the data
         if (!tasks.isEmpty()) {
@@ -46,6 +51,7 @@ public class EditTaskActivity extends AddTaskActivity {
                 binding.dropdownSelection.setText(
                         getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                         false);
+                updateImage(child);
             }
             childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());

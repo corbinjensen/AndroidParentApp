@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -77,21 +79,18 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void setupMenuWithImages() {
         // Pre-select the first choice
-        selectChildAt(0);
-
-        // Set up the adapter and listener for the dropdown menu
-        binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-        binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-                childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i))
-        );
-    }
-
-    void selectChildAt(int position) {
-        Child child = childrenArrayAdapter.getItem(position);
+        Child child = childrenArrayAdapter.getItem(0);
         childrenArrayAdapter.setSelectedChild(child);
         binding.dropdownSelection.setText(
                 getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                 false);
+
+        // Set up the adapter and listener for the dropdown menu
+        binding.dropdownSelection.setAdapter(childrenArrayAdapter);
+        binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
+            childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
+            updateImage(childrenArrayAdapter.getItem(i));
+        });
     }
 
     final TextWatcher watcher = new TextWatcher() {
@@ -113,5 +112,20 @@ public class AddTaskActivity extends AppCompatActivity {
         String taskName = binding.editTaskName.getText().toString();
         String child = binding.dropdownSelection.getText().toString();
         return !taskName.isEmpty() && !child.isEmpty();
+    }
+
+     void updateImage(@NonNull Child child) {
+        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+            binding.currentChildPhoto.setVisibility(View.INVISIBLE);
+        } else {
+            binding.currentChildPhoto.setVisibility(View.VISIBLE);
+            Bitmap bm = ImageInternalStorage.getInstance(this)
+                    .loadImage(child.getPhotoFileName());
+            if (bm == null) {
+                binding.currentChildPhoto.setImageResource(R.drawable.robot);
+            } else {
+                binding.currentChildPhoto.setImageBitmap(bm);
+            }
+        }
     }
 }
