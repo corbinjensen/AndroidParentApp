@@ -7,7 +7,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- *  Child.java - represents a child
+ *  Represents a child table in the database
  */
 @Entity(tableName = "children")
 public class Child {

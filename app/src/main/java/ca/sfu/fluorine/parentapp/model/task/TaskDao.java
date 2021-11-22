@@ -17,7 +17,7 @@ public abstract class TaskDao {
 	@Query("SELECT * FROM tasks JOIN children " +
 			"ON child_turn_id == child_id " +
 			"WHERE task_id = :taskId LIMIT 1")
-	public abstract List<TaskWithChild> getTaskByIdWithChild(int taskId);
+	public abstract List<TaskAndChild> getTaskByIdWithChild(int taskId);
 
 	@Insert
 	public abstract void addTask(Task task);
@@ -29,6 +29,6 @@ public abstract class TaskDao {
 	public abstract void deleteTask(Task task);
 
 
-	@Query("SELECT * FROM tasks JOIN children ON child_turn_id == child_id")
-	public abstract List<TaskWithChild> getAllTasksWithChildren();
+	@Query("SELECT * FROM tasks LEFT JOIN children ON child_turn_id == child_id")
+	public abstract List<TaskAndChild> getAllTasksWithChildren();
 }

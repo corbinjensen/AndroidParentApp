@@ -4,52 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.coin.NewCoinFlipFragment" >
+    android:paddingHorizontal="32dp"
+    tools:context=".view.coin.NewCoinFlipFragment">
 
     <View
-        android:id="@+id/divider1"
+        android:id="@+id/first_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3333" />
 
     <View
-        android:id="@+id/divider4"
+        android:id="@+id/second_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6666" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="32dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="32dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown_menu"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/divider1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintBottom_toTopOf="@+id/first_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <AutoCompleteTextView
@@ -57,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title_children"
-            android:inputType="none" />
+            android:inputType="none"
+            tools:ignore="TextContrastCheck" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,46 +57,48 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/pick_a_child"
-        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toTopOf="@+id/dropdown_menu"
         app:layout_constraintStart_toStartOf="@+id/dropdown_menu" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/pick_a_side"
-        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toTopOf="@+id/coin_side_selection"
-        app:layout_constraintStart_toStartOf="@+id/guideline3" />
+        app:layout_constraintStart_toStartOf="@+id/coin_side_selection" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/coin_side_selection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:singleSelection="true"
+        app:checkedButton="@+id/head"
+        app:layout_constraintBottom_toTopOf="@+id/second_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_divider"
         app:selectionRequired="true"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/divider1"
-        app:checkedButton="@+id/head">
+        app:singleSelection="true">
 
         <Button
             android:id="@+id/head"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/head"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/head" />
 
         <Button
             android:id="@+id/tail"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tail"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/tail" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <Button
@@ -116,8 +107,20 @@
         android:layout_height="wrap_content"
         android:text="@string/flip_coin_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/second_divider" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/current_child"
+        style="@style/icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/current_child"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/coin_side_selection"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        tools:src="@drawable/robot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

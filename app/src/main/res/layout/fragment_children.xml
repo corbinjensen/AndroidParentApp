@@ -18,7 +18,7 @@
         app:emptyStateMessage="@string/empty_state_children_message"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_add_child"
+        android:id="@+id/button_save_child"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

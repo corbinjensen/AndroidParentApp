@@ -56,7 +56,7 @@ public class EditChildActivity extends AddChildActivity {
 		}
 
 		// Activate more buttons
-		binding.buttonAddChild.setOnClickListener(editChildrenDialogListener);
+		binding.buttonSaveChild.setOnClickListener(editChildrenDialogListener);
 		binding.buttonDeleteChild.setVisibility(View.VISIBLE);
 		binding.buttonDeleteChild.setOnClickListener(deleteChildDialogListener);
 	}

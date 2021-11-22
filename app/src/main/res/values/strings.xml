@@ -83,7 +83,7 @@
     <string name="pick_a_child">Pick a child</string>
     <string name="pick_a_side">Pick a side</string>
 
-    <string name="no_children">No children</string>
+    <string name="no_children">Unassigned</string>
     <string name="full_name">%1$s %2$s</string>
     <string name="full_name_with_indicator">%1$s %2$s (last picked)</string>
 
@@ -148,9 +148,11 @@
     <string name="save_task">Save Task</string>
     <string name="delete_task">Delete Task</string>
     <string name="task_name">Task Name</string>
+    <string name="new_task">New Task</string>
+    <string name="task_details">Task Details</string>
     <string name="add_new_task">Add new task</string>
     <string name="edit_task_confirm">Do you want to save your changes?</string>
-    <string name="add_a_task">Add a Task</string>
+    <string name="add_task">Add a Task</string>
     <string name="photo_of_child">Photo of child</string>
     <string name="edit_task">Edit Task</string>
     <string name="complete_task">Complete Task</string>
@@ -158,8 +160,9 @@
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
-    <string name="empty_state_children_message">It\'s empty here</string>
-    <string name="empty_state_coin_flip_message">It\'s empty here</string>
-    <string name="empty_state_task_message">It\'s empty here</string>
+    <string name="empty_state_children_message">Tap the button on the bottom right to add a child</string>
+    <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
+    <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
+    <string name="current_child">Current Child</string>
     <string name="nullChildForTask">No Children are assigned to this Task</string>
 </resources>
