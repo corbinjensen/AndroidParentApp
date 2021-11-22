@@ -14,27 +14,30 @@
         android:id="@+id/dateTimeFlip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/childNameCoinView" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_flip_child_icon"
+        app:layout_constraintStart_toStartOf="@+id/childNameCoinView" />
 
     <TextView
         android:id="@+id/childNameCoinView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/coin_flip_child_icon"
+        app:layout_constraintTop_toTopOf="@+id/coin_flip_child_icon" />
 
     <TextView
         android:id="@+id/didPickerWin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_flip_child_icon"
         app:layout_constraintStart_toEndOf="@+id/dateTimeFlip" />
 
     <ImageView
@@ -42,9 +45,17 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/heads_desc"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_heads" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/coin_flip_child_icon"
+        style="@style/icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/robot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
