@@ -3,7 +3,6 @@ package ca.sfu.fluorine.parentapp.model.task;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Embedded;
-import androidx.room.Relation;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 

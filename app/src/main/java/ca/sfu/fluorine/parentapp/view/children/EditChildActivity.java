@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.util.List;
 import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditChildActivity extends AddChildActivity {

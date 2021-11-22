@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

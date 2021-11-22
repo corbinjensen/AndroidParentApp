@@ -1,7 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();

@@ -2,7 +2,6 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class ChildViewHolder extends RecyclerView.ViewHolder {

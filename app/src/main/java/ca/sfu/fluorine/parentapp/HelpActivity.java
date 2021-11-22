@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.widget.TextView;
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityHelpBinding;
 

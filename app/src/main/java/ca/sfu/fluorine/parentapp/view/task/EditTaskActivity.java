@@ -1,25 +1,15 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;

@@ -1,7 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.icu.text.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class CoinFlipViewHolder extends RecyclerView.ViewHolder {

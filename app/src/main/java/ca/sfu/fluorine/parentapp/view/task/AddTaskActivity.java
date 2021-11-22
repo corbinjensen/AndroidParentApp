@@ -1,14 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +14,6 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
