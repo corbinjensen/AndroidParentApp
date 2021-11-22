@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.children;
 
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,10 +7,6 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.UUID;
@@ -109,7 +104,7 @@ public class AddChildActivity extends AppCompatActivity {
 
     public void onDeleteIconButtonClicked(View btnView) {
         icon = null;
-        binding.displayChildImage.setImageResource(R.drawable.robot);
+        binding.displayChildImage.setImageResource(R.drawable.default_icon);
         // Disabled this button as no photo to delete
         btnView.setEnabled(false);
     }

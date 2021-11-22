@@ -48,7 +48,7 @@ public class Utility {
             Bitmap image = ImageInternalStorage.getInstance(context)
                     .loadImage(child.getPhotoFileName());
             if (image == null) {
-                imageView.setImageResource(R.drawable.robot);
+                imageView.setImageResource(R.drawable.default_icon);
             } else {
                 imageView.setImageBitmap(image);
             }
