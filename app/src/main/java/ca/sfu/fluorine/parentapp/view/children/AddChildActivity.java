@@ -22,6 +22,7 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
  * AddChildActivity.java - represents a user input form
@@ -87,19 +88,8 @@ public class AddChildActivity extends AppCompatActivity {
         return !firstName.isEmpty() && !lastName.isEmpty();
     }
 
-    void makeConfirmDialog(@StringRes int titleId,
-                           @StringRes int messageId,
-                           @NonNull DialogInterface.OnClickListener confirmAction) {
-        new AlertDialog.Builder(this)
-                .setTitle(titleId)
-                .setMessage(messageId)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, confirmAction)
-                .setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.dismiss())
-                .show();
-    }
-
-    private final View.OnClickListener addChildrenDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener addChildrenDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.add_new_child,
             R.string.edit_child_confirm,
             (dialogInterface, i) -> {

@@ -23,6 +23,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
@@ -53,7 +54,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
-    final View.OnClickListener addTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener addTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.add_new_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
@@ -63,18 +65,6 @@ public class AddTaskActivity extends AppCompatActivity {
                 finish();
             }
     );
-
-    void makeConfirmDialog(@StringRes int titleId,
-                           @StringRes int messageId,
-                           @NonNull DialogInterface.OnClickListener confirmAction) {
-        new AlertDialog.Builder(this)
-                .setTitle(titleId)
-                .setMessage(messageId)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, confirmAction)
-                .setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.dismiss())
-                .show();
-    }
 
     public void setupMenuWithImages() {
         // Pre-select the first choice

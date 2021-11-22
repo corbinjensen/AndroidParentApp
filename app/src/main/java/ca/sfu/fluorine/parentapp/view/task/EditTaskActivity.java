@@ -23,6 +23,7 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
     private static final String TASK_ID = "taskIndex";
@@ -67,7 +68,8 @@ public class EditTaskActivity extends AddTaskActivity {
         binding.dropdownSelection.addTextChangedListener(watcher);
     }
 
-    private final View.OnClickListener editTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener editTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.edit_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
@@ -77,7 +79,8 @@ public class EditTaskActivity extends AddTaskActivity {
                 finish();
             });
 
-    private final View.OnClickListener deleteTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener deleteTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.delete_task,
             R.string.delete_child_confirm,
             (dialogInterface, i) -> {
@@ -85,7 +88,8 @@ public class EditTaskActivity extends AddTaskActivity {
                 finish();
             });
 
-    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.complete_task,
             R.string.complete_task_message,
             (dialogInterface, i) -> {
@@ -95,7 +99,6 @@ public class EditTaskActivity extends AddTaskActivity {
                 database.taskDao().updateTask(task);
                 finish();
             });
-
 
     @NonNull
     public static Intent makeIntent(Context context, int taskId) {

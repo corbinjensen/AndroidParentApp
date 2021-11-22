@@ -14,6 +14,7 @@ import java.util.UUID;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditChildActivity extends AddChildActivity {
 	// For intent data
@@ -67,7 +68,8 @@ public class EditChildActivity extends AddChildActivity {
 		return intent;
 	}
 
-	private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
+	private final View.OnClickListener editChildrenDialogListener = (btnView) -> Utility.makeConfirmDialog(
+			this,
 			R.string.edit_child,
 			R.string.edit_child_confirm,
 			(dialogInterface, i) -> {
@@ -80,7 +82,8 @@ public class EditChildActivity extends AddChildActivity {
 				finish();
 			});
 
-	private final View.OnClickListener deleteChildDialogListener = (btnView) -> makeConfirmDialog(
+	private final View.OnClickListener deleteChildDialogListener = (btnView) -> Utility.makeConfirmDialog(
+			this,
 			R.string.delete_child,
 			R.string.delete_child_confirm,
 			(dialogInterface, i) -> {
