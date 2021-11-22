@@ -17,12 +17,12 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 	private final TextView dateTimeView;
 	private final TextView childNameView;
 	private final TextView didPickerWinView;
-	private final ImageView coinResultView;
 	private final ImageView childIcon;
 
 	public CoinFlipViewHolder(@NonNull View itemView) {
@@ -30,7 +30,6 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		dateTimeView = itemView.findViewById(R.id.dateTimeFlip);
 		childNameView = itemView.findViewById(R.id.childNameCoinView);
 		didPickerWinView = itemView.findViewById(R.id.didPickerWin);
-		coinResultView = itemView.findViewById(R.id.imageView);
 		childIcon = itemView.findViewById(R.id.coin_flip_child_icon);
 	}
 
@@ -43,7 +42,7 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 				.format(new Date(result.getDateTimeOfFlip()));
 
 		dateTimeView.setText(formatDateTime);
-		childNameView.setText(child.getFirstName());
+		childNameView.setText(Utility.formatChildName(context, child));
 		didPickerWinView.setText(result.didPickerWin() ? R.string.win : R.string.lose);
 		int color = context.getResources().getColor(
 				result.didPickerWin()
@@ -51,13 +50,6 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 						: android.R.color.holo_red_dark,
 				null);
 		didPickerWinView.setTextColor(color);
-		coinResultView.setImageResource(
-				result.getResultIsHead() ? R.drawable.ic_heads : R.drawable.ic_tails);
-		Bitmap bm = ImageInternalStorage.getInstance(context).loadImage(child.getPhotoFileName());
-		if (bm != null) {
-			childIcon.setImageBitmap(bm);
-		} else {
-			childIcon.setImageResource(R.drawable.robot);
-		}
+		Utility.setupImage(context, childIcon, child);
 	}
 }

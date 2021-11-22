@@ -73,13 +73,13 @@ public class AddTaskActivity extends AppCompatActivity {
         binding.dropdownSelection.setText(
                 getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                 false);
-        updateImage(child);
+        Utility.setupImage(this, binding.currentChildPhoto, child);
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setAdapter(childrenArrayAdapter);
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
             childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
-            updateImage(childrenArrayAdapter.getItem(i));
+            Utility.setupImage(this, binding.currentChildPhoto, child);
         });
     }
 
@@ -102,20 +102,5 @@ public class AddTaskActivity extends AppCompatActivity {
         String taskName = binding.editTaskName.getText().toString();
         String child = binding.dropdownSelection.getText().toString();
         return !taskName.isEmpty() && !child.isEmpty();
-    }
-
-     void updateImage(@NonNull Child child) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
-            binding.currentChildPhoto.setVisibility(View.INVISIBLE);
-        } else {
-            binding.currentChildPhoto.setVisibility(View.VISIBLE);
-            Bitmap bm = ImageInternalStorage.getInstance(this)
-                    .loadImage(child.getPhotoFileName());
-            if (bm == null) {
-                binding.currentChildPhoto.setImageResource(R.drawable.robot);
-            } else {
-                binding.currentChildPhoto.setImageBitmap(bm);
-            }
-        }
     }
 }

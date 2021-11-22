@@ -47,15 +47,11 @@ public class EditTaskActivity extends AddTaskActivity {
             Child child = taskAndChild.getChild();
             if (child == null) {
                 child = Child.getUnspecifiedChild();
-                binding.dropdownSelection.setText(R.string.no_children);
-            } else {
-                binding.dropdownSelection.setText(
-                        getString(R.string.full_name, child.getFirstName(), child.getLastName()),
-                        false);
-                updateImage(child);
             }
+            String childName = Utility.formatChildName(this, child);
+            binding.dropdownSelection.setText(childName, false);
+            Utility.setupImage(this, binding.currentChildPhoto, child);
             childrenArrayAdapter.setSelectedChild(child);
-            binding.editTaskName.setText(taskAndChild.getTask().getName());
         }
 
         // Show the hidden buttons

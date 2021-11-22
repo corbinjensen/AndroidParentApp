@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class ChildViewHolder extends RecyclerView.ViewHolder {
     TextView titleCreationName;
@@ -28,14 +29,10 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
 
     public void populateData(Context context, Child child) {
         // change the text to display child name
-        titleCreationName.setText(child.getFirstName());
+        titleCreationName.setText(Utility.formatChildName(context, child));
 
         //Change display image of child
-        ImageInternalStorage imageStorage = ImageInternalStorage.getInstance(context);
-        Bitmap bitmapImage = imageStorage.loadImage(child.getPhotoFileName());
-        if (bitmapImage != null) {
-            childImage.setImageBitmap(imageStorage.loadImage(child.getPhotoFileName()));
-        }
+        Utility.setupImage(context, childImage, child);
 
         // make the list item clickable
         itemView.setOnClickListener((View view) -> {

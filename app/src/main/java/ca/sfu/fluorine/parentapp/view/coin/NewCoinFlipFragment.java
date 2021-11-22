@@ -19,6 +19,7 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
  * NewCoinFlipFragment
@@ -61,12 +62,13 @@ public class NewCoinFlipFragment extends Fragment {
 				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
 				false);
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		updateCurrentImage();
+		Utility.setupImage(requireContext(), binding.currentChild, first);
 
 		// Add listener
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
-			childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
-			updateCurrentImage();
+			Child child = childrenArrayAdapter.getItem(i);
+			childrenArrayAdapter.setSelectedChild(child);
+			Utility.setupImage(requireContext(), binding.currentChild, child);
 		});
 	}
 
@@ -81,20 +83,5 @@ public class NewCoinFlipFragment extends Fragment {
 			NavHostFragment.findNavController(this).navigate(action);
 		};
 		binding.flipButton.setOnClickListener(listener);
-	}
-
-	private void updateCurrentImage() {
-		Child child = childrenArrayAdapter.getSelectedChild();
-		if (child.getId() == Child.getUnspecifiedChild().getId()) {
-			binding.currentChild.setVisibility(View.INVISIBLE);
-		} else {
-			binding.currentChild.setVisibility(View.VISIBLE);
-			Bitmap bm = storage.loadImage(child.getPhotoFileName());
-			if (bm == null) {
-				binding.currentChild.setImageResource(R.drawable.robot);
-			} else {
-				binding.currentChild.setImageBitmap(bm);
-			}
-		}
 	}
 }
