@@ -38,6 +38,7 @@
 
     <Button
         android:id="@+id/button_delete_task"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -52,6 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:backgroundTint="@android:color/holo_green_dark"
         android:text="@string/complete_task"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

@@ -27,7 +27,6 @@ import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     AppDatabase database;
-    private List<Child> children;
     ChildrenAutoCompleteAdapter childrenArrayAdapter;
 
     @Override
@@ -41,10 +40,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
         // Set up database
         database = AppDatabase.getInstance(this);
-        children = database.childDao().getAllChildren();
+        List<Child> children = database.childDao().getAllChildren();
 
         // Set up the menu
-        childrenArrayAdapter = new ChildrenAutoCompleteAdapter(this, children);
+        childrenArrayAdapter = new ChildrenAutoCompleteAdapter(this, children, true);
         setupMenuWithImages();
 
         // Add listeners
@@ -84,6 +83,7 @@ public class AddTaskActivity extends AppCompatActivity {
         binding.dropdownSelection.setText(
                 getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                 false);
+        updateImage(child);
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setAdapter(childrenArrayAdapter);
