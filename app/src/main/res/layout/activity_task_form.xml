@@ -65,7 +65,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/task_name"
         app:layout_constraintStart_toStartOf="@+id/task_name"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/current_turn"
+        android:text="@string/next_turn"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintStart_toStartOf="@+id/task_name"
         app:layout_constraintTop_toBottomOf="@+id/task_name" />
@@ -98,7 +98,7 @@
         style="@style/icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="@string/current_child"
+        android:contentDescription="@string/next_turn"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView4"
