@@ -28,7 +28,7 @@ public class EditChildActivity extends AddChildActivity {
 
 		// Populate the data
 		int childId = getIntent().getIntExtra(CHILD_ID, DEFAULT);
-		child = database.childDao().getChildById(childId);
+		child = viewModel.getChildById(childId);
 		if (child != null) {
 			// Remove watcher before set text
 			binding.editTextFirstName.removeTextChangedListener(watcher);
@@ -67,7 +67,7 @@ public class EditChildActivity extends AddChildActivity {
 				String lastName = binding.editTextLastName.getText().toString();
 				child.updateName(firstName, lastName);
 				child.updatePhotoFileName(savedFile);
-				database.childDao().updateChild(child);
+				viewModel.updateChild(child);
 				finish();
 			});
 
@@ -77,7 +77,7 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.delete_child_confirm,
 			(dialogInterface, i) -> {
 				imageStorage.deleteImage(child.getPhotoFileName());
-				database.childDao().deleteChild(child);
+				viewModel.deleteChild(child);
 				finish();
 			});
 

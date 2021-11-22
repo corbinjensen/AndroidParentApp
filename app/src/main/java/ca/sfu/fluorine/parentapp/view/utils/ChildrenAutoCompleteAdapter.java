@@ -80,4 +80,12 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	public void setSelectedChild(@NonNull Child selectedChild) {
 		this.selectedChild = selectedChild;
 	}
+
+	public void reset(List<Child> children, boolean hasUnassignedChild) {
+		clear();
+		addAll(children);
+		if (hasUnassignedChild) {
+			add(Child.getUnspecifiedChild());
+		}
+	}
 }

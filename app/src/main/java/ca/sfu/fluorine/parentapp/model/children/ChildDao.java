@@ -1,6 +1,7 @@
 package ca.sfu.fluorine.parentapp.model.children;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,13 +23,13 @@ public abstract class ChildDao {
 	public abstract void deleteChild(Child child);
 
 	@Query("SELECT * FROM children ORDER BY createdTime DESC")
-	public abstract List<Child> getAllChildren();
+	public abstract LiveData<List<Child>> getAllChildren();
 
 	// By the magic of SQL...
 	@Query("SELECT children.* FROM children LEFT JOIN coin_result " +
 			"ON child_id == selected_child_id " +
 			"GROUP BY child_id ORDER BY MAX(coin_result.dateTimeOfFlip)")
-	public abstract List<Child> getAllChildrenOrderByRecentCoinFlips();
+	public abstract LiveData<List<Child>> getAllChildrenOrderByRecentCoinFlips();
 
 	@Nullable
 	@Query("SELECT * FROM children WHERE child_id = :id LIMIT 1")
