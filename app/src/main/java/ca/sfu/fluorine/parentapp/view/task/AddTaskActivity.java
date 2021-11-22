@@ -12,9 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
@@ -22,7 +20,6 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -34,16 +31,22 @@ public class AddTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Binding views
         binding = ActivityTaskFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.new_task);
 
+        // Set up database
         database = AppDatabase.getInstance(this);
         children = database.childDao().getAllChildren();
+
+        // Set up the menu
         childrenArrayAdapter = new ChildrenAutoCompleteAdapter(this, children);
         setupMenuWithImages();
 
+        // Add listeners
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
-
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
 
@@ -61,8 +64,8 @@ public class AddTaskActivity extends AppCompatActivity {
     );
 
     void makeConfirmDialog(@StringRes int titleId,
-                                   @StringRes int messageId,
-                                   @NonNull DialogInterface.OnClickListener confirmAction) {
+                           @StringRes int messageId,
+                           @NonNull DialogInterface.OnClickListener confirmAction) {
         new AlertDialog.Builder(this)
                 .setTitle(titleId)
                 .setMessage(messageId)
@@ -74,20 +77,24 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void setupMenuWithImages() {
         // Pre-select the first choice
-        Child first = children.get(0);
-        childrenArrayAdapter.setSelectedChild(first);
-        binding.dropdownSelection.setText(
-                getString(R.string.full_name, first.getFirstName(), first.getLastName()),
-                false);
+        selectChildAt(0);
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setAdapter(childrenArrayAdapter);
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-                childrenArrayAdapter.setSelectedChild(children.get(i))
+                childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i))
         );
     }
 
-     final TextWatcher watcher = new TextWatcher() {
+    void selectChildAt(int position) {
+        Child child = childrenArrayAdapter.getItem(position);
+        childrenArrayAdapter.setSelectedChild(child);
+        binding.dropdownSelection.setText(
+                getString(R.string.full_name, child.getFirstName(), child.getLastName()),
+                false);
+    }
+
+    final TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
@@ -98,7 +105,8 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) { }
+        public void afterTextChanged(Editable editable) {
+        }
     };
 
     private boolean areAllFieldsFilled() {

@@ -21,6 +21,7 @@ import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
+
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children) {
 		super(context, 0, children);
@@ -41,7 +42,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		Child child = getItem(position);
 
 		// Empty child (or no child)
-		if (child == Child.getUnspecifiedChild()) {
+		if (child.getId() == Child.getUnspecifiedChild().getId()) {
 			childIcon.setImageResource(R.drawable.ic_baseline_nothing);
 		} else {
 			Bitmap icon = ImageInternalStorage
@@ -54,7 +55,8 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 			}
 		}
 		childName.setText(getFullNameFromChild(child));
-		checkmark.setVisibility((child == selectedChild) ? View.VISIBLE : View.INVISIBLE);
+		checkmark.setVisibility(
+				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;
 	}
 
@@ -89,11 +91,13 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 				R.string.full_name, child.getFirstName(), child.getLastName());
 	}
 
+	@NonNull
 	public Child getSelectedChild() {
 		return selectedChild;
 	}
 
-	public void setSelectedChild(Child selectedChild) {
+
+	public void setSelectedChild(@NonNull Child selectedChild) {
 		this.selectedChild = selectedChild;
 	}
 }

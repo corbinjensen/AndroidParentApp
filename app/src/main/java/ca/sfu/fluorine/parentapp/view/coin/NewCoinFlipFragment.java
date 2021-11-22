@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 
 /**
@@ -26,19 +28,21 @@ import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;
-	private List<Child> children;
+	private ImageInternalStorage storage;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppDatabase database = AppDatabase.getInstance(requireContext());
-		children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
+		List<Child> children = database.childDao().getAllChildrenOrderByRecentCoinFlips();
 		if (children.isEmpty()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.flipping_coin_action);
 		} else {
 			children.add(Child.getUnspecifiedChild());
 		}
+		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children);
+		storage = ImageInternalStorage.getInstance(requireContext());
 	}
 
 	@Override
@@ -52,20 +56,20 @@ public class NewCoinFlipFragment extends Fragment {
 	}
 
 	public void setupMenuWithImages() {
-		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
-				requireContext(), children);
 		// Pre-select the first choice
-		Child first = children.get(0);
+		Child first = childrenArrayAdapter.getItem(0);
 		childrenArrayAdapter.setSelectedChild(first);
 		binding.dropdownSelection.setText(
 				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
 				false);
-
-		// Set up the adapter and listener for the dropdown menu
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) ->
-			childrenArrayAdapter.setSelectedChild(children.get(i))
-		);
+		updateCurrentImage();
+
+		// Add listener
+		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
+			childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
+			updateCurrentImage();
+		});
 	}
 
 	private void setupButton() {
@@ -79,5 +83,20 @@ public class NewCoinFlipFragment extends Fragment {
 			NavHostFragment.findNavController(this).navigate(action);
 		};
 		binding.flipButton.setOnClickListener(listener);
+	}
+
+	private void updateCurrentImage() {
+		Child child = childrenArrayAdapter.getSelectedChild();
+		if (child.getId() == Child.getUnspecifiedChild().getId()) {
+			binding.currentChild.setVisibility(View.INVISIBLE);
+		} else {
+			binding.currentChild.setVisibility(View.VISIBLE);
+			Bitmap bm = storage.loadImage(child.getPhotoFileName());
+			if (bm == null) {
+				binding.currentChild.setImageResource(R.drawable.robot);
+			} else {
+				binding.currentChild.setImageBitmap(bm);
+			}
+		}
 	}
 }

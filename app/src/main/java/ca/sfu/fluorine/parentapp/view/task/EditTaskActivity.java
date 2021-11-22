@@ -30,6 +30,7 @@ public class EditTaskActivity extends AddTaskActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.task_details);
 
         // Get the task id from intent then fetch from database
         List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
@@ -38,18 +39,24 @@ public class EditTaskActivity extends AddTaskActivity {
         if (!tasks.isEmpty()) {
             taskAndChild = tasks.get(0);
             Child child = taskAndChild.getChild();
+            if (child == null) {
+                child = Child.getUnspecifiedChild();
+                binding.dropdownSelection.setText(R.string.no_children);
+            } else {
+                binding.dropdownSelection.setText(
+                        getString(R.string.full_name, child.getFirstName(), child.getLastName()),
+                        false);
+            }
             childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
-            binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
 
-        setTitle("Edit Task");
+        // Show the hidden buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
         binding.buttonCompleteTask.setVisibility(View.VISIBLE);
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
         binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
-
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
     }

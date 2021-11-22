@@ -53,7 +53,7 @@ public class AddChildActivity extends AppCompatActivity {
         binding.editTextLastName.addTextChangedListener(watcher);
 
         setTitle(R.string.add_new_child);
-        binding.buttonAddChild.setOnClickListener(addChildrenDialogListener);
+        binding.buttonSaveChild.setOnClickListener(addChildrenDialogListener);
 
         // Set up crop image service
         cropImageServiceLauncher = new CropImageService(this).getServiceLauncher(
@@ -62,7 +62,7 @@ public class AddChildActivity extends AppCompatActivity {
                         icon = resultImage;
                         binding.displayChildImage.setImageBitmap(resultImage);
                         binding.deleteChildImage.setEnabled(true);
-                        binding.buttonAddChild.setEnabled(areAllFieldsFilled());
+                        binding.buttonSaveChild.setEnabled(areAllFieldsFilled());
                     }
                 });
     }
@@ -74,7 +74,7 @@ public class AddChildActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            binding.buttonAddChild.setEnabled(areAllFieldsFilled());
+            binding.buttonSaveChild.setEnabled(areAllFieldsFilled());
         }
 
         @Override
