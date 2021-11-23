@@ -37,20 +37,23 @@ public class EditTaskActivity extends AddTaskActivity {
             if (child == null) {
                 child = Child.getUnspecifiedChild();
                 binding.dropdownSelection.setText(R.string.no_children);
+                binding.buttonCompleteTask.setVisibility(View.GONE);
+                childrenArrayAdapter.setSelectedChild(Child.getUnspecifiedChild());
             } else {
                 binding.dropdownSelection.setText(
                         getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                         false);
                 updateImage(child);
+                binding.buttonCompleteTask.setVisibility(View.VISIBLE);
+                childrenArrayAdapter.setSelectedChild(child);
             }
-            childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
         }
 
         // Show the hidden buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
-        binding.buttonCompleteTask.setVisibility(View.VISIBLE);
+
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
         binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
         binding.editTaskName.addTextChangedListener(watcher);
@@ -62,7 +65,11 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
+                Integer nullChild = childrenArrayAdapter.getSelectedChild().getId();
+                if(nullChild == Child.getUnspecifiedChild().getId()){
+                    nullChild = null;
+                }
+                taskAndChild.getTask().update(taskName, nullChild);
                 database.taskDao().updateTask(taskAndChild.getTask());
                 finish();
             });
@@ -81,13 +88,12 @@ public class EditTaskActivity extends AddTaskActivity {
                 R.string.complete_task_message,
                 (dialogInterface, i) -> {
                     Task task = taskAndChild.getTask();
-                    int nextChildID;
+                    Integer nextChildID;
                     if(taskAndChild.getChild() == null){
                         nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
                     }else{
-                        nextChildID = Integer.parseInt(null);
+                        nextChildID = null;
                     }
-
                     task.update(task.getName(), nextChildID);
                     database.taskDao().updateTask(task);
                     finish();
