@@ -156,14 +156,14 @@
     <string name="photo_of_child">Photo of child</string>
     <string name="edit_task">Edit Task</string>
     <string name="complete_task">Complete Task</string>
-    <string name="complete_task_message">Are you sure you want to confirm?</string>
+    <string name="complete_task_message">This task will be assigned to <b>%s</b></string>
+    <string name="next_turn_info">Next turn: %s</string>
+    <string name="nullChildForTask">No Children are assigned to this Task</string>
+    <string name="next_turn">Next turn</string>
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
     <string name="empty_state_children_message">Tap the button on the bottom right to add a child</string>
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
-    <string name="current_child">Current Child</string>
-    <string name="nullChildForTask">No Children are assigned to this Task</string>
-    <string name="next_turn">Next turn</string>
 </resources>

@@ -61,9 +61,7 @@ public class AddTaskActivity extends AppCompatActivity {
         // Pre-select the first choice
         Child child = childrenArrayAdapter.getItem(0);
         childrenArrayAdapter.setSelectedChild(child);
-        binding.dropdownSelection.setText(
-                getString(R.string.full_name, child.getFirstName(), child.getLastName()),
-                false);
+        binding.dropdownSelection.setText(Utility.formatChildName(this, child));
         Utility.setupImage(this, binding.currentChildPhoto, child);
 
         // Set up the adapter and listener for the dropdown menu

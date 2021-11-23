@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
 public class Child {
     @ColumnInfo(name = "child_id")
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String photoFileName;
@@ -29,7 +29,7 @@ public class Child {
         this.createdTime = System.currentTimeMillis(); // Current UNIX time
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -53,13 +53,12 @@ public class Child {
     public static Child getUnspecifiedChild() {
         if (UNSPECIFIED == null) {
             UNSPECIFIED = new Child("", "", null);
-            UNSPECIFIED.setId(-1);
         }
         return UNSPECIFIED;
     }
 
     // Setters is only serve Room database
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
