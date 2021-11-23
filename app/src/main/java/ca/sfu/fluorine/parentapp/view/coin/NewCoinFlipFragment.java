@@ -28,7 +28,6 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;
-	private ImageInternalStorage storage;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class NewCoinFlipFragment extends Fragment {
 					.navigate(R.id.flipping_coin_action);
 		}
 		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, true);
-		storage = ImageInternalStorage.getInstance(requireContext());
 	}
 
 	@Override
@@ -57,9 +55,7 @@ public class NewCoinFlipFragment extends Fragment {
 		// Pre-select the first choice
 		Child first = childrenArrayAdapter.getItem(0);
 		childrenArrayAdapter.setSelectedChild(first);
-		binding.dropdownSelection.setText(
-				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
-				false);
+		binding.dropdownSelection.setText(Utility.formatChildName(requireContext(), first));
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
 		Utility.setupImage(requireContext(), binding.currentChild, first);
 
@@ -74,11 +70,15 @@ public class NewCoinFlipFragment extends Fragment {
 	private void setupButton() {
 		View.OnClickListener listener = (btnView) -> {
 			boolean isHead = binding.coinSideSelection.getCheckedButtonId() == R.id.head;
+			Child selected = childrenArrayAdapter.getSelectedChild();
 			NewCoinFlipFragmentDirections.FlippingCoinAction action =
-					NewCoinFlipFragmentDirections
-							.flippingCoinAction()
-							.setChildId(childrenArrayAdapter.getSelectedChild().getId())
-							.setCoinSide(isHead);
+					NewCoinFlipFragmentDirections.flippingCoinAction().setCoinSide(isHead);
+			if (selected.getId() == null) {
+				action.setWithoutChild(true);
+			} else {
+				action.setWithoutChild(false);
+				action.setChildId(selected.getId());
+			}
 			NavHostFragment.findNavController(this).navigate(action);
 		};
 		binding.flipButton.setOnClickListener(listener);

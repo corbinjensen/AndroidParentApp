@@ -25,6 +25,10 @@
             app:popUpTo="@id/newCoinFlipFragment"
             app:popUpToInclusive="true" />
         <argument
+            android:name="withoutChild"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
             android:name="childId"
             app:argType="integer"
             android:defaultValue="-1" />
