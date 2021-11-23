@@ -96,62 +96,59 @@
     <string name="help">Help</string>
     <string name="about_the_author">About the author</string>
     <string name="resources">Resources</string>
-    <string name="developers">Developers:</string>
-    <string name="citations">Citations:</string>
+    <string name="developers">Developers</string>
+    <string name="icons">Icons</string>
+    <string name="external_libraries">Open-source third-party Libraries</string>
+    <string name="citations">Resources</string>
     <string name="grace_humer">Grace Humer</string>
     <string name="viet_hung_nguyen">Viet-Hung Nguyen</string>
     <string name="gavin_nagra">Gavin Nagra</string>
     <string name="corbin_jensen">Corbin Jensen</string>
     <string name="about_app">Created for SFU CMPT 276 by team Fluorine.</string>
     <string name="app_icon_citation">App icon:
-        <a href="https://thenounproject.com/search/?q=parent&amp;i=5036">
-            thenounproject.com
-        </a>
+        <a href="https://thenounproject.com/search/?q=parent&amp;i=5036">Parent</a> by Dmitry Baranovskiy
     </string>
-    <string name="coin_icon_citation">Coin (with modification):
-        <a href="https://thenounproject.com/search/?q=coin%20flip&amp;i=1329029">
-            thenounproject.com
-        </a>
+    <string name="coin_icon_citation">
+        <a href="https://thenounproject.com/search/?q=coin%20flip&amp;i=1329029">Coin</a> by Ben Davis (with modification)
     </string>
-    <string name="child_icon_citation">Child:
-        <a href="https://fontawesome.com/v5.15/icons/child?style=solid">
-            thenounproject.com
-        </a>
+    <string name="child_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/child?style=solid">Child</a> from Font Awesome Library
     </string>
-    <string name="timer_icon_citation">Timer:
-        <a href="https://fontawesome.com/v5.15/icons/stopwatch?style=solid">
-            thenounproject.com
-        </a>
+    <string name="timer_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/stopwatch?style=solid">Timer</a> from Font Awesome Library
     </string>
-    <string name="task_icon_citation">Task:
-        <a href="https://fontawesome.com/v5.15/icons/tasks?style=solid">
-            thenounproject.com
-        </a>
+    <string name="task_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/tasks?style=solid">Task</a> from Font Awesome Library
     </string>
 
     <string name="pulsator_citation">
-        <a href="https://github.com/booncol/Pulsator4Droid">
-           Pulsing UI Effect
-        </a> by booncol
+        <a href="https://github.com/booncol/Pulsator4Droid">Pulsing UI Effect</a> by booncol
     </string>
 
     <string name="image_cropper_citation">
-        <a href="https://github.com/booncol/Pulsator4Droid">
-           Android-Image-Coppper
-        </a> by ArthurHub
+        <a href="https://github.com/booncol/Pulsator4Droid">Android-Image-Coppper</a> by ArthurHub
     </string>
 
 
-    <string name="robot_empty_image_citation">Robot by Adrien Coquet from
-        <a href="https://thenounproject.com/search/?q=robot&amp;i=1749583">
-            thenounproject.com
-        </a>
+    <string name="robot_empty_image_citation">
+        <a href="https://thenounproject.com/search/?q=robot&amp;i=1749583">Robot</a> by the Adrien Coquet
     </string>
+
+    <string name="clip_art_board_citation">
+        <a href="https://www.flaticon.com/premium-icon/task_2098402">Clip Board</a> by Freepik
+    </string>
+
+    <string name="clip_art_children_citation">
+        <a href="https://www.flaticon.com/premium-icon/family-member_3088419">Children</a> by Freepik
+    </string>
+
+    <string name="clip_art_coin_flip_citation">
+        <a href="https://www.flaticon.com/premium-icon/coin_1540515">CoinFlip</a> by Freepik
+    </string>
+
 
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
-    <string name="icons">Icons:</string>
-    <string name="external_libraries">Open-source third-party Libraries:</string>
     <string name="crop_image">Crop image</string>
     <string name="save_task">Save Task</string>
     <string name="delete_task">Delete Task</string>
