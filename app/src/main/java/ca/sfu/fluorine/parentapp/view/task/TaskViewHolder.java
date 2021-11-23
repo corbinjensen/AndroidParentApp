@@ -33,13 +33,24 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 	}
 
     public void populateData(Context context, TaskAndChild taskAndChild) {
-        childNameTask.setText(taskAndChild.getChild().getFirstName());
-	    taskName.setText(taskAndChild.getTask().getName());
+        if(taskAndChild.getChild() == null){
+        	childNameTask.setText(R.string.nullChildForTask);
+		}else {
+			childNameTask.setText(taskAndChild.getChild().getFirstName());
+		}
 
-	    Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
-            .loadImage(taskAndChild.getChild().getPhotoFileName());
-	    if(childTaskPhoto != null) {
-            childPhotoTask.setImageBitmap(childTaskPhoto);
-        }
+        taskName.setText(taskAndChild.getTask().getName());
+
+	    if (taskAndChild.getChild() != null){
+			Bitmap childTaskPhoto = ImageInternalStorage.getInstance(context)
+					.loadImage(taskAndChild.getChild().getPhotoFileName());
+			if(childTaskPhoto != null) {
+				childPhotoTask.setImageBitmap(childTaskPhoto);
+			}
+		}else{
+	    	childPhotoTask.setImageResource(R.drawable.robot);
+	    }
+
+
     }
 }

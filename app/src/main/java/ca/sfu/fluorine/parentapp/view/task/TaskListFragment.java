@@ -102,7 +102,6 @@ public class TaskListFragment extends Fragment {
         ) {
             // get child object from index
             TaskAndChild task = tasks.get(position);
-
             taskHolder.populateData(requireContext(), task);
 
             // make the list item clickable
