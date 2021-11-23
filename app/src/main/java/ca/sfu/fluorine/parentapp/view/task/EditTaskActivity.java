@@ -3,6 +3,7 @@ package ca.sfu.fluorine.parentapp.view.task;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,25 +31,38 @@ public class EditTaskActivity extends AddTaskActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.task_details);
+
+        binding.editTaskName.removeTextChangedListener(watcher);
+        binding.dropdownSelection.removeTextChangedListener(watcher);
 
         // Get the task id from intent then fetch from database
-        List<TaskAndChild> tasks = database.taskDao().getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
+        List<TaskAndChild> tasks = database.taskDao()
+                .getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
 
+        // Populate the data
         if (!tasks.isEmpty()) {
             taskAndChild = tasks.get(0);
             Child child = taskAndChild.getChild();
-            childId = child.getId();
+            if (child == null) {
+                child = Child.getUnspecifiedChild();
+                binding.dropdownSelection.setText(R.string.no_children);
+            } else {
+                binding.dropdownSelection.setText(
+                        getString(R.string.full_name, child.getFirstName(), child.getLastName()),
+                        false);
+                updateImage(child);
+            }
+            childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
-            binding.dropdownSelection.setText(getString(R.string.full_name, child.getFirstName(), child.getLastName()), false);
         }
 
-        setTitle("Edit Task");
+        // Show the hidden buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
         binding.buttonCompleteTask.setVisibility(View.VISIBLE);
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
         binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
-
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
     }
@@ -58,7 +72,7 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childId);
+                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
                 database.taskDao().updateTask(taskAndChild.getTask());
                 finish();
             });

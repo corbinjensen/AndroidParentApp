@@ -23,7 +23,9 @@ public class HelpActivity extends AppCompatActivity {
         binding.pulsatorCitation.setMovementMethod(LinkMovementMethod.getInstance());
         binding.taskIconCitation.setMovementMethod(LinkMovementMethod.getInstance());
         binding.timerIconCitation.setMovementMethod(LinkMovementMethod.getInstance());
-        binding.robotIconCitation.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.citationBoard.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.citationChildren.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.citationCoinFlip.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 }
