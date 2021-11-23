@@ -147,6 +147,16 @@
         app:layout_constraintTop_toBottomOf="@+id/robot_icon_citation" />
 
     <TextView
+        android:id="@+id/external_libraries_header2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/clip_art"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/pulsator_citation" />
+
+    <TextView
         android:id="@+id/pulsator_citation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -154,6 +164,33 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/external_libraries_header" />
+
+    <TextView
+        android:id="@+id/citation_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clip_art_board_citation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/external_libraries_header2" />
+
+    <TextView
+        android:id="@+id/citation_coin_flip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clip_art_coin_flip_citation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/citation_board" />
+
+    <TextView
+        android:id="@+id/citation_children"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clip_art_children_citation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/citation_coin_flip" />
 
     <TextView
         android:id="@+id/image_cropper_citation"
