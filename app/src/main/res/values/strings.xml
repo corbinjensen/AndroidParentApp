@@ -140,6 +140,24 @@
         </a>
     </string>
 
+    <string name="clip_art_board_citation">Clip Board
+        <a href="https://www.flaticon.com/premium-icon/task_2098402">
+            flaticon.com
+        </a>
+    </string>
+
+    <string name="clip_art_children_citation">Children
+        <a href="https://www.flaticon.com/premium-icon/family-member_3088419">
+            flaticon.com
+        </a>
+    </string>
+
+    <string name="clip_art_coin_flip_citation">Coin Flip
+        <a href="https://www.flaticon.com/premium-icon/coin_1540515">
+            flaticon.com
+        </a>
+    </string>
+
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
     <string name="icons">Icons:</string>
@@ -164,4 +182,5 @@
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
     <string name="next_turn">Next turn</string>
+    <string name="clip_art">Clip Art:</string>
 </resources>
