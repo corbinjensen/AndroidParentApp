@@ -8,12 +8,11 @@ import android.text.method.LinkMovementMethod;
 import ca.sfu.fluorine.parentapp.databinding.ActivityHelpBinding;
 
 public class HelpActivity extends AppCompatActivity {
-    private ActivityHelpBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHelpBinding.inflate(getLayoutInflater());
+        ActivityHelpBinding binding = ActivityHelpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.appIconCitation.setMovementMethod(LinkMovementMethod.getInstance());

@@ -126,7 +126,6 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	private void saveCoinFlip() {
 		CoinAnimationFragmentArgs arguments =
 				CoinAnimationFragmentArgs.fromBundle(getArguments());
-		boolean isWithoutchild = arguments.getWithoutChild();
 		if (!arguments.getWithoutChild()) {
 			CoinResult newResult = new CoinResult(
 					arguments.getChildId(), arguments.getCoinSide(), resultIsHead);

@@ -128,11 +128,19 @@
             thenounproject.com
         </a>
     </string>
-    <string name="pulsator_citation">Pulsing UI Effect:
+
+    <string name="pulsator_citation">
         <a href="https://github.com/booncol/Pulsator4Droid">
-            github.com/booncol/Pulsator4Droid
-        </a>
+           Pulsing UI Effect
+        </a> by booncol
     </string>
+
+    <string name="image_cropper_citation">
+        <a href="https://github.com/booncol/Pulsator4Droid">
+           Android-Image-Coppper
+        </a> by ArthurHub
+    </string>
+
 
     <string name="robot_empty_image_citation">Robot by Adrien Coquet from
         <a href="https://thenounproject.com/search/?q=robot&amp;i=1749583">
@@ -143,7 +151,7 @@
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
     <string name="icons">Icons:</string>
-    <string name="external_libraries">External Libraries:</string>
+    <string name="external_libraries">Open-source third-party Libraries:</string>
     <string name="crop_image">Crop image</string>
     <string name="save_task">Save Task</string>
     <string name="delete_task">Delete Task</string>
