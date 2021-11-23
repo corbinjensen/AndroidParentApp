@@ -1,25 +1,15 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
@@ -47,20 +37,23 @@ public class EditTaskActivity extends AddTaskActivity {
             if (child == null) {
                 child = Child.getUnspecifiedChild();
                 binding.dropdownSelection.setText(R.string.no_children);
+                binding.buttonCompleteTask.setVisibility(View.GONE);
+                childrenArrayAdapter.setSelectedChild(Child.getUnspecifiedChild());
             } else {
                 binding.dropdownSelection.setText(
                         getString(R.string.full_name, child.getFirstName(), child.getLastName()),
                         false);
                 updateImage(child);
+                binding.buttonCompleteTask.setVisibility(View.VISIBLE);
+                childrenArrayAdapter.setSelectedChild(child);
             }
-            childrenArrayAdapter.setSelectedChild(child);
             binding.editTaskName.setText(taskAndChild.getTask().getName());
         }
 
         // Show the hidden buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
-        binding.buttonCompleteTask.setVisibility(View.VISIBLE);
+
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
         binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
         binding.editTaskName.addTextChangedListener(watcher);
@@ -72,7 +65,11 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
+                Integer nullChild = childrenArrayAdapter.getSelectedChild().getId();
+                if(nullChild == Child.getUnspecifiedChild().getId()){
+                    nullChild = null;
+                }
+                taskAndChild.getTask().update(taskName, nullChild);
                 database.taskDao().updateTask(taskAndChild.getTask());
                 finish();
             });
@@ -85,16 +82,23 @@ public class EditTaskActivity extends AddTaskActivity {
                 finish();
             });
 
-    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.complete_task,
-            R.string.complete_task_message,
-            (dialogInterface, i) -> {
-                Task task = taskAndChild.getTask();
-                int nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
-                task.update(task.getName(), nextChildID);
-                database.taskDao().updateTask(task);
-                finish();
-            });
+    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> {
+        makeConfirmDialog(
+                R.string.complete_task,
+                R.string.complete_task_message,
+                (dialogInterface, i) -> {
+                    Task task = taskAndChild.getTask();
+                    Integer nextChildID;
+                    if(taskAndChild.getChild() == null){
+                        nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
+                    }else{
+                        nextChildID = null;
+                    }
+                    task.update(task.getName(), nextChildID);
+                    database.taskDao().updateTask(task);
+                    finish();
+                });
+    };
 
 
     @NonNull
