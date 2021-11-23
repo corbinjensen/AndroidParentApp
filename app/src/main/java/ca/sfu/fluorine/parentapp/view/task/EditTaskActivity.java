@@ -1,25 +1,15 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
@@ -85,16 +75,24 @@ public class EditTaskActivity extends AddTaskActivity {
                 finish();
             });
 
-    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> makeConfirmDialog(
-            R.string.complete_task,
-            R.string.complete_task_message,
-            (dialogInterface, i) -> {
-                Task task = taskAndChild.getTask();
-                int nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
-                task.update(task.getName(), nextChildID);
-                database.taskDao().updateTask(task);
-                finish();
-            });
+    private final View.OnClickListener confirmTaskDialogListener = (btnView) -> {
+        makeConfirmDialog(
+                R.string.complete_task,
+                R.string.complete_task_message,
+                (dialogInterface, i) -> {
+                    Task task = taskAndChild.getTask();
+                    int nextChildID;
+                    if(taskAndChild.getChild() == null){
+                        nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
+                    }else{
+                        nextChildID = Integer.parseInt(null);
+                    }
+
+                    task.update(task.getName(), nextChildID);
+                    database.taskDao().updateTask(task);
+                    finish();
+                });
+    };
 
 
     @NonNull

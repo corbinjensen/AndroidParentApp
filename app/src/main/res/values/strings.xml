@@ -166,4 +166,6 @@
     <string name="next_turn">Next turn</string>
     <string name="current_child">Current Child</string>
     <string name="nullChildForTask">No Children are assigned to this Task</string>
+    <string name="no_child_first">No Child</string>
+    <string name="assigned_second">Assigned</string>
 </resources>
