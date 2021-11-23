@@ -13,68 +13,65 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
     private static final String TASK_ID = "taskIndex";
     private TaskAndChild taskAndChild;
+    private Child previousChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.task_details);
 
+        // Unregister watcher
         binding.editTaskName.removeTextChangedListener(watcher);
         binding.dropdownSelection.removeTextChangedListener(watcher);
 
         // Get the task id from intent then fetch from database
-        List<TaskAndChild> tasks = database.taskDao()
-                .getTaskByIdWithChild(getIntent().getIntExtra(TASK_ID, 0));
+        int taskId = getIntent().getIntExtra(TASK_ID, 0);
+        taskAndChild = database.taskDao().getTaskByIdWithChild(taskId);
 
         // Populate the data
-        if (!tasks.isEmpty()) {
-            taskAndChild = tasks.get(0);
-            Child child = taskAndChild.getChild();
-            if (child == null) {
-                child = Child.getUnspecifiedChild();
-                binding.dropdownSelection.setText(R.string.no_children);
-                binding.buttonCompleteTask.setVisibility(View.GONE);
-                childrenArrayAdapter.setSelectedChild(Child.getUnspecifiedChild());
-            } else {
-                binding.dropdownSelection.setText(
-                        getString(R.string.full_name, child.getFirstName(), child.getLastName()),
-                        false);
-                updateImage(child);
-                binding.buttonCompleteTask.setVisibility(View.VISIBLE);
-                childrenArrayAdapter.setSelectedChild(child);
-            }
+        if (taskAndChild != null) {
             binding.editTaskName.setText(taskAndChild.getTask().getName());
+            previousChild = taskAndChild.getChild();
+            if (previousChild == null) {
+                previousChild = Child.getUnspecifiedChild();
+            } else {
+                binding.buttonCompleteTask.setVisibility(View.VISIBLE);
+                binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
+            }
+            String childName = Utility.formatChildName(this, previousChild);
+            binding.dropdownSelection.setText(childName, false);
+            childrenArrayAdapter.setSelectedChild(previousChild);
+            Utility.setupImage(this, binding.currentChildPhoto, previousChild);
         }
 
-        // Show the hidden buttons
+        // Set up more buttons
         binding.buttonSaveTask.setOnClickListener(editTaskDialogListener);
         binding.buttonDeleteTask.setVisibility(View.VISIBLE);
-
         binding.buttonDeleteTask.setOnClickListener(deleteTaskDialogListener);
-        binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
+
+        // Re-register watcher
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
     }
 
-    private final View.OnClickListener editTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener editTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.edit_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                Integer nullChild = childrenArrayAdapter.getSelectedChild().getId();
-                if(nullChild == Child.getUnspecifiedChild().getId()){
-                    nullChild = null;
-                }
-                taskAndChild.getTask().update(taskName, nullChild);
+                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
                 database.taskDao().updateTask(taskAndChild.getTask());
                 finish();
             });
 
-    private final View.OnClickListener deleteTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener deleteTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.delete_task,
             R.string.delete_child_confirm,
             (dialogInterface, i) -> {
@@ -83,23 +80,20 @@ public class EditTaskActivity extends AddTaskActivity {
             });
 
     private final View.OnClickListener confirmTaskDialogListener = (btnView) -> {
-        makeConfirmDialog(
-                R.string.complete_task,
-                R.string.complete_task_message,
-                (dialogInterface, i) -> {
+        Child nextChild = database.childDao().getNextChildId(previousChild);
+        String childName = Utility.formatChildName(EditTaskActivity.this, nextChild);
+        String completeTaskMessage = getString(R.string.complete_task_message, childName);
+        Utility.createConfirmDialogBuilder(EditTaskActivity.this)
+                .setTitle(R.string.complete_task)
+                .setMessage(completeTaskMessage)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     Task task = taskAndChild.getTask();
-                    Integer nextChildID;
-                    if(taskAndChild.getChild() == null){
-                        nextChildID = database.childDao().getNextChildId(taskAndChild.getChild());
-                    }else{
-                        nextChildID = null;
-                    }
-                    task.update(task.getName(), nextChildID);
+                    task.update(task.getName(), nextChild.getId());
                     database.taskDao().updateTask(task);
                     finish();
-                });
+                })
+                .show();
     };
-
 
     @NonNull
     public static Intent makeIntent(Context context, int taskId) {

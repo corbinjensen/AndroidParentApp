@@ -1,16 +1,8 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
@@ -21,8 +13,8 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
@@ -53,7 +45,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
-    final View.OnClickListener addTaskDialogListener = (btnView) -> makeConfirmDialog(
+    private final View.OnClickListener addTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
+            this,
             R.string.add_new_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
@@ -68,68 +61,27 @@ public class AddTaskActivity extends AppCompatActivity {
             }
     );
 
-    void makeConfirmDialog(@StringRes int titleId,
-                           @StringRes int messageId,
-                           @NonNull DialogInterface.OnClickListener confirmAction) {
-        new AlertDialog.Builder(this)
-                .setTitle(titleId)
-                .setMessage(messageId)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, confirmAction)
-                .setNegativeButton(android.R.string.cancel, (dialog, i) -> dialog.dismiss())
-                .show();
-    }
-
     public void setupMenuWithImages() {
         // Pre-select the first choice
         Child child = childrenArrayAdapter.getItem(0);
         childrenArrayAdapter.setSelectedChild(child);
-        binding.dropdownSelection.setText(
-                getString(R.string.full_name, child.getFirstName(), child.getLastName()),
-                false);
-        updateImage(child);
+        binding.dropdownSelection.setText(Utility.formatChildName(this, child));
+        Utility.setupImage(this, binding.currentChildPhoto, child);
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setAdapter(childrenArrayAdapter);
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
             childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
-            updateImage(childrenArrayAdapter.getItem(i));
+            Utility.setupImage(this, binding.currentChildPhoto, child);
         });
     }
 
-    final TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            binding.buttonSaveTask.setEnabled(areAllFieldsFilled());
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-    };
+    final TextWatcher watcher = Utility.makeTextWatcher(() ->
+            binding.buttonSaveTask.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
         String taskName = binding.editTaskName.getText().toString();
         String child = binding.dropdownSelection.getText().toString();
         return !taskName.isEmpty() && !child.isEmpty();
-    }
-
-     void updateImage(@NonNull Child child) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
-            binding.currentChildPhoto.setVisibility(View.INVISIBLE);
-        } else {
-            binding.currentChildPhoto.setVisibility(View.VISIBLE);
-            Bitmap bm = ImageInternalStorage.getInstance(this)
-                    .loadImage(child.getPhotoFileName());
-            if (bm == null) {
-                binding.currentChildPhoto.setImageResource(R.drawable.robot);
-            } else {
-                binding.currentChildPhoto.setImageBitmap(bm);
-            }
-        }
     }
 }

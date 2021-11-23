@@ -71,7 +71,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/robot" />
+        app:srcCompat="@drawable/default_icon" />
 
     <Button
         android:id="@+id/edit_child_image"

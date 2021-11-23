@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.util.List;
 import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditChildActivity extends AddChildActivity {
 	// For intent data
@@ -30,10 +28,8 @@ public class EditChildActivity extends AddChildActivity {
 
 		// Populate the data
 		int childId = getIntent().getIntExtra(CHILD_ID, DEFAULT);
-		List<Child> children = database.childDao().getChildById(childId);
-		if (!children.isEmpty()) {
-			child = children.get(0);
-			ImageInternalStorage imageInternalStorage = ImageInternalStorage.getInstance(getApplicationContext());
+		child = database.childDao().getChildById(childId);
+		if (child != null) {
 			// Remove watcher before set text
 			binding.editTextFirstName.removeTextChangedListener(watcher);
 			binding.editTextLastName.removeTextChangedListener(watcher);
@@ -46,13 +42,7 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextLastName.addTextChangedListener(watcher);
 
 			// Initial display child image
-			if(child.getPhotoFileName() == null){
-				binding.displayChildImage.setImageResource(R.drawable.robot);
-				binding.deleteChildImage.setEnabled(false);
-			}else{
-				binding.displayChildImage.setImageBitmap(imageInternalStorage.loadImage(child.getPhotoFileName()));
-			}
-
+			Utility.setupImage(this, binding.displayChildImage, child);
 		}
 
 		// Activate more buttons
@@ -67,7 +57,8 @@ public class EditChildActivity extends AddChildActivity {
 		return intent;
 	}
 
-	private final View.OnClickListener editChildrenDialogListener = (btnView) -> makeConfirmDialog(
+	private final View.OnClickListener editChildrenDialogListener = (btnView) -> Utility.makeConfirmDialog(
+			this,
 			R.string.edit_child,
 			R.string.edit_child_confirm,
 			(dialogInterface, i) -> {
@@ -80,7 +71,8 @@ public class EditChildActivity extends AddChildActivity {
 				finish();
 			});
 
-	private final View.OnClickListener deleteChildDialogListener = (btnView) -> makeConfirmDialog(
+	private final View.OnClickListener deleteChildDialogListener = (btnView) -> Utility.makeConfirmDialog(
+			this,
 			R.string.delete_child,
 			R.string.delete_child_confirm,
 			(dialogInterface, i) -> {

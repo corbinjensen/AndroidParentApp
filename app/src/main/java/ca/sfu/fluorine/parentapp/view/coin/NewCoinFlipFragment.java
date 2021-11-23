@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +18,7 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
+import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
  * NewCoinFlipFragment
@@ -28,7 +28,6 @@ import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;
-	private ImageInternalStorage storage;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class NewCoinFlipFragment extends Fragment {
 					.navigate(R.id.flipping_coin_action);
 		}
 		childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, true);
-		storage = ImageInternalStorage.getInstance(requireContext());
 	}
 
 	@Override
@@ -57,44 +55,32 @@ public class NewCoinFlipFragment extends Fragment {
 		// Pre-select the first choice
 		Child first = childrenArrayAdapter.getItem(0);
 		childrenArrayAdapter.setSelectedChild(first);
-		binding.dropdownSelection.setText(
-				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
-				false);
+		binding.dropdownSelection.setText(Utility.formatChildName(requireContext(), first));
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		updateCurrentImage();
+		Utility.setupImage(requireContext(), binding.currentChild, first);
 
 		// Add listener
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
-			childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
-			updateCurrentImage();
+			Child child = childrenArrayAdapter.getItem(i);
+			childrenArrayAdapter.setSelectedChild(child);
+			Utility.setupImage(requireContext(), binding.currentChild, child);
 		});
 	}
 
 	private void setupButton() {
 		View.OnClickListener listener = (btnView) -> {
 			boolean isHead = binding.coinSideSelection.getCheckedButtonId() == R.id.head;
+			Child selected = childrenArrayAdapter.getSelectedChild();
 			NewCoinFlipFragmentDirections.FlippingCoinAction action =
-					NewCoinFlipFragmentDirections
-							.flippingCoinAction()
-							.setChildId(childrenArrayAdapter.getSelectedChild().getId())
-							.setCoinSide(isHead);
+					NewCoinFlipFragmentDirections.flippingCoinAction().setCoinSide(isHead);
+			if (selected.getId() == null) {
+				action.setWithoutChild(true);
+			} else {
+				action.setWithoutChild(false);
+				action.setChildId(selected.getId());
+			}
 			NavHostFragment.findNavController(this).navigate(action);
 		};
 		binding.flipButton.setOnClickListener(listener);
-	}
-
-	private void updateCurrentImage() {
-		Child child = childrenArrayAdapter.getSelectedChild();
-		if (child.getId() == Child.getUnspecifiedChild().getId()) {
-			binding.currentChild.setVisibility(View.INVISIBLE);
-		} else {
-			binding.currentChild.setVisibility(View.VISIBLE);
-			Bitmap bm = storage.loadImage(child.getPhotoFileName());
-			if (bm == null) {
-				binding.currentChild.setImageResource(R.drawable.robot);
-			} else {
-				binding.currentChild.setImageBitmap(bm);
-			}
-		}
 	}
 }

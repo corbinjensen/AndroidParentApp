@@ -102,7 +102,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:srcCompat="@drawable/robot"
+        app:srcCompat="@drawable/default_icon"
         android:visibility="invisible" />
 
 

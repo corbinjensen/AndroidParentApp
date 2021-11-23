@@ -28,21 +28,8 @@ import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
  */
 public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
-	private int childId;
-	private boolean selectionIsHead;
 	private static final Random random = new Random();
 	private final boolean resultIsHead = random.nextBoolean();
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Retrieve the arguments
-		CoinAnimationFragmentArgs arguments =
-				CoinAnimationFragmentArgs.fromBundle(getArguments());
-		childId = arguments.getChildId();
-		selectionIsHead = arguments.getCoinSide();
-	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -108,7 +95,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 				binding.buttonDone.setVisibility(View.VISIBLE);
 				binding.buttonNewTurn.setVisibility(View.VISIBLE);
 				binding.resultTitle.setVisibility(View.VISIBLE);
-				binding.resultTitle.setText(CoinAnimationFragment.this.resultIsHead ? R.string.head : R.string.tail);
+				binding.resultTitle.setText(resultIsHead ? R.string.head : R.string.tail);
 
 				saveCoinFlip();
 			}
@@ -137,9 +124,13 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	}
 
 	private void saveCoinFlip() {
-		if (childId < 0) return;
-		CoinResult newResult = new CoinResult(childId, selectionIsHead, resultIsHead);
-		AppDatabase database = AppDatabase.getInstance(requireContext());
-		database.coinResultDao().addNewCoinResult(newResult);
+		CoinAnimationFragmentArgs arguments =
+				CoinAnimationFragmentArgs.fromBundle(getArguments());
+		if (!arguments.getWithoutChild()) {
+			CoinResult newResult = new CoinResult(
+					arguments.getChildId(), arguments.getCoinSide(), resultIsHead);
+			AppDatabase database = AppDatabase.getInstance(requireContext());
+			database.coinResultDao().addNewCoinResult(newResult);
+		}
 	}
 }

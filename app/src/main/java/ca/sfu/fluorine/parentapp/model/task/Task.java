@@ -30,7 +30,7 @@ public class Task {
 	private String name;
 
 	// This filed will automatically set to NULL when the referenced child get deleted
-	@ColumnInfo(name = "child_turn_id", defaultValue = "'NULL'")
+	@ColumnInfo(name = "child_turn_id", defaultValue = "'NULL'", index = true)
 	private Integer childId;
 
 	public Task(String name, Integer childId) {

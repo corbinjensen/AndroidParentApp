@@ -1,7 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
@@ -29,7 +27,6 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		if (hasUnassignedChild) {
 			add(Child.getUnspecifiedChild());
 		}
-
 	}
 
 	@NonNull
@@ -47,60 +44,38 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		Child child = getItem(position);
 
 		// Empty child (or no child)
-		if (child.getId() == Child.getUnspecifiedChild().getId()) {
-			childIcon.setImageResource(R.drawable.ic_baseline_nothing);
-		} else {
-			Bitmap icon = ImageInternalStorage
-					.getInstance(getContext())
-					.loadImage(child.getPhotoFileName());
-			if (icon != null) {
-				childIcon.setImageBitmap(icon);
-			} else {
-				childIcon.setImageResource(R.drawable.robot);
-			}
-		}
-		childName.setText(getFullNameFromChild(child));
+		childName.setText(Utility.formatChildName(getContext(), child));
+		Utility.setupImage(getContext(), childIcon, child);
 		checkmark.setVisibility(
 				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;
 	}
 
-	public Filter childrenFilter = new Filter() {
-		@Override
-		protected FilterResults performFiltering(CharSequence charSequence) {
-			return null;
-		}
-
-		@Override
-		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-		}
-
-		@Override
-		public CharSequence convertResultToString(Object resultValue) {
-			Child child = (Child) resultValue;
-			return getFullNameFromChild(child);
-		}
-	};
-
 	@NonNull
 	@Override
 	public Filter getFilter() {
-		return childrenFilter;
-	}
+		return new Filter() {
+			@Override
+			protected FilterResults performFiltering(CharSequence charSequence) {
+				return null;
+			}
 
-	private String getFullNameFromChild(Child child) {
-		if (child == Child.getUnspecifiedChild()) {
-			return getContext().getString(R.string.no_children);
-		}
-		return getContext().getString(
-				R.string.full_name, child.getFirstName(), child.getLastName());
+			@Override
+			protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+			}
+
+			@Override
+			public CharSequence convertResultToString(Object resultValue) {
+				Child child = (Child) resultValue;
+				return Utility.formatChildName(getContext(), child);
+			}
+		};
 	}
 
 	@NonNull
 	public Child getSelectedChild() {
 		return selectedChild;
 	}
-
 
 	public void setSelectedChild(@NonNull Child selectedChild) {
 		this.selectedChild = selectedChild;
