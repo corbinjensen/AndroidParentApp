@@ -63,7 +63,7 @@ public class Task {
 		this.childId = childId;
 	}
 
-	public void update(@NonNull String taskName, int childId) {
+	public void update(@NonNull String taskName, Integer childId) {
 		this.name = taskName;
 		this.childId = childId;
 	}

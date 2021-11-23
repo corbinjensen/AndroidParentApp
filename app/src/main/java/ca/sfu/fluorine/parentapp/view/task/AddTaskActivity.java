@@ -51,7 +51,11 @@ public class AddTaskActivity extends AppCompatActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                Task newTask = new Task(taskName, childrenArrayAdapter.getSelectedChild().getId());
+                Integer childID = childrenArrayAdapter.getSelectedChild().getId();
+                if(childID == Child.getUnspecifiedChild().getId()){
+                    childID = null;
+                }
+                Task newTask = new Task(taskName, childID);
                 database.taskDao().addTask(newTask);
                 finish();
             }
