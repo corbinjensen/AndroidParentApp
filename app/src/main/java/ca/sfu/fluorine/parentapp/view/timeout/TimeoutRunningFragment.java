@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer.TimerState;
 import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
+import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
 
 /**
  * Represents the screen of the timer counting down
@@ -24,20 +24,15 @@ import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 public class TimeoutRunningFragment extends NoActionBarFragment {
     private FragmentTimeoutRunningBinding binding;
     private TimeoutTimer timer;
-    private TimeoutSetting timeoutSetting;
+    private TimeoutViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTimeoutRunningBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        timeoutSetting = TimeoutSetting.getInstance(requireContext());
     }
 
     @Override
@@ -48,16 +43,17 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         binding.pulsator.start();
 
         // Set up the timer
-        timer = timeoutSetting.makeTimer();
+        timer = viewModel.getSetting().makeTimer();
         if (timer == null) {
             long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
             timer = new TimeoutTimer(millis);
         }
 
-        timer.registerActions(this::updateTimerUI, () ->
+        timer.registerActions(this::updateTimerUI, () -> {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.redirect_to_end_screen)
-        );
+                    .navigate(R.id.redirect_to_end_screen);
+            viewModel.getSetting().clear();
+        });
 
         updateTimerUI();
         updateButtonUI();
@@ -69,7 +65,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
             NavHostFragment.findNavController(this).navigate(R.id.reset_timer_action);
         });
 
-        if (timeoutSetting.isTimerRunning()) {
+        if (viewModel.getSetting().isTimerRunning()) {
             toggleTimer();
         }
     }
@@ -80,12 +76,12 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         TimerState state = timer.getState();
         // Save the timer if it's not finished
         if (state != TimerState.FINISHED) {
-            timeoutSetting.saveTimer(timer);
+            viewModel.getSetting().saveTimer(timer);
             if (state == TimerState.RUNNING) {
                 BackgroundTimeoutService.setAlarm(requireContext(), timer);
             }
         } else {
-            timeoutSetting.clear();
+            viewModel.getSetting().clear();
         }
         timer.discard();
 
