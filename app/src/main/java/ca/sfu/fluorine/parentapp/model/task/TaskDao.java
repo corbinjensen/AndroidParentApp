@@ -34,7 +34,7 @@ public abstract class TaskDao {
 	@Query("SELECT * FROM tasks LEFT JOIN children ON child_turn_id == child_id")
 	public abstract List<TaskWithChild> getAllTasksWithChildren();
 
-	@Query("SELECT children.*, tasks.*, completionTime FROM whose_turn " +
+	@Query("SELECT children.*, completionTime FROM whose_turn " +
 			"JOIN children ON child_id = assigned_child_id " +
 			"JOIN tasks ON task_id = assigned_task_id " +
 			"WHERE assigned_child_id = :taskId " +
