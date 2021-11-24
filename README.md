@@ -3,6 +3,9 @@
 ## Team members
 For the role of each member, check [here](docs/roles.md)
 
+## Changelog
+For the CHANGELOG.md file, check [here](CHANGELOG.md)
+
 ## Style Guide
 For the style guide please, check [here](docs/styleGuide.md)
 
