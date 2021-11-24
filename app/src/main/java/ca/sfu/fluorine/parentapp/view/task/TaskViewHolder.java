@@ -1,7 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
+import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
@@ -34,10 +32,10 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
 	}
 
-    public void populateData(Context context, TaskAndChild taskAndChild) {
-		taskName.setText(taskAndChild.getTask().getName());
+    public void populateData(Context context, TaskWithChild taskWithChild) {
+		taskName.setText(taskWithChild.getTask().getName());
 
-		Child child = taskAndChild.getChild();
+		Child child = taskWithChild.getChild();
 		if (child == null) {
 			child = Child.getUnspecifiedChild();
 		}
