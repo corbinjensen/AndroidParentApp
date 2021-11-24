@@ -13,14 +13,15 @@ import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;
+import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
 
 /**
  * Represents the whole database of the app
  *
  * This database object only has one instance for the whole application
  */
-@Database(entities = {Child.class, CoinResult.class, Task.class},
-		version = 1, exportSchema = false)
+@Database(entities = {Child.class, CoinResult.class, Task.class, WhoseTurn.class},
+		version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 	private static final String DATABASE_NAME = "app_database";
 	private static AppDatabase INSTANCE;

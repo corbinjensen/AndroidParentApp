@@ -7,17 +7,15 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import java.util.List;
-
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
     private static final String TASK_ID = "taskIndex";
-    private TaskAndChild taskAndChild;
+    private TaskWithChild taskWithChild;
     private Child previousChild;
 
     @Override
@@ -31,12 +29,12 @@ public class EditTaskActivity extends AddTaskActivity {
 
         // Get the task id from intent then fetch from database
         int taskId = getIntent().getIntExtra(TASK_ID, 0);
-        taskAndChild = database.taskDao().getTaskByIdWithChild(taskId);
+        taskWithChild = database.taskDao().getTaskByIdWithChild(taskId);
 
         // Populate the data
-        if (taskAndChild != null) {
-            binding.editTaskName.setText(taskAndChild.getTask().getName());
-            previousChild = taskAndChild.getChild();
+        if (taskWithChild != null) {
+            binding.editTaskName.setText(taskWithChild.getTask().getName());
+            previousChild = taskWithChild.getChild();
             if (previousChild == null) {
                 previousChild = Child.getUnspecifiedChild();
             } else {
@@ -65,8 +63,8 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                taskAndChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
-                database.taskDao().updateTask(taskAndChild.getTask());
+                taskWithChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
+                database.taskDao().updateTask(taskWithChild.getTask());
                 finish();
             });
 
@@ -75,7 +73,7 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.delete_task,
             R.string.delete_child_confirm,
             (dialogInterface, i) -> {
-                database.taskDao().deleteTask(taskAndChild.getTask());
+                database.taskDao().deleteTask(taskWithChild.getTask());
                 finish();
             });
 
@@ -87,7 +85,7 @@ public class EditTaskActivity extends AddTaskActivity {
                 .setTitle(R.string.complete_task)
                 .setMessage(completeTaskMessage)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    Task task = taskAndChild.getTask();
+                    Task task = taskWithChild.getTask();
                     task.update(task.getName(), nextChild.getId());
                     database.taskDao().updateTask(task);
                     finish();
