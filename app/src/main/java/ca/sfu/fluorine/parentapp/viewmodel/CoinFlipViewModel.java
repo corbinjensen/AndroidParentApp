@@ -28,6 +28,6 @@ public class CoinFlipViewModel extends AndroidViewModel {
     }
 
     public void addNewCoinResult(CoinResult coinResult) {
-        coinResultDao.addNewCoinResult(coinResult);
+        coinResultDao.add(coinResult);
     }
 }

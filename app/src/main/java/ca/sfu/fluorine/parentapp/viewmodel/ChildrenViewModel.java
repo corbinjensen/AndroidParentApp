@@ -43,15 +43,15 @@ public class ChildrenViewModel extends AndroidViewModel {
     }
 
     public void updateChild(Child child) {
-        childDao.updateChild(child);
+        childDao.update(child);
     }
 
     public void addChild(Child child) {
-        childDao.addChild(child);
+        childDao.add(child);
     }
 
     public void deleteChild(Child child) {
-        childDao.deleteChild(child);
+        childDao.delete(child);
     }
 
     public Child getNextChild(Child child) {

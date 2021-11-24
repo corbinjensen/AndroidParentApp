@@ -17,7 +17,6 @@ import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 
 public class TaskViewModel extends AndroidViewModel {
     private final TaskDao taskDao;
-    private final ChildDao childDao;
 
     private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
 
@@ -25,7 +24,6 @@ public class TaskViewModel extends AndroidViewModel {
         super(application);
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         taskDao = appDatabase.taskDao();
-        childDao = appDatabase.childDao();
         liveTasksWithChildren = taskDao.getAllTasksWithChildren();
     }
 
@@ -34,7 +32,7 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     public void addTask(Task task) {
-        taskDao.addTask(task);
+        taskDao.add(task);
     }
 
     @Nullable
@@ -43,10 +41,10 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     public void updateTask(Task task) {
-        taskDao.updateTask(task);
+        taskDao.update(task);
     }
 
     public void deleteTask(Task task) {
-        taskDao.deleteTask(task);
+        taskDao.delete(task);
     }
 }
