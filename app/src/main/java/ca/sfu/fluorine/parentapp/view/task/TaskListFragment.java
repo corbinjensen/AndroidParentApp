@@ -17,7 +17,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.task.TaskAndChild;
+import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 
 
 /**
@@ -58,7 +58,7 @@ public class TaskListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        List<TaskAndChild> tasks = database.taskDao().getAllTasksWithChildren();
+        List<TaskWithChild> tasks = database.taskDao().getAllTasksWithChildren();
         if (tasks.isEmpty()) {
             binding.taskList.showEmpty();
         } else {
@@ -73,9 +73,9 @@ public class TaskListFragment extends Fragment {
     }
 
     class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
-        private final List<TaskAndChild> tasks;
+        private final List<TaskWithChild> tasks;
 
-        public TaskListAdapter(List<TaskAndChild> tasks) {
+        public TaskListAdapter(List<TaskWithChild> tasks) {
             this.tasks = tasks;
         }
 
@@ -101,8 +101,7 @@ public class TaskListFragment extends Fragment {
             int position
         ) {
             // get child object from index
-            TaskAndChild task = tasks.get(position);
-
+            TaskWithChild task = tasks.get(position);
             taskHolder.populateData(requireContext(), task);
 
             // make the list item clickable

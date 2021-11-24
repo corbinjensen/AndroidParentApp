@@ -16,3 +16,9 @@ Roles are subject to change foreach iteration
 - Repo Manager: **Corbin**
 - Team member: **Viet**
 
+## Iteration 3 
+- Scrum Master: **Gavin**
+- Product Manager: **Viet**
+- Repo Manger: **Grace**
+- Team Member: **Corbin**
+

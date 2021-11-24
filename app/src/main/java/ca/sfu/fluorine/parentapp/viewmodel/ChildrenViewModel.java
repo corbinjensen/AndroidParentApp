@@ -14,6 +14,9 @@ import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 
+/**
+ * Resprents the view model for the children
+ */
 public class ChildrenViewModel extends AndroidViewModel {
     private final ChildDao childDao;
     private final LiveData<List<Child>> childrenLiveData;

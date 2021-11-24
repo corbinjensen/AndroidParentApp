@@ -38,22 +38,24 @@ public abstract class ChildDao {
 	@Update
 	public abstract void updateChild(Child child);
 
-	@Query("SELECT child_id FROM children WHERE createdTime > :createdTime " +
+	@Nullable
+	@Query("SELECT * FROM children WHERE createdTime > :createdTime " +
 			"ORDER BY createdTime LIMIT 1")
-	abstract List<Integer> getFirstChildIdAfterCreationTime(long createdTime);
+	abstract Child getFirstChildAfterCreationTime(long createdTime);
 
-	@Query("SELECT child_id FROM children " +
+	@Query("SELECT * FROM children " +
 			"ORDER BY createdTime LIMIT 1")
-	abstract List<Integer> getFirstCreatedChildId();
+	@Nullable
+	abstract Child getFirstCreatedChild();
 
 	// Get the next child according to their creation time
 	// if the last child's turn is done, then returns the first created child
 	@Transaction
-	public int getNextChildId(Child child) {
-		List<Integer> ids = getFirstChildIdAfterCreationTime(child.getCreatedTime());
-		if (ids.isEmpty()) {
-			ids = getFirstCreatedChildId();
+	public Child getNextChildId(Child child) {
+		Child nextChild = getFirstChildAfterCreationTime(child.getCreatedTime());
+		if (nextChild == null) {
+			nextChild = getFirstCreatedChild();
 		}
-		return (ids.isEmpty()) ? Child.getUnspecifiedChild().getId() : ids.get(0);
+		return (nextChild == null) ? Child.getUnspecifiedChild() : nextChild;
 	}
 }

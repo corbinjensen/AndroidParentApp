@@ -16,7 +16,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultAndChild;
+import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
 
 /**
  * CoinFlipFragment
@@ -54,7 +54,7 @@ public class CoinFlipFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		List<CoinResultAndChild> coinResultsWithChildren
+		List<CoinResultWithChild> coinResultsWithChildren
 				= database.coinResultDao().getAllCoinResultsWithChildren();
 		if (coinResultsWithChildren.isEmpty()) {
 			binding.listCoinFlip.showEmpty();
@@ -70,9 +70,9 @@ public class CoinFlipFragment extends Fragment {
 	}
 
 	public class CoinHistoryAdapter extends RecyclerView.Adapter<CoinFlipViewHolder> {
-		private final List<CoinResultAndChild> coinResultsWithChildren;
+		private final List<CoinResultWithChild> coinResultsWithChildren;
 
-		public CoinHistoryAdapter(List<CoinResultAndChild> coinResultsWithChildren) {
+		public CoinHistoryAdapter(List<CoinResultWithChild> coinResultsWithChildren) {
 			this.coinResultsWithChildren = coinResultsWithChildren;
 		}
 
@@ -86,7 +86,7 @@ public class CoinFlipFragment extends Fragment {
 
 		@Override
 		public void onBindViewHolder(@NonNull CoinFlipViewHolder holder, int position) {
-			CoinResultAndChild coinResultWithChild = coinResultsWithChildren.get(position);
+			CoinResultWithChild coinResultWithChild = coinResultsWithChildren.get(position);
 			holder.populateData(requireContext(), coinResultWithChild);
 		}
 

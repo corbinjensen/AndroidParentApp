@@ -11,13 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.List;
-
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
@@ -64,9 +60,8 @@ public class NewCoinFlipFragment extends Fragment {
 		// Pre-select the first choice
 		Child first = childrenArrayAdapter.getItem(0);
 		childrenArrayAdapter.setSelectedChild(first);
-		binding.dropdownSelection.setText(
-				getString(R.string.full_name, first.getFirstName(), first.getLastName()),
-				false);
+		binding.dropdownSelection.setText(Utility.formatChildName(requireContext(), first));
+		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
 		Utility.setupImage(requireContext(), binding.currentChild, first);
 
 		// Add listener
@@ -80,11 +75,15 @@ public class NewCoinFlipFragment extends Fragment {
 	private void setupButton() {
 		View.OnClickListener listener = (btnView) -> {
 			boolean isHead = binding.coinSideSelection.getCheckedButtonId() == R.id.head;
+			Child selected = childrenArrayAdapter.getSelectedChild();
 			NewCoinFlipFragmentDirections.FlippingCoinAction action =
-					NewCoinFlipFragmentDirections
-							.flippingCoinAction()
-							.setChildId(childrenArrayAdapter.getSelectedChild().getId())
-							.setCoinSide(isHead);
+					NewCoinFlipFragmentDirections.flippingCoinAction().setCoinSide(isHead);
+			if (selected.getId() == null) {
+				action.setWithoutChild(true);
+			} else {
+				action.setWithoutChild(false);
+				action.setChildId(selected.getId());
+			}
 			NavHostFragment.findNavController(this).navigate(action);
 		};
 		binding.flipButton.setOnClickListener(listener);

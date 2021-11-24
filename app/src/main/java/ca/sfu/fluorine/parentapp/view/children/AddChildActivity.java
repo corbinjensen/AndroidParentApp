@@ -2,7 +2,6 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
@@ -66,19 +65,8 @@ public class AddChildActivity extends AppCompatActivity {
                 });
     }
 
-    final TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            binding.buttonSaveChild.setEnabled(areAllFieldsFilled());
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) { }
-    };
+    final TextWatcher watcher = Utility.makeTextWatcher(() ->
+            binding.buttonSaveChild.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
         String firstName = binding.editTextFirstName.getText().toString();

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
@@ -61,7 +60,11 @@ public class AddTaskActivity extends AppCompatActivity {
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
-                Task newTask = new Task(taskName, childrenArrayAdapter.getSelectedChild().getId());
+                Integer childID = childrenArrayAdapter.getSelectedChild().getId();
+                if(childID == Child.getUnspecifiedChild().getId()){
+                    childID = null;
+                }
+                Task newTask = new Task(taskName, childID);
                 database.taskDao().addTask(newTask);
                 finish();
             }
@@ -71,9 +74,7 @@ public class AddTaskActivity extends AppCompatActivity {
         // Pre-select the first choice
         Child child = childrenArrayAdapter.getItem(0);
         childrenArrayAdapter.setSelectedChild(child);
-        binding.dropdownSelection.setText(
-                getString(R.string.full_name, child.getFirstName(), child.getLastName()),
-                false);
+        binding.dropdownSelection.setText(Utility.formatChildName(this, child));
         Utility.setupImage(this, binding.currentChildPhoto, child);
 
         // Set up the adapter and listener for the dropdown menu
@@ -83,20 +84,8 @@ public class AddTaskActivity extends AppCompatActivity {
         });
     }
 
-    final TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            binding.buttonSaveTask.setEnabled(areAllFieldsFilled());
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-    };
+    final TextWatcher watcher = Utility.makeTextWatcher(() ->
+            binding.buttonSaveTask.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
         String taskName = binding.editTaskName.getText().toString();
