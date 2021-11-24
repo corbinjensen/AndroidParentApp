@@ -1,5 +1,7 @@
 package ca.sfu.fluorine.parentapp.model.task;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,6 +19,7 @@ import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 @Dao
 public abstract class TaskDao {
 	// Either return an empty list or 1-element list
+	@Nullable
 	@Query("SELECT * FROM tasks LEFT JOIN children " +
 			"ON child_turn_id == child_id " +
 			"WHERE task_id = :taskId LIMIT 1")
@@ -32,7 +35,7 @@ public abstract class TaskDao {
 	public abstract void deleteTask(Task task);
 
 	@Query("SELECT * FROM tasks LEFT JOIN children ON child_turn_id == child_id")
-	public abstract List<TaskWithChild> getAllTasksWithChildren();
+	public abstract LiveData<List<TaskWithChild>> getAllTasksWithChildren();
 
 	@Query("SELECT children.*, completionTime FROM whose_turn " +
 			"JOIN children ON child_id = assigned_child_id " +

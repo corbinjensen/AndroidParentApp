@@ -27,11 +27,6 @@ public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
 	private ChildrenViewModel viewModel;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
-    }
 
     @Override
 	public View onCreateView(
@@ -45,6 +40,7 @@ public class ChildrenFragment extends Fragment {
             container,
             false
         );
+        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
 		return binding.getRoot();
     }
     @Override

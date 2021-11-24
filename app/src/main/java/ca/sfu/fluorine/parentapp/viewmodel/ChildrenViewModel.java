@@ -15,7 +15,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 
 /**
- * Resprents the view model for the children
+ * Represents the view model for the children
  */
 public class ChildrenViewModel extends AndroidViewModel {
     private final ChildDao childDao;
@@ -52,5 +52,9 @@ public class ChildrenViewModel extends AndroidViewModel {
 
     public void deleteChild(Child child) {
         childDao.deleteChild(child);
+    }
+
+    public Child getNextChild(Child child) {
+        return childDao.getNextChildId(child);
     }
 }

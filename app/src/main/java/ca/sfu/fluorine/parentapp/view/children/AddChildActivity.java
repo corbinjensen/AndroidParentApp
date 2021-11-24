@@ -40,8 +40,7 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Set up the view model
-        ChildrenViewModel viewModel =
-                new ViewModelProvider(this).get(ChildrenViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
 
         // Set up the image storage
         imageStorage = ImageInternalStorage.getInstance(this);

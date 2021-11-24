@@ -15,12 +15,13 @@ import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.TaskViewModel;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
-    AppDatabase database;
     ChildrenAutoCompleteAdapter childrenArrayAdapter;
     ChildrenViewModel childrenViewModel;
+    TaskViewModel taskViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,9 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setTitle(R.string.new_task);
 
-        // Set up database
-        database = AppDatabase.getInstance(this);
-
-        // View models
-        childrenViewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+        // Child View models
+        ViewModelProvider provider = new ViewModelProvider(this);
+        childrenViewModel = provider.get(ChildrenViewModel.class);
         childrenViewModel.getChildrenLiveData().observe(this, children -> {
             if (childrenArrayAdapter == null) {
                 childrenArrayAdapter =
@@ -46,6 +45,9 @@ public class AddTaskActivity extends AppCompatActivity {
             binding.dropdownSelection.setAdapter(childrenArrayAdapter);
             setupMenuWithImages();
         });
+
+        // Task view model
+        taskViewModel = provider.get(TaskViewModel.class);
 
         // Add listeners
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
@@ -65,7 +67,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     childID = null;
                 }
                 Task newTask = new Task(taskName, childID);
-                database.taskDao().addTask(newTask);
+                taskViewModel.addTask(newTask);
                 finish();
             }
     );

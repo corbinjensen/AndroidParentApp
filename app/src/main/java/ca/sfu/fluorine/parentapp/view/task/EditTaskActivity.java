@@ -29,7 +29,7 @@ public class EditTaskActivity extends AddTaskActivity {
 
         // Get the task id from intent then fetch from database
         int taskId = getIntent().getIntExtra(TASK_ID, 0);
-        taskWithChild = database.taskDao().getTaskByIdWithChild(taskId);
+        taskWithChild = taskViewModel.getTaskByIdWithChild(taskId);
 
         // Populate the data
         if (taskWithChild != null) {
@@ -64,7 +64,7 @@ public class EditTaskActivity extends AddTaskActivity {
             (dialogInterface, i) -> {
                 String taskName = binding.editTaskName.getText().toString();
                 taskWithChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
-                database.taskDao().updateTask(taskWithChild.getTask());
+                taskViewModel.updateTask(taskWithChild.getTask());
                 finish();
             });
 
@@ -73,12 +73,12 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.delete_task,
             R.string.delete_child_confirm,
             (dialogInterface, i) -> {
-                database.taskDao().deleteTask(taskWithChild.getTask());
+                taskViewModel.deleteTask(taskWithChild.getTask());
                 finish();
             });
 
     private final View.OnClickListener confirmTaskDialogListener = (btnView) -> {
-        Child nextChild = database.childDao().getNextChildId(previousChild);
+        Child nextChild = childrenViewModel.getNextChild(previousChild);
         String childName = Utility.formatChildName(EditTaskActivity.this, nextChild);
         String completeTaskMessage = getString(R.string.complete_task_message, childName);
         Utility.createConfirmDialogBuilder(EditTaskActivity.this)
@@ -87,7 +87,7 @@ public class EditTaskActivity extends AddTaskActivity {
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     Task task = taskWithChild.getTask();
                     task.update(task.getName(), nextChild.getId());
-                    database.taskDao().updateTask(task);
+                    taskViewModel.updateTask(task);
                     finish();
                 })
                 .show();

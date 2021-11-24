@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
+import ca.sfu.fluorine.parentapp.viewmodel.CoinFlipViewModel;
 
 /**
  * CoinAnimationFragment
@@ -30,12 +32,14 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
 	private static final Random random = new Random();
 	private final boolean resultIsHead = random.nextBoolean();
+	private CoinFlipViewModel viewModel;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentCoinAnimationBinding.inflate(inflater, container, false);
+		viewModel = new ViewModelProvider(this).get(CoinFlipViewModel.class);
 		return binding.getRoot();
 	}
 
@@ -129,8 +133,7 @@ public class CoinAnimationFragment extends NoActionBarFragment {
 		if (!arguments.getWithoutChild()) {
 			CoinResult newResult = new CoinResult(
 					arguments.getChildId(), arguments.getCoinSide(), resultIsHead);
-			AppDatabase database = AppDatabase.getInstance(requireContext());
-			database.coinResultDao().addNewCoinResult(newResult);
+			viewModel.addNewCoinResult(newResult);
 		}
 	}
 }
