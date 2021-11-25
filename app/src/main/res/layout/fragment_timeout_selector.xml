@@ -8,4 +8,4 @@
     android:orientation="vertical"
     android:padding="32dp"
     android:gravity="center"
-    tools:context=".view.timeout.TimeoutSelectorFragment" />
+    tools:context=".view.calm.timeout.TimeoutSelectorFragment" />
