@@ -18,8 +18,6 @@ public class TimeoutExpiredReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// Clear out the timer
-		TimeoutSetting.getInstance(context).clear();
 		TimeoutExpiredNotification.showNotification(context);
 	}
 
