@@ -5,15 +5,19 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 public class BreathingViewModel extends AndroidViewModel {
-    private boolean is_inhaling = true;
-    private final MutableLiveData<Integer> liveBreathCount;
-    private final MutableLiveData<Boolean> liveBreathState;
+    // Live and observable states
+    private final MutableLiveData<Integer> breathCycleCount;
     private final MutableLiveData<Long> millisSecondsLeft;
+    private final LiveData<Boolean> breathingState;
+    private final LiveData<Integer> breathsLeft; // whether breath in or out
+    private final MutableLiveData<Boolean> buttonStillPressing = new MutableLiveData<>(false);
 
-    // Timer marker
+    // Constants
     public static final long TOTAL_DURATION = 100000;
     public static final long TRANSITION = 7000;
     public static final long INTERVAL = 500;
@@ -21,56 +25,66 @@ public class BreathingViewModel extends AndroidViewModel {
 
     public BreathingViewModel(@NonNull Application application) {
         super(application);
-        liveBreathCount = new MutableLiveData<>(0);
-        liveBreathState = new MutableLiveData<>(is_inhaling);
         millisSecondsLeft = new MutableLiveData<>(TOTAL_DURATION);
+        breathCycleCount = new MutableLiveData<>(0);
+        breathsLeft = Transformations.map(breathCycleCount, cycleCount -> (cycleCount + 1) / 2);
+        breathingState = Transformations.map(breathCycleCount, count -> count % 2 == 0);
+
     }
 
     public void setBreathCount(int breathCount) {
-        liveBreathCount.postValue(breathCount);
+        breathCycleCount.setValue(breathCount * 2);
     }
 
-    public MutableLiveData<Integer> getLiveBreathCount() {
-        return liveBreathCount;
+    public LiveData<Boolean> getBreathingState() {
+        return breathingState;
     }
 
-    public MutableLiveData<Boolean> getLiveBreathState() {
-        return liveBreathState;
+    public LiveData<Integer> getBreathsLeft() {
+        return breathsLeft;
     }
 
-    public MutableLiveData<Long> getMillisSecondsLeft() {
-        return millisSecondsLeft;
+    public MutableLiveData<Boolean> isButtonStillPressing() {
+        return buttonStillPressing;
     }
 
+    // Press the button
     public void startBreathing() {
-        millisSecondsLeft.postValue(TOTAL_DURATION);
+        millisSecondsLeft.setValue(TOTAL_DURATION);
+        buttonStillPressing.setValue(false);
         timer = new CountDownTimer(TOTAL_DURATION, INTERVAL) {
             @Override
             public void onTick(long millisLeft) {
-                millisSecondsLeft.postValue(millisLeft);
+                millisSecondsLeft.setValue(millisLeft);
             }
 
             @Override
             public void onFinish() {
-                // Switch the state
-                switchState(true);
+                buttonStillPressing.setValue(true);
             }
         };
+        timer.start();
     }
 
-    public void stopBreathing(boolean isDone) {
+    // Release the button
+    public void stopBreathing() {
+        buttonStillPressing.setValue(false);
         if (timer != null) {
             timer.cancel();
         }
-        if (isDone) {
-            switchState(isDone);
+        Long millisLeft = millisSecondsLeft.getValue();
+        if (millisLeft != null && millisLeft <= TRANSITION) {
+            decrementBreathCycleCount();
         }
+        millisSecondsLeft.setValue(TOTAL_DURATION);
     }
 
-    private void switchState(boolean isDone) {
-        if (isDone) {
-            is_inhaling = !is_inhaling;
-            liveBreathState.postValue(is_inhaling);
+    private void decrementBreathCycleCount() {
+        Integer cycleCount = breathCycleCount.getValue();
+        if (cycleCount != null) {
+            breathCycleCount.setValue(cycleCount - 1);
+        } else {
+            breathCycleCount.setValue(0);
         }
     }
 }
