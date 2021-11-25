@@ -1,5 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,17 +36,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
         // Child View models
         ViewModelProvider provider = new ViewModelProvider(this);
-        childrenViewModel = provider.get(ChildrenViewModel.class);
-        childrenViewModel.getChildrenLiveData().observe(this, children -> {
-            if (childrenArrayAdapter == null) {
-                childrenArrayAdapter =
-                        new ChildrenAutoCompleteAdapter(this, children, true);
-            } else {
-                childrenArrayAdapter.reset(children, true);
-            }
-            binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-            setupMenuWithImages();
-        });
 
         // Task view model
         taskViewModel = provider.get(TaskViewModel.class);
@@ -54,6 +45,8 @@ public class AddTaskActivity extends AppCompatActivity {
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
 
+        childrenViewModel = provider.get(ChildrenViewModel.class);
+        populateDropDown(Child.getUnspecifiedChild());
     }
 
     private final View.OnClickListener addTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(
@@ -72,20 +65,6 @@ public class AddTaskActivity extends AppCompatActivity {
             }
     );
 
-    public void setupMenuWithImages() {
-        // Pre-select the first choice
-        Child child = childrenArrayAdapter.getItem(0);
-        childrenArrayAdapter.setSelectedChild(child);
-        binding.dropdownSelection.setText(Utility.formatChildName(this, child));
-        Utility.setupImage(this, binding.currentChildPhoto, child);
-
-        // Set up the adapter and listener for the dropdown menu
-        binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
-            childrenArrayAdapter.setSelectedChild(childrenArrayAdapter.getItem(i));
-            Utility.setupImage(this, binding.currentChildPhoto, child);
-        });
-    }
-
     final TextWatcher watcher = Utility.makeTextWatcher(() ->
             binding.buttonSaveTask.setEnabled(areAllFieldsFilled()));
 
@@ -93,5 +72,26 @@ public class AddTaskActivity extends AppCompatActivity {
         String taskName = binding.editTaskName.getText().toString();
         String child = binding.dropdownSelection.getText().toString();
         return !taskName.isEmpty() && !child.isEmpty();
+    }
+
+    void populateDropDown(@NonNull Child selectedChild) {
+        childrenViewModel.getChildrenLiveData().observe(this, children -> {
+            if (childrenArrayAdapter == null) {
+                childrenArrayAdapter =
+                        new ChildrenAutoCompleteAdapter(this, children, true);
+            }
+            binding.dropdownSelection.setAdapter(childrenArrayAdapter);
+            childrenArrayAdapter.setSelectedChild(selectedChild);
+            binding.dropdownSelection.setText(
+                    Utility.formatChildName(this, selectedChild), false);
+            Utility.setupImage(this, binding.currentChildPhoto, selectedChild);
+        });
+
+        // Set up the adapter and listener for the dropdown menu
+        binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
+            Child child = childrenArrayAdapter.getItem(i);
+            childrenArrayAdapter.setSelectedChild(child);
+            Utility.setupImage(this, binding.currentChildPhoto, child);
+        });
     }
 }
