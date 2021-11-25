@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view.timeout;
+package ca.sfu.fluorine.parentapp.view.calm.timeout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
@@ -21,7 +22,7 @@ import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 /**
  * Represents the end screen when the timer reaches 0
  */
-public class TimeoutFinishFragment extends NoActionBarFragment {
+public class TimeoutFinishFragment extends Fragment {
 	private RingtoneController ringtoneController;
 
 	@Override

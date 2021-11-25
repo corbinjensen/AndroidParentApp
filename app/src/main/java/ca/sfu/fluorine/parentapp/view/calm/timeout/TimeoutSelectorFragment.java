@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view.timeout;
+package ca.sfu.fluorine.parentapp.view.calm.timeout;
 
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
-import ca.sfu.fluorine.parentapp.view.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
+import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 
 /**
  * Represents the screen for timer selection

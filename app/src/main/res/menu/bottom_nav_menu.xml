@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_children"
+        android:id="@id/navigation_children"
         android:icon="@drawable/ic_child_solid"
         android:title="@string/title_children" />
 
     <item
-        android:id="@+id/navigation_coin_flip"
+        android:id="@id/navigation_coin_flip"
         android:icon="@drawable/ic_noun_coin_flip"
         android:title="@string/title_coin_flip"/>
-
-    <item
-        android:id="@+id/navigation_timeout"
-        android:icon="@drawable/ic_stopwatch_solid"
-        android:title="@string/title_timeout"/>
 
     <item
         android:id="@id/navigation_task"
         android:icon="@drawable/ic_tasks_solid"
         android:title="@string/tasks"/>
+
+    <item
+        android:id="@id/navigation_calm"
+        android:icon="@drawable/ic_noun_lotus"
+        android:title="@string/calm_title" />
 
 </menu>
