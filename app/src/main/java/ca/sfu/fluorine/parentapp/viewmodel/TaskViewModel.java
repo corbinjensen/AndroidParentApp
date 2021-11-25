@@ -1,29 +1,29 @@
 package ca.sfu.fluorine.parentapp.viewmodel;
 
-import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.children.ChildDao;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TaskViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TaskViewModel extends ViewModel {
     private final TaskDao taskDao;
 
     private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
 
-    public TaskViewModel(@NonNull Application application) {
-        super(application);
-        AppDatabase appDatabase = AppDatabase.getInstance(application);
-        taskDao = appDatabase.taskDao();
+    @Inject
+    public TaskViewModel(@NonNull TaskDao taskDao) {
+        this.taskDao = taskDao;
         liveTasksWithChildren = taskDao.getAllTasksWithChildren();
     }
 

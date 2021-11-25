@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import ca.sfu.fluorine.parentapp.R;

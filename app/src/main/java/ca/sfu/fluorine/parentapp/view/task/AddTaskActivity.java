@@ -9,14 +9,15 @@ import android.view.View;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
 import ca.sfu.fluorine.parentapp.viewmodel.TaskViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     ChildrenAutoCompleteAdapter childrenArrayAdapter;
