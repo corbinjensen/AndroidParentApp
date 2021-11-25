@@ -15,12 +15,14 @@ import android.view.MenuItem;
 
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityMainBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * MainActivity.java
  *
  * Represents the UI for main activity of the Parenting App.
  */
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
 	private ActivityMainBinding binding;

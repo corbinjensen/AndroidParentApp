@@ -1,25 +1,27 @@
 package ca.sfu.fluorine.parentapp.viewmodel;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class CoinFlipViewModel extends AndroidViewModel {
+@HiltViewModel
+public class CoinFlipViewModel extends ViewModel {
     private final CoinResultDao coinResultDao;
     private final LiveData<List<CoinResultWithChild>> liveCoinResultsWithChildren;
 
-    public CoinFlipViewModel(@NonNull Application application) {
-        super(application);
-        coinResultDao = AppDatabase.getInstance(application).coinResultDao();
+    @Inject
+    public CoinFlipViewModel(@NonNull CoinResultDao coinResultDao) {
+        super();
+        this.coinResultDao = coinResultDao;
         liveCoinResultsWithChildren = coinResultDao.getAllCoinResultsWithChildren();
     }
 

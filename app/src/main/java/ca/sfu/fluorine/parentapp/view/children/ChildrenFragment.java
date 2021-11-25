@@ -16,17 +16,17 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
  */
+@AndroidEntryPoint
 public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
 	private ChildrenViewModel viewModel;
-
 
     @Override
 	public View onCreateView(

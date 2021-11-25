@@ -1,30 +1,31 @@
 package ca.sfu.fluorine.parentapp.viewmodel;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.Database;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
  * Represents the view model for the children
  */
-public class ChildrenViewModel extends AndroidViewModel {
+@HiltViewModel
+public class ChildrenViewModel extends ViewModel {
     private final ChildDao childDao;
     private final LiveData<List<Child>> childrenLiveData;
     private final LiveData<List<Child>> childrenByCoinFlipsLiveData;
 
-    public ChildrenViewModel(@NonNull Application application) {
-        super(application);
-        childDao = AppDatabase.getInstance(application).childDao();
+    @Inject
+    public ChildrenViewModel(@NonNull ChildDao childDao) {
+        super();
+        this.childDao = childDao;
         childrenLiveData = childDao.getAllChildren();
         childrenByCoinFlipsLiveData = childDao.getAllChildrenOrderByRecentCoinFlips();
     }

@@ -17,12 +17,14 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * NewCoinFlipFragment
  *
  * Represents the UI to set up a new coin flip.
  */
+@AndroidEntryPoint
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;

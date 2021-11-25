@@ -13,17 +13,18 @@ import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * AddChildActivity.java - represents a user input form
  * activity to add a new, or modify info on a child.
  */
+@AndroidEntryPoint
 public class AddChildActivity extends AppCompatActivity {
     ActivityChildFormBinding binding;
     Bitmap icon = null;
