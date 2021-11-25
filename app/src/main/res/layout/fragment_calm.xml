@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calm_layout"
@@ -7,22 +7,28 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="32dp"
     android:paddingTop="32dp"
-    tools:context=".view.calm.CalmFragment">
+    tools:context=".view.calm.CalmFragment"
+    android:background="@drawable/gradient_1">
 
     <Button
         android:id="@+id/timeout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/calm_button"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/title_timeout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:icon="@drawable/ic_stopwatch_solid"
+        app:iconGravity="end" />
 
     <Button
         android:id="@+id/zen_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        style="@style/calm_button"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:layout_below="@+id/timeout_button"
+        android:layout_marginTop="16dp"
         android:text="@string/zen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeout_button" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:icon="@drawable/ic_wind_solid"
+        app:iconGravity="end" />
+
+</RelativeLayout>
