@@ -171,4 +171,9 @@
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
     <string name="clip_art">Clip Art:</string>
+
+    <!--  Calm screen  -->
+    <string name="calm_title">Calm</string>
+    <string name="crop_image_title">Crop Image</string>
+    <string name="zen">Zen</string>
 </resources>
