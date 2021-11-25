@@ -12,17 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:alpha="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/count_down_text"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:pulse_count="4"
         app:pulse_color="@color/triadic1_700"
+        app:pulse_count="4"
         app:pulse_duration="10000"
-        app:pulse_repeat="0"
         app:pulse_interpolator="AccelerateDecelerate"
+        app:pulse_repeat="0"
         app:pulse_startFromScratch="false" />
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar_timer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:indeterminateOnly="false"
+        android:padding="64dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/count_down_text"
@@ -30,17 +43,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/title_timeout"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="80sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="?attr/colorOnPrimary"/>
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_timer" />
 
     <Button
         android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/analogous1_700"
         android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,6 +66,7 @@
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/analogous1_700"
         android:text="@string/pause"
         app:layout_constraintBottom_toBottomOf="parent"
