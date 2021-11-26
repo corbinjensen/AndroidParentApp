@@ -1,10 +1,12 @@
-package ca.sfu.fluorine.parentapp.model.timeout;
+package ca.sfu.fluorine.parentapp.store;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import javax.inject.Inject;
+
+import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 
 /**
  * TimeoutSetting.java

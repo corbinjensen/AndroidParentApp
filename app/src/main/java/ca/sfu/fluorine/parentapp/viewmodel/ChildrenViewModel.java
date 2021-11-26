@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
+import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
@@ -21,10 +22,12 @@ public class ChildrenViewModel extends ViewModel {
     private final ChildDao childDao;
     private final LiveData<List<Child>> childrenLiveData;
     private final LiveData<List<Child>> childrenByCoinFlipsLiveData;
+    private final IconService iconService;
 
     @Inject
-    public ChildrenViewModel(@NonNull ChildDao childDao) {
+    public ChildrenViewModel(@NonNull ChildDao childDao, @NonNull IconService iconService) {
         super();
+        this.iconService = iconService;
         this.childDao = childDao;
         childrenLiveData = childDao.getAllChildren();
         childrenByCoinFlipsLiveData = childDao.getAllChildrenOrderByRecentCoinFlips();
@@ -57,5 +60,9 @@ public class ChildrenViewModel extends ViewModel {
 
     public Child getNextChild(Child child) {
         return childDao.getNextChildId(child);
+    }
+
+    public IconService getIconService() {
+        return iconService;
     }
 }

@@ -1,6 +1,7 @@
-package ca.sfu.fluorine.parentapp.service;
+package ca.sfu.fluorine.parentapp.store;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,8 @@ import androidx.annotation.Nullable;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.R;
 
@@ -31,6 +34,11 @@ public class ImageInternalStorage {
 			INSTANCE.context = context.getApplicationContext();
 		}
 		return INSTANCE;
+	}
+
+	@Inject
+	public ImageInternalStorage(Application application) {
+		context = application.getApplicationContext();
 	}
 
 	public void saveImage(@NonNull String fileName, @NonNull Bitmap image) {
