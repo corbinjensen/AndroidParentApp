@@ -2,7 +2,6 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
     public void populateData(Child child, Context context, @NonNull IconService service) {
         // change the text to display child name
         titleCreationName.setText(Utility.formatChildName(context, child));
-        service.loadChildImageToView(child, childImage);
+        service.updateChildImageView(child, childImage);
 
         // make the list item clickable
         itemView.setOnClickListener((View view) -> {

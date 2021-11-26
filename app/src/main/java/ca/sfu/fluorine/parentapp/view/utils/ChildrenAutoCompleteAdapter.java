@@ -20,7 +20,7 @@ import ca.sfu.fluorine.parentapp.service.IconService;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
-	private IconService service;
+	private final IconService service;
 
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children,
@@ -49,12 +49,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 
 		// Empty child (or no child)
 		childName.setText(Utility.formatChildName(getContext(), child));
-		if (child.getId() == Child.getUnspecifiedChild().getId()) {
-			childIcon.setVisibility(ImageView.INVISIBLE);
-		} else {
-			childIcon.setVisibility(ImageView.VISIBLE);
-			service.loadChildImageToView(child, childIcon);
-		}
+		service.updateChildImageView(child, childIcon);
 		checkmark.setVisibility(
 				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;

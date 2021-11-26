@@ -2,13 +2,8 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-
-import java.util.UUID;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -35,16 +30,16 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextFirstName.removeTextChangedListener(watcher);
 			binding.editTextLastName.removeTextChangedListener(watcher);
 
-			binding.editTextFirstName.setText(child.getFirstName());
-			binding.editTextLastName.setText(child.getLastName());
+				binding.editTextFirstName.setText(child.getFirstName());
+				binding.editTextLastName.setText(child.getLastName());
 
-			// Remove watcher before set text
-			binding.editTextFirstName.addTextChangedListener(watcher);
-			binding.editTextLastName.addTextChangedListener(watcher);
+				// Remove watcher before set text
+				binding.editTextFirstName.addTextChangedListener(watcher);
+				binding.editTextLastName.addTextChangedListener(watcher);
 
 			// Initial display child image
 			icon = viewModel.getIconService()
-					.loadChildImageToView(child, binding.displayChildImage);
+					.updateChildImageView(child, binding.displayChildImage);
 		}
 
 		// Activate more buttons

@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
-import android.app.Service;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,7 +42,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 			childPhotoTask.setVisibility(View.INVISIBLE);
 		} else {
 			childPhotoTask.setVisibility(View.VISIBLE);
-			service.loadChildImageToView(child, childPhotoTask);
+			service.updateChildImageView(child, childPhotoTask);
 		}
 		String childName = Utility.formatChildName(context, child);
 		childNameTask.setText(context.getString(R.string.next_turn_info, childName));

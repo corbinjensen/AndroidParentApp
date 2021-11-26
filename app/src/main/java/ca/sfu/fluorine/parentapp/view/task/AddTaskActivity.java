@@ -84,14 +84,16 @@ public class AddTaskActivity extends AppCompatActivity {
             childrenArrayAdapter.setSelectedChild(selectedChild);
             binding.dropdownSelection.setText(
                     Utility.formatChildName(this, selectedChild), false);
-            Utility.setupImage(this, binding.currentChildPhoto, selectedChild);
+            childrenViewModel.getIconService()
+                    .updateChildImageView(selectedChild, binding.currentChildPhoto);
         });
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
             Child child = childrenArrayAdapter.getItem(i);
             childrenArrayAdapter.setSelectedChild(child);
-            Utility.setupImage(this, binding.currentChildPhoto, child);
+            childrenViewModel.getIconService()
+                    .updateChildImageView(child, binding.currentChildPhoto);
         });
     }
 }

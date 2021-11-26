@@ -65,13 +65,13 @@ public class NewCoinFlipFragment extends Fragment {
 		childrenArrayAdapter.setSelectedChild(first);
 		binding.dropdownSelection.setText(Utility.formatChildName(requireContext(), first));
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		Utility.setupImage(requireContext(), binding.currentChild, first);
+		viewModel.getIconService().updateChildImageView(first, binding.currentChild);
 
 		// Add listener
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
 			Child child = childrenArrayAdapter.getItem(i);
 			childrenArrayAdapter.setSelectedChild(child);
-			Utility.setupImage(requireContext(), binding.currentChild, child);
+			viewModel.getIconService().updateChildImageView(child, binding.currentChild);
 		});
 	}
 

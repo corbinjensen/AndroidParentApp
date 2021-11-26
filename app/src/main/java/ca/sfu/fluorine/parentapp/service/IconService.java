@@ -40,7 +40,12 @@ public class IconService {
         storage.deleteImage(child.getPhotoFileName());
     }
 
-    public Bitmap loadChildImageToView(@NonNull Child child, @NonNull ImageView childIconView) {
+    public Bitmap updateChildImageView(@NonNull Child child, @NonNull ImageView childIconView) {
+        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+            childIconView.setVisibility(ImageView.INVISIBLE);
+            return null;
+        }
+        childIconView.setVisibility(ImageView.VISIBLE);
         Bitmap bitmap = storage.loadImage(child.getPhotoFileName());
         if (bitmap == null) {
             childIconView.setImageResource(R.drawable.default_icon);

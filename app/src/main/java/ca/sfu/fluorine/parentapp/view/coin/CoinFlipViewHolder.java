@@ -52,6 +52,6 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 						: android.R.color.holo_red_dark,
 				null);
 		didPickerWinView.setTextColor(color);
-		service.loadChildImageToView(child, childIcon);
+		service.updateChildImageView(child, childIcon);
 	}
 }
