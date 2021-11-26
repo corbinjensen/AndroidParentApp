@@ -19,22 +19,8 @@ import javax.inject.Inject;
 import ca.sfu.fluorine.parentapp.R;
 
 public class ImageInternalStorage {
-	private Context context;
+	private final Context context;
 	private static final String FILE_EXT = ".png";
-
-	@SuppressLint("StaticFieldLeak")
-	private static ImageInternalStorage INSTANCE;
-
-	private ImageInternalStorage() {
-	}
-
-	public static ImageInternalStorage getInstance(Context context) {
-		if (INSTANCE == null) {
-			INSTANCE = new ImageInternalStorage();
-			INSTANCE.context = context.getApplicationContext();
-		}
-		return INSTANCE;
-	}
 
 	@Inject
 	public ImageInternalStorage(Application application) {

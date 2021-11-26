@@ -42,21 +42,6 @@ public class Utility {
                 .show();
     }
 
-    public static void setupImage(Context context, ImageView imageView, @NonNull Child child) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
-            imageView.setVisibility(ImageView.INVISIBLE);
-        } else {
-            imageView.setVisibility(ImageView.VISIBLE);
-            Bitmap image = ImageInternalStorage.getInstance(context)
-                    .loadImage(child.getPhotoFileName());
-            if (image == null) {
-                imageView.setImageResource(R.drawable.default_icon);
-            } else {
-                imageView.setImageBitmap(image);
-            }
-        }
-    }
-
     public static String formatChildName(Context context, @NonNull Child child) {
         if (child.getId() == Child.getUnspecifiedChild().getId()) {
             return context.getString(R.string.no_children);

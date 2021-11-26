@@ -15,6 +15,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
+import ca.sfu.fluorine.parentapp.service.IconService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
@@ -31,7 +32,10 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		childIcon = itemView.findViewById(R.id.coin_flip_child_icon);
 	}
 
-	public void populateData(Context context, CoinResultWithChild coinResultWithChild) {
+	public void populateData(
+			CoinResultWithChild coinResultWithChild,
+			Context context,
+			IconService service) {
 		CoinResult result = coinResultWithChild.getCoinResult();
 		Child child = coinResultWithChild.getChild();
 
@@ -48,6 +52,6 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 						: android.R.color.holo_red_dark,
 				null);
 		didPickerWinView.setTextColor(color);
-		Utility.setupImage(context, childIcon, child);
+		service.loadChildImageToView(child, childIcon);
 	}
 }

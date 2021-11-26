@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
+import android.app.Service;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
+import ca.sfu.fluorine.parentapp.service.IconService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
@@ -32,15 +34,18 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
 	}
 
-    public void populateData(Context context, TaskWithChild taskWithChild) {
+    public void populateData(TaskWithChild taskWithChild, Context context, IconService service) {
 		taskName.setText(taskWithChild.getTask().getName());
 
 		Child child = taskWithChild.getChild();
 		if (child == null) {
 			child = Child.getUnspecifiedChild();
+			childPhotoTask.setVisibility(View.INVISIBLE);
+		} else {
+			childPhotoTask.setVisibility(View.VISIBLE);
+			service.loadChildImageToView(child, childPhotoTask);
 		}
 		String childName = Utility.formatChildName(context, child);
 		childNameTask.setText(context.getString(R.string.next_turn_info, childName));
-        Utility.setupImage(context, childPhotoTask, child);
     }
 }

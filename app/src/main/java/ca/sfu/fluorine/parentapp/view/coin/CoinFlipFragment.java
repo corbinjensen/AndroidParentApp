@@ -81,7 +81,7 @@ public class CoinFlipFragment extends Fragment {
 		@Override
 		public void onBindViewHolder(@NonNull CoinFlipViewHolder holder, int position) {
 			CoinResultWithChild coinResultWithChild = coinResultsWithChildren.get(position);
-			holder.populateData(requireContext(), coinResultWithChild);
+			holder.populateData(coinResultWithChild, requireContext(), viewModel.getIconService());
 		}
 
 		@Override

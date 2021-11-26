@@ -20,11 +20,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class TaskViewModel extends ViewModel {
     private final TaskDao taskDao;
     private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
+    private final IconService iconService;
 
     @Inject
-    public TaskViewModel(@NonNull TaskDao taskDao) {
+    public TaskViewModel(@NonNull TaskDao taskDao, IconService iconService) {
         this.taskDao = taskDao;
         liveTasksWithChildren = taskDao.getAllTasksWithChildren();
+        this.iconService = iconService;
     }
 
     public LiveData<List<TaskWithChild>> getLiveTasksWithChildren() {
@@ -46,5 +48,9 @@ public class TaskViewModel extends ViewModel {
 
     public void deleteTask(Task task) {
         taskDao.delete(task);
+    }
+
+    public IconService getIconService() {
+        return iconService;
     }
 }

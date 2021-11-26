@@ -95,7 +95,7 @@ public class TaskListFragment extends Fragment {
         ) {
             // get child object from index
             TaskWithChild task = tasks.get(position);
-            taskHolder.populateData(requireContext(), task);
+            taskHolder.populateData(task, requireContext(), viewModel.getIconService());
 
             // make the list item clickable
             taskHolder.itemView.setOnClickListener((View view) -> {
