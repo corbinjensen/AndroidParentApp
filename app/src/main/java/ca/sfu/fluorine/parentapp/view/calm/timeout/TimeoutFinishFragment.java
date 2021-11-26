@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
@@ -31,10 +30,9 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		TimeoutExpiredNotification.hideNotification(requireContext());
-		BackgroundTimeoutService.removeAlarm(requireContext());
-		TimeoutViewModel viewModel =
-				new ViewModelProvider(this).get(TimeoutViewModel.class);
-		viewModel.getSetting().clear();
+		TimeoutViewModel viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+		viewModel.clearTimeout();
+		viewModel.removeAlarm();
 	}
 
 	@Override
