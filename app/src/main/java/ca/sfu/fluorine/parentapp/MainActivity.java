@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 				R.id.navigation_children,
 				R.id.navigation_coin_flip,
-				R.id.navigation_timeout,
-				R.id.navigation_task)
+				R.id.navigation_task,
+				R.id.navigation_calm)
 				.build();
 		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

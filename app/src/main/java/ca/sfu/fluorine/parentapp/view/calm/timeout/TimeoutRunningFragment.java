@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.view.timeout;
+package ca.sfu.fluorine.parentapp.view.calm.timeout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
