@@ -8,18 +8,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutStorage;
+import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
 
 public class TimeoutViewModel extends AndroidViewModel {
-    private final TimeoutSetting setting;
     private final TimeoutStorage storage;
 
     // Constants
     private final long INTERVAL = 100;
     public enum TimeoutState {RUNNING, PAUSED, EXPIRED}
 
-    // Observable data
+    // Live data
     private long totalDuration = 0;
     private final MutableLiveData<Long> millisLeft = new MutableLiveData<>(0L);
     private final MutableLiveData<TimeoutState> timerState
@@ -29,24 +27,15 @@ public class TimeoutViewModel extends AndroidViewModel {
 
     public TimeoutViewModel(@NonNull Application application) {
         super(application);
-        storage = new TimeoutStorage(application);
-        setting = TimeoutSetting.getInstance(application);
-    }
-
-    public TimeoutSetting getSetting() {
-        return setting;
+        storage = TimeoutStorage.getInstance(application);
     }
 
     public LiveData<Long> getMillisLeft() {
         return millisLeft;
     }
 
-    public LiveData<TimeoutState> isTimerRunning() {
+    public LiveData<TimeoutState> getTimerState() {
         return timerState;
-    }
-
-    public long getTotalDuration() {
-        return totalDuration;
     }
 
     public void loadTimerFromStorage() {
@@ -74,30 +63,10 @@ public class TimeoutViewModel extends AndroidViewModel {
             timer.cancel();
         }
         timerState.setValue(TimeoutState.PAUSED);
-        saveTimerToStorage();
-    }
-
-    public void resetTimer() {
-        pauseTimer();
-        storage.clear();
-    }
-
-    public void saveTimerToStorage() {
-        long remaining = (millisLeft.getValue() == null) ? 0 : millisLeft.getValue();
-        long expiredTime = System.currentTimeMillis() + remaining;
-
-        storage.getEditor()
-                .putBoolean(
-                        TimeoutStorage.IS_RUNNING,
-                        timerState.getValue() == TimeoutState.RUNNING)
-                .putLong(TimeoutStorage.TOTAL_DURATION, totalDuration)
-                .putLong(TimeoutStorage.REMAINING_TIME, remaining)
-                .putLong(TimeoutStorage.EXPIRED_TIME, expiredTime)
-                .apply();
     }
 
     private void makeTimerFromSettings() {
-        long duration = storage.getTimerDuration();
+        long duration = storage.calculateRemainingMillis();
         millisLeft.setValue(duration);
         timer = new CountDownTimer(duration, INTERVAL) {
             @Override
@@ -112,10 +81,36 @@ public class TimeoutViewModel extends AndroidViewModel {
         };
     }
 
-    public void resetTimer(long totalDuration) {
+    public void initializeTimeout(long totalDuration) {
         storage.getEditor()
                 .clear()
                 .putLong(TimeoutStorage.TOTAL_DURATION, totalDuration)
+                .putLong(TimeoutStorage.EXPIRED_TIME, System.currentTimeMillis() + totalDuration)
+                .putLong(TimeoutStorage.REMAINING_TIME, totalDuration)
+                .putBoolean(TimeoutStorage.IS_RUNNING, true)
+                .apply();
+    }
+
+    public void clearTimeout() {
+        storage.getEditor().clear().apply();
+        totalDuration = 0;
+    }
+
+    public boolean hasSavedTimer() {
+        return storage.hasTimer();
+    }
+
+    // Will call this one at fragment `onResume`
+    public void saveTimerToStorage() {
+        long remaining = (millisLeft.getValue() == null) ? 0 : millisLeft.getValue();
+        long expiredTime = System.currentTimeMillis() + remaining;
+        storage.getEditor()
+                .putBoolean(
+                        TimeoutStorage.IS_RUNNING,
+                        timerState.getValue() == TimeoutState.RUNNING)
+                .putLong(TimeoutStorage.TOTAL_DURATION, totalDuration)
+                .putLong(TimeoutStorage.REMAINING_TIME, remaining)
+                .putLong(TimeoutStorage.EXPIRED_TIME, expiredTime)
                 .apply();
     }
 }

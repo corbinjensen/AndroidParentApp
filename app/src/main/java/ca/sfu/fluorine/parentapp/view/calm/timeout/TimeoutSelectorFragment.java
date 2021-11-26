@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.view.calm.timeout;
 
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +19,6 @@ import com.google.android.material.button.MaterialButton;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
-import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
 
 /**
@@ -31,6 +28,8 @@ import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
  * or start their own custom timer
  */
 public class TimeoutSelectorFragment extends Fragment {
+	private TimeoutViewModel viewModel;
+
 	private static final LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -42,9 +41,8 @@ public class TimeoutSelectorFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		// Navigate away to running timer when a timer is active
-		TimeoutViewModel viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
-		Long expiredTime = viewModel.getSetting().getExpiredTime();
-		if (expiredTime != null) {
+		viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+		if (viewModel.hasSavedTimer()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.start_preset_timer_action);
 		}
@@ -72,14 +70,10 @@ public class TimeoutSelectorFragment extends Fragment {
 			String buttonLabel = getResources()
 					.getQuantityString(R.plurals.duration_in_minutes, duration, duration);
 			View.OnClickListener listener = btnView -> {
-				// Set up action and pass data upon navigation
-				StartPresetTimerAction action =
-						TimeoutSelectorFragmentDirections.startPresetTimerAction();
-				long expiredTime = Calendar.getInstance().getTimeInMillis()
-						+ duration * TimeoutTimer.MINUTES_TO_MILLIS;
-				action.setExpiredTime(expiredTime);
+				// Store the selection to the internal storage
+				viewModel.initializeTimeout(duration * 60000L);
 				Navigation.findNavController(view)
-						.navigate(action);
+						.navigate(R.id.start_preset_timer_action);
 			};
 
 			buttonList.addView(createButton(buttonLabel, listener));
@@ -92,7 +86,8 @@ public class TimeoutSelectorFragment extends Fragment {
 		buttonList.addView(customButton);
 	}
 
-	public Button createButton(String buttonLabel, View.OnClickListener listener) {
+	@NonNull
+	private Button createButton(String buttonLabel, View.OnClickListener listener) {
 		MaterialButton button = new MaterialButton(
 				new ContextThemeWrapper(requireContext(), R.style.CustomButton_WhiteOutlined));
 		button.setLayoutParams(param);

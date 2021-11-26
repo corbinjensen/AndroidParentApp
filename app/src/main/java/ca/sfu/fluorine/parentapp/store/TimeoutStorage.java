@@ -1,25 +1,32 @@
-package ca.sfu.fluorine.parentapp.model.timeout;
+package ca.sfu.fluorine.parentapp.store;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.os.CountDownTimer;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Represents the storage for timeout timer parameters
+ */
 public class TimeoutStorage {
-    private final static String KEY = "timeout";
+    private final static String KEY = "timeout_storage";
     public final static String IS_RUNNING = "running";
     public final static String EXPIRED_TIME = "expired";
     public final static String REMAINING_TIME = "remaining";
     public final static String TOTAL_DURATION = "duration";
     private final SharedPreferences preferences;
+    public static TimeoutStorage INSTANCE;
 
-    public TimeoutStorage(@NonNull Application application) {
+    private TimeoutStorage(@NonNull Application application) {
         preferences = application.getSharedPreferences(KEY, Application.MODE_PRIVATE);
     }
 
-    public void clear() {
-        preferences.edit().clear().apply();
+    public static TimeoutStorage getInstance(@NonNull Application application) {
+        if (INSTANCE == null) {
+            INSTANCE = new TimeoutStorage(application);
+        }
+        return INSTANCE;
     }
 
     public boolean isTimerRunning() {
@@ -27,6 +34,7 @@ public class TimeoutStorage {
     }
 
     public boolean hasTimer() {
+        Log.d(null, "Duration: " + getTotalDuration());
         return getTotalDuration() != 0;
     }
 
@@ -46,7 +54,9 @@ public class TimeoutStorage {
         return preferences.edit();
     }
 
-    public long getTimerDuration() {
+    public long calculateRemainingMillis() {
+        Log.d(null, "Remaining: " + getRemainingTime());
+        Log.d(null, "Expired: " + getExpiredTime());
         return !isTimerRunning()
                 ? getRemainingTime()
                 : getExpiredTime() - System.currentTimeMillis();

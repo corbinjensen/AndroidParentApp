@@ -30,9 +30,7 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 		super.onCreate(savedInstanceState);
 		TimeoutExpiredNotification.hideNotification(requireContext());
 		BackgroundTimeoutService.removeAlarm(requireContext());
-		TimeoutViewModel viewModel =
-				new ViewModelProvider(this).get(TimeoutViewModel.class);
-		viewModel.getSetting().clear();
+		new ViewModelProvider(this).get(TimeoutViewModel.class).clearTimeout();
 	}
 
 	@Override
