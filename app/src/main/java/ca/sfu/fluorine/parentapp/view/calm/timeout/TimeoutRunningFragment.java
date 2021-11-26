@@ -35,8 +35,10 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
     @Override
     public void onResume() {
         super.onResume();
-        BackgroundTimeoutService.removeAlarm(requireContext());
-        TimeoutExpiredNotification.hideNotification(requireContext());
+        viewModel.removeAlarm();
+        TimeoutExpiredNotification.hideNotification(requireContext().getApplicationContext());
+
+        // Start the pulsator
         binding.pulsator.start();
 
         // Set up the timer
@@ -62,6 +64,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
                     binding.playButton.setOnClickListener(v -> viewModel.resumeTimer());
                     break;
                 case EXPIRED:
+                    viewModel.clearTimeout();
                     NavHostFragment.findNavController(this)
                             .navigate(R.id.redirect_to_end_screen);
                     break;
@@ -78,6 +81,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
     @Override
     public void onStop() {
         viewModel.saveTimerToStorage();
+        viewModel.registerAlarm();
 
         super.onStop();
     }

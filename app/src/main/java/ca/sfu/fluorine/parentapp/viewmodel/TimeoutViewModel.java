@@ -5,16 +5,23 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
 
 public class TimeoutViewModel extends AndroidViewModel {
+    // Services and storages
     private final TimeoutStorage storage;
+    private final BackgroundTimeoutService service;
 
     // Constants
     private final long INTERVAL = 100;
+
     public enum TimeoutState {RUNNING, PAUSED, EXPIRED}
 
     // Live data
@@ -28,8 +35,10 @@ public class TimeoutViewModel extends AndroidViewModel {
     public TimeoutViewModel(@NonNull Application application) {
         super(application);
         storage = TimeoutStorage.getInstance(application);
+        service = new BackgroundTimeoutService(application);
     }
 
+    // Emits data to the view
     public LiveData<Long> getMillisLeft() {
         return millisLeft;
     }
@@ -38,20 +47,7 @@ public class TimeoutViewModel extends AndroidViewModel {
         return timerState;
     }
 
-    public void loadTimerFromStorage() {
-        if (!storage.hasTimer()) {
-            timerState.setValue(TimeoutState.EXPIRED);
-            return;
-        }
-        timerState.setValue(TimeoutState.PAUSED);
-        totalDuration = storage.getTotalDuration();
-        makeTimerFromSettings();
-        if (storage.isTimerRunning()) {
-            timerState.setValue(TimeoutState.RUNNING);
-            timer.start();
-        }
-    }
-
+    // Methods for the views interact with this view model
     public void resumeTimer() {
         makeTimerFromSettings();
         timer.start();
@@ -63,8 +59,10 @@ public class TimeoutViewModel extends AndroidViewModel {
             timer.cancel();
         }
         timerState.setValue(TimeoutState.PAUSED);
+        saveTimerToStorage();
     }
 
+    // Interact with the timeout preferences
     private void makeTimerFromSettings() {
         long duration = storage.calculateRemainingMillis();
         millisLeft.setValue(duration);
@@ -91,7 +89,22 @@ public class TimeoutViewModel extends AndroidViewModel {
                 .apply();
     }
 
+    public void loadTimerFromStorage() {
+        if (!storage.hasTimer()) {
+            timerState.setValue(TimeoutState.EXPIRED);
+            return;
+        }
+        timerState.setValue(TimeoutState.PAUSED);
+        totalDuration = storage.getTotalDuration();
+        makeTimerFromSettings();
+        if (storage.isTimerRunning()) {
+            timerState.setValue(TimeoutState.RUNNING);
+            timer.start();
+        }
+    }
+
     public void clearTimeout() {
+        pauseTimer();
         storage.getEditor().clear().apply();
         totalDuration = 0;
     }
@@ -112,5 +125,18 @@ public class TimeoutViewModel extends AndroidViewModel {
                 .putLong(TimeoutStorage.REMAINING_TIME, remaining)
                 .putLong(TimeoutStorage.EXPIRED_TIME, expiredTime)
                 .apply();
+    }
+
+    // Interact with background service
+    public void registerAlarm() {
+        if (timerState.getValue() == TimeoutState.RUNNING) {
+            long remaining = (millisLeft.getValue() == null) ? 0 : millisLeft.getValue();
+            long expiredTime = System.currentTimeMillis() + remaining;
+            service.setAlarmAt(expiredTime);
+        }
+    }
+
+    public void removeAlarm() {
+        service.removeAlarm();
     }
 }
