@@ -76,11 +76,7 @@ public class ChildrenFragment extends Fragment {
 
         @NonNull
         @Override
-        public ChildViewHolder onCreateViewHolder(
-            @NonNull
-                ViewGroup parent,
-            int viewType
-        ) {
+        public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(requireContext()).inflate(
                 R.layout.child_row_layout,
                 parent,
@@ -90,14 +86,10 @@ public class ChildrenFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(
-            @NonNull
-                    ChildViewHolder holder,
-            int position
-        ) {
+        public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
             // get child object from index
             Child child = children.get(position);
-            holder.populateData(requireContext(), child);
+            holder.populateData(child, requireContext(), viewModel.getIconService());
         }
 
         @Override

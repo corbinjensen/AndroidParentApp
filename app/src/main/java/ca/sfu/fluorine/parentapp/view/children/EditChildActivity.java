@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
@@ -42,7 +43,8 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextLastName.addTextChangedListener(watcher);
 
 			// Initial display child image
-			Utility.setupImage(this, binding.displayChildImage, child);
+			icon = viewModel.getIconService()
+					.loadChildImageToView(child, binding.displayChildImage);
 		}
 
 		// Activate more buttons
@@ -62,12 +64,10 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.edit_child,
 			R.string.edit_child_confirm,
 			(dialogInterface, i) -> {
-				String savedFile = persistIconData(child);
 				String firstName = binding.editTextFirstName.getText().toString();
 				String lastName = binding.editTextLastName.getText().toString();
 				child.updateName(firstName, lastName);
-				child.updatePhotoFileName(savedFile);
-				viewModel.updateChild(child);
+				viewModel.updateChild(child, icon);
 				finish();
 			});
 
@@ -76,21 +76,7 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.delete_child,
 			R.string.delete_child_confirm,
 			(dialogInterface, i) -> {
-				imageStorage.deleteImage(child.getPhotoFileName());
 				viewModel.deleteChild(child);
 				finish();
 			});
-
-	String persistIconData(@NonNull Child child) {
-		String filename = child.getPhotoFileName();
-		if (icon == null) {
-			imageStorage.deleteImage(filename);
-			return null;
-		}
-		if (filename == null) {
-			filename = UUID.randomUUID().toString();
-		}
-		imageStorage.saveImage(filename, icon);
-		return filename;
-	}
 }

@@ -31,7 +31,6 @@ public class AddChildActivity extends AppCompatActivity {
     ChildrenViewModel viewModel;
 
     // For the database and storage
-    ImageInternalStorage imageStorage;
     private ActivityResultLauncher<?> cropImageServiceLauncher;
 
     @Override
@@ -42,9 +41,6 @@ public class AddChildActivity extends AppCompatActivity {
 
         // Set up the view model
         viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
-
-        // Set up the image storage
-        imageStorage = ImageInternalStorage.getInstance(this);
 
         // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);
@@ -81,9 +77,8 @@ public class AddChildActivity extends AppCompatActivity {
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                String savedImageFileName = persistIconData();
-                Child newChild = new Child(firstName, lastName, savedImageFileName);
-                viewModel.addChild(newChild);
+                Child newChild = new Child(firstName, lastName);
+                viewModel.addChild(newChild, icon);
                 finish();
             }
     );
@@ -98,15 +93,5 @@ public class AddChildActivity extends AppCompatActivity {
         binding.displayChildImage.setImageResource(R.drawable.default_icon);
         // Disabled this button as no photo to delete
         btnView.setEnabled(false);
-    }
-
-    // Return a saved image filename in the system
-    String persistIconData() {
-        if (icon != null) {
-            String filename = UUID.randomUUID().toString();
-            imageStorage.saveImage(filename, icon);
-            return filename;
-        }
-        return null;
     }
 }

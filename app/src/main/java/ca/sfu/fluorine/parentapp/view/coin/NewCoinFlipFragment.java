@@ -51,7 +51,8 @@ public class NewCoinFlipFragment extends Fragment {
 			if (children.isEmpty()) {
 				NavHostFragment.findNavController(this).navigate(R.id.flipping_coin_action);
 			}
-			childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, true);
+			childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
+					requireContext(), children, viewModel.getIconService(), true);
 			binding.dropdownSelection.setAdapter(childrenArrayAdapter);
 			setupMenuWithImages();
 		});

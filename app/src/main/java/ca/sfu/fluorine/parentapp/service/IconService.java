@@ -26,13 +26,13 @@ public class IconService {
         String fileName = child.getPhotoFileName();
         if (bitmap == null) {
             storage.deleteImage(fileName);
-            child.updatePhotoFileName(null);
+            child.setPhotoFileName(null);
         } else {
             if (fileName == null) {
                 fileName = UUID.randomUUID().toString();
                 storage.saveImage(fileName, bitmap);
             }
-            child.updatePhotoFileName(fileName);
+            child.setPhotoFileName(fileName);
         }
     }
 
@@ -40,12 +40,13 @@ public class IconService {
         storage.deleteImage(child.getPhotoFileName());
     }
 
-    public void loadChildImageToView(@NonNull Child child, @NonNull ImageView childIconView) {
+    public Bitmap loadChildImageToView(@NonNull Child child, @NonNull ImageView childIconView) {
         Bitmap bitmap = storage.loadImage(child.getPhotoFileName());
         if (bitmap == null) {
             childIconView.setImageResource(R.drawable.default_icon);
         } else {
             childIconView.setImageBitmap(bitmap);
         }
+        return bitmap;
     }
 }

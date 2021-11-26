@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.view.children;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.IconService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class ChildViewHolder extends RecyclerView.ViewHolder {
@@ -25,12 +27,10 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
         titleCreationName = itemView.findViewById(R.id.childNameDisplay);
     }
 
-    public void populateData(Context context, Child child) {
+    public void populateData(Child child, Context context, @NonNull IconService service) {
         // change the text to display child name
         titleCreationName.setText(Utility.formatChildName(context, child));
-
-        //Change display image of child
-        Utility.setupImage(context, childImage, child);
+        service.loadChildImageToView(child, childImage);
 
         // make the list item clickable
         itemView.setOnClickListener((View view) -> {

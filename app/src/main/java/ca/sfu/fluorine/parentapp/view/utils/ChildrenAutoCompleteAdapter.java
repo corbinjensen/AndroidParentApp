@@ -16,14 +16,18 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.service.IconService;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
+	private IconService service;
 
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children,
+									   @NonNull IconService iconService,
 									   boolean hasUnassignedChild) {
 		super(context, 0, children);
+		service = iconService;
 		if (hasUnassignedChild) {
 			add(Child.getUnspecifiedChild());
 		}
@@ -45,7 +49,12 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 
 		// Empty child (or no child)
 		childName.setText(Utility.formatChildName(getContext(), child));
-		Utility.setupImage(getContext(), childIcon, child);
+		if (child.getId() == Child.getUnspecifiedChild().getId()) {
+			childIcon.setVisibility(ImageView.INVISIBLE);
+		} else {
+			childIcon.setVisibility(ImageView.VISIBLE);
+			service.loadChildImageToView(child, childIcon);
+		}
 		checkmark.setVisibility(
 				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;

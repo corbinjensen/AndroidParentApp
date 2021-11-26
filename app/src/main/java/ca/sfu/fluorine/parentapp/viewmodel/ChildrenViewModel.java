@@ -1,5 +1,7 @@
 package ca.sfu.fluorine.parentapp.viewmodel;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -46,15 +48,18 @@ public class ChildrenViewModel extends ViewModel {
         return childDao.getChildById(id);
     }
 
-    public void updateChild(Child child) {
+    public void updateChild(Child child, @Nullable Bitmap icon) {
+        iconService.saveImageToChild(child, icon);
         childDao.update(child);
     }
 
-    public void addChild(Child child) {
+    public void addChild(Child child, @Nullable Bitmap icon) {
+        iconService.saveImageToChild(child, icon);
         childDao.add(child);
     }
 
     public void deleteChild(Child child) {
+        iconService.deleteImageFromChild(child);
         childDao.delete(child);
     }
 

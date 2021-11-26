@@ -38,8 +38,8 @@ public class AddTaskActivity extends AppCompatActivity {
         childrenViewModel = provider.get(ChildrenViewModel.class);
         childrenViewModel.getChildrenLiveData().observe(this, children -> {
             if (childrenArrayAdapter == null) {
-                childrenArrayAdapter =
-                        new ChildrenAutoCompleteAdapter(this, children, true);
+                childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
+                        this, children, childrenViewModel.getIconService(), true);
             } else {
                 childrenArrayAdapter.reset(children, true);
             }
