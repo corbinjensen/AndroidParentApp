@@ -41,10 +41,7 @@ public class EditTaskActivity extends AddTaskActivity {
                 binding.buttonCompleteTask.setVisibility(View.VISIBLE);
                 binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
             }
-            String childName = Utility.formatChildName(this, previousChild);
-            binding.dropdownSelection.setText(childName, false);
-            childrenArrayAdapter.setSelectedChild(previousChild);
-            Utility.setupImage(this, binding.currentChildPhoto, previousChild);
+            populateDropDown(previousChild);
         }
 
         // Set up more buttons
