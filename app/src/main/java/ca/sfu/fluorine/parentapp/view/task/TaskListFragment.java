@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
+import ca.sfu.fluorine.parentapp.viewmodel.TaskViewModel;
 
 
 /**
@@ -25,14 +27,8 @@ import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
  *  user can create a new task, or edit existing ones.
  */
 public class TaskListFragment extends Fragment {
-    private AppDatabase database;
     private FragmentTaskListBinding binding;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        database = AppDatabase.getInstance(requireContext());
-    }
+    private TaskViewModel viewModel;
 
     @Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -40,30 +36,26 @@ public class TaskListFragment extends Fragment {
 		// Inflate the layout for this fragment
 		binding = FragmentTaskListBinding
 				.inflate(inflater, container, false);
+		viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 		return binding.getRoot();
 	}
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // floating action button
         binding.buttonAddTask.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), AddTaskActivity.class);
             startActivity(intent);
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        List<TaskWithChild> tasks = database.taskDao().getAllTasksWithChildren();
-        if (tasks.isEmpty()) {
-            binding.taskList.showEmpty();
-        } else {
-            binding.taskList.useAdapter(new TaskListAdapter(tasks));
-        }
+        viewModel.getLiveTasksWithChildren().observe(getViewLifecycleOwner(),
+                taskWithChildren -> {
+                    if (taskWithChildren.isEmpty()) {
+                        binding.taskList.showEmpty();
+                    } else {
+                        binding.taskList.useAdapter(new TaskListAdapter(taskWithChildren));
+                    }
+                });
     }
 
     @Override
@@ -116,6 +108,4 @@ public class TaskListFragment extends Fragment {
             return tasks.size();
         }
     }
-
-
 }

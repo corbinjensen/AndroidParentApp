@@ -8,21 +8,21 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
+import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
-public class TimeoutFinishFragment extends Fragment {
+public class TimeoutFinishFragment extends NoActionBarFragment {
 	private RingtoneController ringtoneController;
 
 	@Override
@@ -30,6 +30,9 @@ public class TimeoutFinishFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		TimeoutExpiredNotification.hideNotification(requireContext());
 		BackgroundTimeoutService.removeAlarm(requireContext());
+		TimeoutViewModel viewModel =
+				new ViewModelProvider(this).get(TimeoutViewModel.class);
+		viewModel.getSetting().clear();
 	}
 
 	@Override
@@ -45,13 +48,11 @@ public class TimeoutFinishFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
 		// Clear out the saved timer and navigate away
 		Button dismissButton = FragmentTimeoutFinishBinding.bind(view).button;
-		dismissButton.setOnClickListener(btnView -> {
-			TimeoutSetting.getInstance(getContext()).clear();
-			NavHostFragment.findNavController(this).navigate(R.id.return_to_timeout);
-		});
+		dismissButton.setOnClickListener(btnView ->
+			NavHostFragment.findNavController(this).navigate(R.id.return_to_timeout)
+		);
 	}
 
 	@Override

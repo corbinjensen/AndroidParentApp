@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -19,9 +20,9 @@ import com.google.android.material.button.MaterialButton;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
+import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
 
 /**
  * Represents the screen for timer selection
@@ -41,8 +42,8 @@ public class TimeoutSelectorFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		// Navigate away to running timer when a timer is active
-		TimeoutSetting setting = TimeoutSetting.getInstance(requireContext());
-		Long expiredTime = setting.getExpiredTime();
+		TimeoutViewModel viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+		Long expiredTime = viewModel.getSetting().getExpiredTime();
 		if (expiredTime != null) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.start_preset_timer_action);

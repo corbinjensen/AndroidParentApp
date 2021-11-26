@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,19 +18,15 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
+import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
  */
 public class ChildrenFragment extends Fragment {
-    private AppDatabase database;
 	private FragmentChildrenBinding binding;
+	private ChildrenViewModel viewModel;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        database = AppDatabase.getInstance(requireContext());
-    }
 
     @Override
 	public View onCreateView(
@@ -43,8 +40,8 @@ public class ChildrenFragment extends Fragment {
             container,
             false
         );
+        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
 		return binding.getRoot();
-
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -55,18 +52,13 @@ public class ChildrenFragment extends Fragment {
                     Intent intent = new Intent(requireContext(), AddChildActivity.class);
                     startActivity(intent);
                 });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Fetch from database
-        List<Child> children = database.childDao().getAllChildren();
-        if (children.isEmpty()) {
-            binding.childrenList.showEmpty();
-        } else {
-            binding.childrenList.useAdapter(new ChildListAdapter(children));
-        }
+        viewModel.getChildrenLiveData().observe(getViewLifecycleOwner(), children -> {
+            if (children.isEmpty()) {
+                binding.childrenList.showEmpty();
+            } else {
+                binding.childrenList.useAdapter(new ChildListAdapter(children));
+            }
+        });
     }
 
     @Override
