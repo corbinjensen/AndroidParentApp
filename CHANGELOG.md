@@ -1,5 +1,23 @@
 # CHANGELOG
 
+### Nov 25, 2021 - Dependency injection 💉
+
+- Remove singleton patterns in the storage modules, prevent memory leaks
+- Use the `Hilt` for dependency injection
+
+#### Why?
+- Cleaner architecture
+- Loose relationships between classes
+- Better organization of the class hierarchy
+
+#### Architecture flows
+- Room database (and DAOs), the `SharedPreferences` of the `TimeoutTimer`, and the internal storage will instantiate when the app is open
+- These storages will be injected to some services
+- The above modules/services will be then injected to the **view models** for then fetching data and manipulate data in the storage
+- The **views** consumes **view models**. Most of their functions of **views** are to *observe data* from view models and *perform UI logic*
+
+More details will be addressed during in-person meeting
+
 ### Nov 24, 2021 - View models, MVVM and more optimization
 
 - Implement view models to separate UI and database layer for children, coin flips, and tasks
