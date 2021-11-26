@@ -4,15 +4,20 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+
+import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutSetting;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TimeoutViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TimeoutViewModel extends ViewModel {
     private final TimeoutSetting setting;
 
-    public TimeoutViewModel(@NonNull Application application) {
-        super(application);
-        setting = TimeoutSetting.getInstance(application);
+    @Inject
+    public TimeoutViewModel(@NonNull TimeoutSetting setting) {
+        this.setting = setting;
     }
 
     public TimeoutSetting getSetting() {

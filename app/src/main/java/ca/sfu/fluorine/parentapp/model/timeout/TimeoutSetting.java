@@ -1,7 +1,10 @@
 package ca.sfu.fluorine.parentapp.model.timeout;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import javax.inject.Inject;
 
 /**
  * TimeoutSetting.java
@@ -9,22 +12,17 @@ import android.content.SharedPreferences;
  * Represents the settings of the timeout function
  */
 public class TimeoutSetting {
-	private static TimeoutSetting instance;
 	private final static String KEY = "timeout";
 	private final static String RUNNING = "running";
 	private final static String EXPIRED_TIME = "expired";
 	private final static String REMAINING_TIME = "remaining";
-	private SharedPreferences preferences;
-	private TimeoutSetting() {}
+	private final SharedPreferences preferences;
 
-	public static TimeoutSetting getInstance(Context context) {
-		if (instance == null) {
-			instance = new TimeoutSetting();
-			instance.preferences = context
-					.getApplicationContext()
-					.getSharedPreferences(KEY, Context.MODE_PRIVATE);
-		}
-		return instance;
+	@Inject
+	public TimeoutSetting(Application application) {
+		preferences = application
+				.getApplicationContext()
+				.getSharedPreferences(KEY, Context.MODE_PRIVATE);
 	}
 
 	public void saveTimer(TimeoutTimer timer) {

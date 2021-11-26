@@ -17,10 +17,12 @@ import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Represents the screen of the timer counting down
  */
+@AndroidEntryPoint
 public class TimeoutRunningFragment extends NoActionBarFragment {
     private FragmentTimeoutRunningBinding binding;
     private TimeoutTimer timer;

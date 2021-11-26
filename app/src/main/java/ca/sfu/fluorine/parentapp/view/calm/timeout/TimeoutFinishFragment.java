@@ -18,10 +18,12 @@ import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
+@AndroidEntryPoint
 public class TimeoutFinishFragment extends NoActionBarFragment {
 	private RingtoneController ringtoneController;
 

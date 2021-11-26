@@ -23,6 +23,7 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
 import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
 import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutSelectorFragmentDirections.StartPresetTimerAction;
 import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Represents the screen for timer selection
@@ -30,6 +31,7 @@ import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
  * Users can either have quick access to preset duration
  * or start their own custom timer
  */
+@AndroidEntryPoint
 public class TimeoutSelectorFragment extends Fragment {
 	private static final LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
