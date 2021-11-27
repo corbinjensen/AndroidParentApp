@@ -9,16 +9,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.UUID;
-
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenEditViewModel;
 
 /**
  * AddChildActivity.java - represents a user input form
@@ -27,10 +23,9 @@ import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
 public class AddChildActivity extends AppCompatActivity {
     ActivityChildFormBinding binding;
     Bitmap icon = null;
-    ChildrenViewModel viewModel;
+    ChildrenEditViewModel viewModel;
 
     // For the database and storage
-    ImageInternalStorage imageStorage;
     private ActivityResultLauncher<?> cropImageServiceLauncher;
 
     @Override
@@ -40,10 +35,9 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Set up the view model
-        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ChildrenEditViewModel.class);
 
         // Set up the image storage
-        imageStorage = ImageInternalStorage.getInstance(this);
 
         // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);
@@ -73,16 +67,16 @@ public class AddChildActivity extends AppCompatActivity {
         return !firstName.isEmpty() && !lastName.isEmpty();
     }
 
-    private final View.OnClickListener addChildrenDialogListener = (btnView) -> Utility.makeConfirmDialog(
+    private final View.OnClickListener addChildrenDialogListener = (btnView)
+            -> Utility.makeConfirmDialog(
             this,
             R.string.add_new_child,
             R.string.edit_child_confirm,
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                String savedImageFileName = persistIconData();
-                Child newChild = new Child(firstName, lastName, savedImageFileName);
-                viewModel.addChild(newChild);
+                Child newChild = new Child(firstName, lastName, null);
+                viewModel.addChild(newChild, icon);
                 finish();
             }
     );
@@ -97,15 +91,5 @@ public class AddChildActivity extends AppCompatActivity {
         binding.displayChildImage.setImageResource(R.drawable.default_icon);
         // Disabled this button as no photo to delete
         btnView.setEnabled(false);
-    }
-
-    // Return a saved image filename in the system
-    String persistIconData() {
-        if (icon != null) {
-            String filename = UUID.randomUUID().toString();
-            imageStorage.saveImage(filename, icon);
-            return filename;
-        }
-        return null;
     }
 }

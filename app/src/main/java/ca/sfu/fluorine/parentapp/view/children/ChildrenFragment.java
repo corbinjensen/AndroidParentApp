@@ -16,16 +16,15 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 
 /**
  * ChildrenFragment.java - represents the UI of the configure children feature.
  */
 public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
-	private ChildrenViewModel viewModel;
+	private ChildrenListingViewModel viewModel;
 
 
     @Override
@@ -40,7 +39,7 @@ public class ChildrenFragment extends Fragment {
             container,
             false
         );
-        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ChildrenListingViewModel.class);
 		return binding.getRoot();
     }
     @Override
@@ -97,7 +96,7 @@ public class ChildrenFragment extends Fragment {
         ) {
             // get child object from index
             Child child = children.get(position);
-            holder.populateData(requireContext(), child);
+            holder.populateData(requireContext(), child, viewModel.loadBitmapFrom(child));
         }
 
         @Override
