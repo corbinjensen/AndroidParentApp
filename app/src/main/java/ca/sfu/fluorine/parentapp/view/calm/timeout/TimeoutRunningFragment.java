@@ -48,7 +48,13 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         timer = viewModel.getSetting().makeTimer();
         if (timer == null) {
             long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
+            int timerMin = -(Math.toIntExact(millis/1000));
+            int timerMax = 0;
             timer = new TimeoutTimer(millis);
+
+            binding.progressBarTimer.setMin(timerMin);
+            binding.progressBarTimer.setMax(timerMax);
+            binding.progressBarTimer.setProgress(timerMin);
         }
 
         timer.registerActions(this::updateTimerUI, () -> {
@@ -85,6 +91,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         } else {
             viewModel.getSetting().clear();
         }
+        binding.pulsator.stop();
         timer.discard();
 
         super.onStop();
@@ -97,6 +104,8 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 
     private void updateTimerUI() {
         long remainingInSeconds = timer.getMillisLeft() / 1000;
+        int setTimerProgress = Math.toIntExact(-remainingInSeconds);
+        binding.progressBarTimer.setProgress(setTimerProgress);
         binding.countDownText.setText(getString(
             R.string.remaining_time,
             remainingInSeconds / 60,
@@ -107,4 +116,5 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         binding.playButton.setText(
             timer.getState() == TimerState.PAUSED ? R.string.resume : R.string.pause);
     }
+
 }

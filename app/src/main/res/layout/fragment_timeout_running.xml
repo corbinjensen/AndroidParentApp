@@ -32,6 +32,8 @@
         android:layout_height="0dp"
         android:indeterminateOnly="false"
         android:padding="64dp"
+        tools:progress="60"
+        android:progressDrawable="@drawable/circular_timer_progress_bar"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
