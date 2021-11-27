@@ -14,7 +14,6 @@ import androidx.annotation.StringRes;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.store.ImageInternalStorage;
 
 /**
  * Provides utility for the general application functions

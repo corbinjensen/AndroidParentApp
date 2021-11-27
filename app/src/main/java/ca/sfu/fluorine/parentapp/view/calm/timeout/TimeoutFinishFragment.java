@@ -17,7 +17,6 @@ import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
-import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
 
 /**
  * Represents the end screen when the timer reaches 0

@@ -20,7 +20,6 @@ import com.google.android.material.button.MaterialButton;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
 import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
-import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
 
 /**
  * Represents the screen for timer selection
