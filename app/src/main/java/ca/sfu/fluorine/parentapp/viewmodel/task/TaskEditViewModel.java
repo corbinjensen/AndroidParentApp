@@ -1,34 +1,22 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.task;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
 
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 
-public class TaskViewModel extends AndroidViewModel {
+public class TaskEditViewModel extends AndroidViewModel {
     private final TaskDao taskDao;
 
-    private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
-
-    public TaskViewModel(@NonNull Application application) {
+    public TaskEditViewModel(@NonNull Application application) {
         super(application);
-        AppDatabase appDatabase = AppDatabase.getInstance(application);
-        taskDao = appDatabase.taskDao();
-        liveTasksWithChildren = taskDao.getAllTasksWithChildren();
-    }
-
-    public LiveData<List<TaskWithChild>> getLiveTasksWithChildren() {
-        return liveTasksWithChildren;
+        taskDao =  AppDatabase.getInstance(application).taskDao();
     }
 
     public void addTask(Task task) {

@@ -35,8 +35,8 @@ public class IconService {
         storage.deleteImage(child.getPhotoFileName());
     }
 
-    public Bitmap loadBitmapFrom(@NonNull Child child) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+    public Bitmap loadBitmapFrom(@Nullable Child child) {
+        if (child == null || child.getId() == Child.getUnspecifiedChild().getId()) {
             return null;
         }
         return storage.loadImage(child.getPhotoFileName());

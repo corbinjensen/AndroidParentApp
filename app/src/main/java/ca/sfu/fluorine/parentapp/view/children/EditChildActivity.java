@@ -38,7 +38,8 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextLastName.addTextChangedListener(watcher);
 
 			// Initial display child image
-			Utility.setupImage(child, viewModel.loadBitmapFrom(child), binding.displayChildImage);
+			icon = viewModel.loadBitmapFrom(child);
+			Utility.setupImage(child, icon, binding.displayChildImage);
 		}
 
 		// Activate more buttons
