@@ -48,13 +48,10 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
         timer = viewModel.getSetting().makeTimer();
         if (timer == null) {
             long millis = TimeoutRunningFragmentArgs.fromBundle(getArguments()).getExpiredTime();
-            int timerMin = -(Math.toIntExact(millis/1000));
-            int timerMax = 0;
-            timer = new TimeoutTimer(millis);
+            int progressInit = 0;
 
-            binding.progressBarTimer.setMin(timerMin);
-            binding.progressBarTimer.setMax(timerMax);
-            binding.progressBarTimer.setProgress(timerMin);
+            timer = new TimeoutTimer(millis);
+            binding.progressBarTimer.setProgress(progressInit);
         }
 
         timer.registerActions(this::updateTimerUI, () -> {
@@ -104,8 +101,8 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 
     private void updateTimerUI() {
         long remainingInSeconds = timer.getMillisLeft() / 1000;
-        int setTimerProgress = Math.toIntExact(-remainingInSeconds);
-        binding.progressBarTimer.setProgress(setTimerProgress);
+
+        binding.progressBarTimer.setProgress(setTimerProgressFromMillisLeft());
         binding.countDownText.setText(getString(
             R.string.remaining_time,
             remainingInSeconds / 60,
@@ -117,4 +114,11 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
             timer.getState() == TimerState.PAUSED ? R.string.resume : R.string.pause);
     }
 
+    private int setTimerProgressFromMillisLeft(){
+        long seconds = timer.getMillisLeft() / 1000;
+        long startingTimeSecond = timer.expiredTime / 1000;
+        float decimalPercentTime = (float)(seconds*100 / startingTimeSecond);
+        decimalPercentTime = 1 - decimalPercentTime;
+        return (int)(decimalPercentTime * 100);
+    }
 }
