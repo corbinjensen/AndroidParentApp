@@ -90,6 +90,12 @@ public class EditTaskActivity extends AddTaskActivity {
                 .show();
     };
 
+    // Make button for task history page
+    private final View.OnClickListener viewTaskHistoryDialogListner = (btnView) -> {
+        // navigate to activity to view feed of whos turn it was.
+
+    };
+
     @NonNull
     public static Intent makeIntent(Context context, int taskId) {
         Intent intent = new Intent(context, EditTaskActivity.class);
