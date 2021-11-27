@@ -1,13 +1,10 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.timeout;
 
 import android.app.Application;
 import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -103,14 +100,9 @@ public class TimeoutViewModel extends AndroidViewModel {
         }
     }
 
-    public void clearTimeout() {
+    public void resetTimeout() {
         pauseTimer();
-        storage.getEditor().clear().apply();
         totalDuration = 0;
-    }
-
-    public boolean hasSavedTimer() {
-        return storage.hasTimer();
     }
 
     // Will call this one at fragment `onResume`
