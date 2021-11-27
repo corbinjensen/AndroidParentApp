@@ -76,16 +76,6 @@ public class TimeoutViewModel extends AndroidViewModel {
         };
     }
 
-    public void initializeTimeout(long totalDuration) {
-        storage.getEditor()
-                .clear()
-                .putLong(TimeoutStorage.TOTAL_DURATION, totalDuration)
-                .putLong(TimeoutStorage.EXPIRED_TIME, System.currentTimeMillis() + totalDuration)
-                .putLong(TimeoutStorage.REMAINING_TIME, totalDuration)
-                .putBoolean(TimeoutStorage.IS_RUNNING, true)
-                .apply();
-    }
-
     public void loadTimerFromStorage() {
         if (!storage.hasTimer()) {
             timerState.setValue(TimeoutState.EXPIRED);

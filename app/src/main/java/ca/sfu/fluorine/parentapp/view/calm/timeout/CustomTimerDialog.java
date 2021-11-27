@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.DialogCustomTimerBinding;
-import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
 
 /**
  * Represents a dialog to start a timer with customized duration
@@ -54,8 +54,9 @@ public class CustomTimerDialog extends AppCompatDialogFragment {
 
 	private void startTimer() {
 		long duration = binding.customDurationPicker.getValue() * 60000L;
-		TimeoutViewModel viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
-		viewModel.initializeTimeout(duration);
+		new ViewModelProvider(this)
+				.get(TimeoutLiteViewModel.class)
+				.initializeTimeout(duration);
 		NavHostFragment.findNavController(this).navigate(R.id.run_custom_timer_action);
 	}
 }
