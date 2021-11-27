@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
+import ca.sfu.fluorine.parentapp.viewmodel.CoinFlipViewModel;
 
 /**
  * CoinFlipFragment
@@ -24,43 +26,34 @@ import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
  * Represents the UI for the coin flip animation and user input.
  */
 public class CoinFlipFragment extends Fragment {
-	private AppDatabase database;
 	private FragmentCoinFlipBinding binding;
-
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		database = AppDatabase.getInstance(requireContext());
-	}
+	private CoinFlipViewModel viewModel;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		binding = FragmentCoinFlipBinding.inflate(inflater, container, false);
+		viewModel = new ViewModelProvider(this).get(CoinFlipViewModel.class);
 		return binding.getRoot();
 	}
 
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
 		binding.navigationCoinFlip.setOnClickListener(v -> {
 			Intent add = new Intent(requireContext(), CoinFlipActivity.class);
 			startActivity(add);
 		});
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		List<CoinResultWithChild> coinResultsWithChildren
-				= database.coinResultDao().getAllCoinResultsWithChildren();
-		if (coinResultsWithChildren.isEmpty()) {
-			binding.listCoinFlip.showEmpty();
-		} else {
-			binding.listCoinFlip.useAdapter(new CoinHistoryAdapter(coinResultsWithChildren));
-		}
+		viewModel.getLiveCoinResultsWithChildren().observe(getViewLifecycleOwner(),
+				coinResultWithChildren -> {
+					if (coinResultWithChildren.isEmpty()) {
+						binding.listCoinFlip.showEmpty();
+					} else {
+						binding.listCoinFlip.useAdapter(
+								new CoinHistoryAdapter(coinResultWithChildren));
+					}
+				});
 	}
 
 	@Override

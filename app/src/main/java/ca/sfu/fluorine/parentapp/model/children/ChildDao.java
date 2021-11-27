@@ -1,41 +1,32 @@
 package ca.sfu.fluorine.parentapp.model.children;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
-import androidx.room.Update;
 
 import java.util.List;
+
+import ca.sfu.fluorine.parentapp.model.BaseDao;
 
 /**
  * Represents a data access object (DAO) to manipulate data about children in the database
  */
 @Dao
-public abstract class ChildDao {
-	@Insert
-	public abstract void addChild(Child child);
-
-	@Delete
-	public abstract void deleteChild(Child child);
-
+public abstract class ChildDao implements BaseDao<Child> {
 	@Query("SELECT * FROM children ORDER BY createdTime DESC")
-	public abstract List<Child> getAllChildren();
+	public abstract LiveData<List<Child>> getAllChildren();
 
 	// By the magic of SQL...
 	@Query("SELECT children.* FROM children LEFT JOIN coin_result " +
 			"ON child_id == selected_child_id " +
 			"GROUP BY child_id ORDER BY MAX(coin_result.dateTimeOfFlip)")
-	public abstract List<Child> getAllChildrenOrderByRecentCoinFlips();
+	public abstract LiveData<List<Child>> getAllChildrenOrderByRecentCoinFlips();
 
 	@Nullable
 	@Query("SELECT * FROM children WHERE child_id = :id LIMIT 1")
 	public abstract Child getChildById(int id);
-
-	@Update
-	public abstract void updateChild(Child child);
 
 	@Nullable
 	@Query("SELECT * FROM children WHERE createdTime > :createdTime " +

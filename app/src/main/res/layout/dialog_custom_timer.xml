@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.timeout.CustomTimerDialog">
+    tools:context=".view.calm.timeout.CustomTimerDialog">
 
     <NumberPicker
         android:id="@+id/custom_duration_picker"

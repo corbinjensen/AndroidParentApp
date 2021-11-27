@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
+import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
 
 /**
  * AddChildActivity.java - represents a user input form
@@ -25,9 +27,9 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
 public class AddChildActivity extends AppCompatActivity {
     ActivityChildFormBinding binding;
     Bitmap icon = null;
+    ChildrenViewModel viewModel;
 
     // For the database and storage
-    AppDatabase database;
     ImageInternalStorage imageStorage;
     private ActivityResultLauncher<?> cropImageServiceLauncher;
 
@@ -37,8 +39,8 @@ public class AddChildActivity extends AppCompatActivity {
         binding = ActivityChildFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set up the database
-        database = AppDatabase.getInstance(this);
+        // Set up the view model
+        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
 
         // Set up the image storage
         imageStorage = ImageInternalStorage.getInstance(this);
@@ -80,7 +82,7 @@ public class AddChildActivity extends AppCompatActivity {
                 String lastName = binding.editTextLastName.getText().toString();
                 String savedImageFileName = persistIconData();
                 Child newChild = new Child(firstName, lastName, savedImageFileName);
-                database.childDao().addChild(newChild);
+                viewModel.addChild(newChild);
                 finish();
             }
     );

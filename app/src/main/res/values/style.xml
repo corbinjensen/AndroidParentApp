@@ -7,8 +7,26 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Rounded</item>
     </style>
 
+    <style name="calm_button" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.SlightlyRounded</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="strokeColor">?attr/colorOnPrimary</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="materialThemeOverlay">@style/CalmButtonThemeOverlay</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.Rounded" parent="">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.SlightlyRounded" parent="">
+        <item name="cornerSize">20%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="CalmButtonThemeOverlay">
+        <item name="colorPrimary">@android:color/transparent</item>
     </style>
 </resources>
