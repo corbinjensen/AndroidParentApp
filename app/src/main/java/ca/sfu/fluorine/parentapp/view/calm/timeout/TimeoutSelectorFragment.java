@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutSelectorBinding;
-import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 @AndroidEntryPoint
 public class TimeoutSelectorFragment extends Fragment {
-	private TimeoutViewModel viewModel;
+	private TimeoutLiteViewModel viewModel;
 
 	private static final LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
@@ -43,7 +43,7 @@ public class TimeoutSelectorFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		// Navigate away to running timer when a timer is active
-		viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+		viewModel = new ViewModelProvider(this).get(TimeoutLiteViewModel.class);
 		if (viewModel.hasSavedTimer()) {
 			NavHostFragment.findNavController(this)
 					.navigate(R.id.start_preset_timer_action);

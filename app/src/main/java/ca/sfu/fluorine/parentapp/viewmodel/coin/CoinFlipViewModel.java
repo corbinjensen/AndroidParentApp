@@ -1,6 +1,7 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.coin;
 
-import androidx.annotation.NonNull;
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -18,14 +19,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class CoinFlipViewModel extends ViewModel {
     private final CoinResultDao coinResultDao;
     private final LiveData<List<CoinResultWithChild>> liveCoinResultsWithChildren;
-    private final IconService iconService;
+    private final IconService service;
 
     @Inject
-    public CoinFlipViewModel(@NonNull CoinResultDao coinResultDao, @NonNull IconService iconService) {
-        super();
+    public CoinFlipViewModel(CoinResultDao coinResultDao, IconService service) {
         this.coinResultDao = coinResultDao;
+        this.service = service;
         liveCoinResultsWithChildren = coinResultDao.getAllCoinResultsWithChildren();
-        this.iconService = iconService;
+
     }
 
     public LiveData<List<CoinResultWithChild>> getLiveCoinResultsWithChildren() {
@@ -36,7 +37,7 @@ public class CoinFlipViewModel extends ViewModel {
         coinResultDao.add(coinResult);
     }
 
-    public IconService getIconService() {
-        return iconService;
+    public Bitmap loadChildIconFromCoinResult(CoinResultWithChild coinResult) {
+        return service.loadBitmapFrom(coinResult.getChild());
     }
 }

@@ -3,16 +3,17 @@ package ca.sfu.fluorine.parentapp.view.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.IconService;
 
 /**
  * Provides utility for the general application functions
@@ -39,6 +40,22 @@ public class Utility {
                 .setMessage(messageId)
                 .setPositiveButton(android.R.string.ok, confirmAction)
                 .show();
+    }
+
+    public static void setupImage(
+            @NonNull Child child,
+            @Nullable Bitmap bitmap,
+            ImageView imageView) {
+        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+            imageView.setVisibility(ImageView.INVISIBLE);
+        } else {
+            imageView.setVisibility(ImageView.VISIBLE);
+            if (bitmap == null) {
+                imageView.setImageResource(R.drawable.default_icon);
+            } else {
+                imageView.setImageBitmap(bitmap);
+            }
+        }
     }
 
     public static String formatChildName(Context context, @NonNull Child child) {

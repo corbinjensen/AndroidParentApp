@@ -14,7 +14,7 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityChildFormBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenEditViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class AddChildActivity extends AppCompatActivity {
     ActivityChildFormBinding binding;
     Bitmap icon = null;
-    ChildrenViewModel viewModel;
+    ChildrenEditViewModel viewModel;
 
     // For the database and storage
     private ActivityResultLauncher<?> cropImageServiceLauncher;
@@ -37,7 +37,7 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Set up the view model
-        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ChildrenEditViewModel.class);
 
         // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);
@@ -67,7 +67,8 @@ public class AddChildActivity extends AppCompatActivity {
         return !firstName.isEmpty() && !lastName.isEmpty();
     }
 
-    private final View.OnClickListener addChildrenDialogListener = (btnView) -> Utility.makeConfirmDialog(
+    private final View.OnClickListener addChildrenDialogListener = (btnView)
+            -> Utility.makeConfirmDialog(
             this,
             R.string.add_new_child,
             R.string.edit_child_confirm,

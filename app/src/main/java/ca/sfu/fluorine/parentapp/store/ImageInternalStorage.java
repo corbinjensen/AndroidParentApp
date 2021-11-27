@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.store;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,8 +26,8 @@ public class ImageInternalStorage {
 	}
 
 	public void saveImage(@NonNull String fileName, @NonNull Bitmap image) {
-		try (FileOutputStream outputStream
-					 = context.openFileOutput(fileName + FILE_EXT, Context.MODE_PRIVATE)) {
+		try (FileOutputStream outputStream =
+					 context.openFileOutput(fileName + FILE_EXT, Context.MODE_PRIVATE)) {
 			image.compress(Bitmap.CompressFormat.PNG, 95, outputStream);
 		} catch (Exception e) {
 			Toast.makeText(context, R.string.save_error, Toast.LENGTH_SHORT).show();

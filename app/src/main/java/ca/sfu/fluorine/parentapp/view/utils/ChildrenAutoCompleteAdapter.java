@@ -16,21 +16,18 @@ import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.IconService;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
-	private final IconService service;
+	private final ChildrenListingViewModel viewModel;
 
 	public ChildrenAutoCompleteAdapter(@NonNull Context context,
 									   @NonNull List<Child> children,
-									   @NonNull IconService iconService,
-									   boolean hasUnassignedChild) {
+									   @NonNull ChildrenListingViewModel viewModel) {
 		super(context, 0, children);
-		service = iconService;
-		if (hasUnassignedChild) {
-			add(Child.getUnspecifiedChild());
-		}
+		add(Child.getUnspecifiedChild());
+		this.viewModel = viewModel;
 	}
 
 	@NonNull
@@ -49,7 +46,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 
 		// Empty child (or no child)
 		childName.setText(Utility.formatChildName(getContext(), child));
-		service.updateChildImageView(child, childIcon);
+		Utility.setupImage(child, viewModel.loadBitmapFrom(child), childIcon);
 		checkmark.setVisibility(
 				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;
@@ -83,13 +80,5 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 
 	public void setSelectedChild(@NonNull Child selectedChild) {
 		this.selectedChild = selectedChild;
-	}
-
-	public void reset(List<Child> children, boolean hasUnassignedChild) {
-		clear();
-		addAll(children);
-		if (hasUnassignedChild) {
-			add(Child.getUnspecifiedChild());
-		}
 	}
 }

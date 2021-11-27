@@ -30,16 +30,16 @@ public class EditChildActivity extends AddChildActivity {
 			binding.editTextFirstName.removeTextChangedListener(watcher);
 			binding.editTextLastName.removeTextChangedListener(watcher);
 
-				binding.editTextFirstName.setText(child.getFirstName());
-				binding.editTextLastName.setText(child.getLastName());
+			binding.editTextFirstName.setText(child.getFirstName());
+			binding.editTextLastName.setText(child.getLastName());
 
-				// Remove watcher before set text
-				binding.editTextFirstName.addTextChangedListener(watcher);
-				binding.editTextLastName.addTextChangedListener(watcher);
+			// Remove watcher before set text
+			binding.editTextFirstName.addTextChangedListener(watcher);
+			binding.editTextLastName.addTextChangedListener(watcher);
 
 			// Initial display child image
-			icon = viewModel.getIconService()
-					.updateChildImageView(child, binding.displayChildImage);
+			icon = viewModel.loadBitmapFrom(child);
+			Utility.setupImage(child, icon, binding.displayChildImage);
 		}
 
 		// Activate more buttons

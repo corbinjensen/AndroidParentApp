@@ -17,7 +17,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
-import ca.sfu.fluorine.parentapp.viewmodel.CoinFlipViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.coin.CoinFlipViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -81,7 +81,10 @@ public class CoinFlipFragment extends Fragment {
 		@Override
 		public void onBindViewHolder(@NonNull CoinFlipViewHolder holder, int position) {
 			CoinResultWithChild coinResultWithChild = coinResultsWithChildren.get(position);
-			holder.populateData(coinResultWithChild, requireContext(), viewModel.getIconService());
+			holder.populateData(
+					requireContext(),
+					coinResultWithChild,
+					viewModel.loadChildIconFromCoinResult(coinResultWithChild));
 		}
 
 		@Override

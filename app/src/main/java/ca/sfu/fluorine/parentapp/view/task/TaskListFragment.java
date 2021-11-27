@@ -18,7 +18,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
-import ca.sfu.fluorine.parentapp.viewmodel.TaskViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.task.TaskListingViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class TaskListFragment extends Fragment {
     private FragmentTaskListBinding binding;
-    private TaskViewModel viewModel;
+    private TaskListingViewModel viewModel;
 
     @Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -37,7 +37,7 @@ public class TaskListFragment extends Fragment {
 		// Inflate the layout for this fragment
 		binding = FragmentTaskListBinding
 				.inflate(inflater, container, false);
-		viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+		viewModel = new ViewModelProvider(this).get(TaskListingViewModel.class);
 		return binding.getRoot();
 	}
 
@@ -95,13 +95,7 @@ public class TaskListFragment extends Fragment {
         ) {
             // get child object from index
             TaskWithChild task = tasks.get(position);
-            taskHolder.populateData(task, requireContext(), viewModel.getIconService());
-
-            // make the list item clickable
-            taskHolder.itemView.setOnClickListener((View view) -> {
-                Intent intent = EditTaskActivity.makeIntent(requireContext(), task.getTask().getId());
-                startActivity(intent);
-            });
+            taskHolder.populateData(requireContext(), task, viewModel.loadCurrentChildImage(task));
         }
 
         @Override

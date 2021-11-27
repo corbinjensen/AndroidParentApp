@@ -1,6 +1,8 @@
 package ca.sfu.fluorine.parentapp.view.task;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
-import ca.sfu.fluorine.parentapp.service.IconService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 /**
@@ -19,9 +20,9 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
  */
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
-	TextView taskName;
-	TextView childNameTask;
-	ImageView childPhotoTask;
+	final TextView taskName;
+	final TextView childNameTask;
+	final ImageView childPhotoTask;
 
 	public TaskViewHolder(@NonNull View itemView) {
 		super(itemView);
@@ -33,18 +34,20 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
 	}
 
-    public void populateData(TaskWithChild taskWithChild, Context context, IconService service) {
+    public void populateData(Context context, TaskWithChild taskWithChild, Bitmap bitmap) {
 		taskName.setText(taskWithChild.getTask().getName());
 
 		Child child = taskWithChild.getChild();
 		if (child == null) {
 			child = Child.getUnspecifiedChild();
-			childPhotoTask.setVisibility(View.INVISIBLE);
-		} else {
-			childPhotoTask.setVisibility(View.VISIBLE);
-			service.updateChildImageView(child, childPhotoTask);
 		}
 		String childName = Utility.formatChildName(context, child);
 		childNameTask.setText(context.getString(R.string.next_turn_info, childName));
+        Utility.setupImage(child, bitmap, childPhotoTask);
+
+		itemView.setOnClickListener((View view) -> {
+			Intent intent = EditTaskActivity.makeIntent(context, taskWithChild.getTask().getId());
+			context.startActivity(intent);
+		});
     }
 }

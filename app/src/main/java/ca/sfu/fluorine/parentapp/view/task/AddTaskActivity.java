@@ -14,16 +14,16 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
-import ca.sfu.fluorine.parentapp.viewmodel.TaskViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.task.TaskEditViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     ChildrenAutoCompleteAdapter childrenArrayAdapter;
-    ChildrenViewModel childrenViewModel;
-    TaskViewModel taskViewModel;
+    ChildrenListingViewModel childrenViewModel;
+    TaskEditViewModel taskViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,14 @@ public class AddTaskActivity extends AppCompatActivity {
         ViewModelProvider provider = new ViewModelProvider(this);
 
         // Task view model
-        taskViewModel = provider.get(TaskViewModel.class);
+        taskViewModel = provider.get(TaskEditViewModel.class);
 
         // Add listeners
         binding.buttonSaveTask.setOnClickListener(addTaskDialogListener);
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
 
-        childrenViewModel = provider.get(ChildrenViewModel.class);
+        childrenViewModel = provider.get(ChildrenListingViewModel.class);
         populateDropDown(Child.getUnspecifiedChild());
     }
 
@@ -77,23 +77,22 @@ public class AddTaskActivity extends AppCompatActivity {
     void populateDropDown(@NonNull Child selectedChild) {
         childrenViewModel.getChildrenLiveData().observe(this, children -> {
             if (childrenArrayAdapter == null) {
-                childrenArrayAdapter = new ChildrenAutoCompleteAdapter(
-                        this, children, childrenViewModel.getIconService(), true);
+                childrenArrayAdapter =
+                        new ChildrenAutoCompleteAdapter(this, children, childrenViewModel);
             }
             binding.dropdownSelection.setAdapter(childrenArrayAdapter);
             childrenArrayAdapter.setSelectedChild(selectedChild);
             binding.dropdownSelection.setText(
                     Utility.formatChildName(this, selectedChild), false);
-            childrenViewModel.getIconService()
-                    .updateChildImageView(selectedChild, binding.currentChildPhoto);
+            Utility.setupImage(
+                    selectedChild, childrenViewModel.loadBitmapFrom(selectedChild), binding.currentChildPhoto);
         });
 
         // Set up the adapter and listener for the dropdown menu
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
             Child child = childrenArrayAdapter.getItem(i);
             childrenArrayAdapter.setSelectedChild(child);
-            childrenViewModel.getIconService()
-                    .updateChildImageView(child, binding.currentChildPhoto);
+            Utility.setupImage(child, childrenViewModel.loadBitmapFrom(child), binding.currentChildPhoto);
         });
     }
 }

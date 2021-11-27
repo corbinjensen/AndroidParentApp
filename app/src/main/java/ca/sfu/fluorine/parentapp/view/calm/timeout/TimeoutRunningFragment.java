@@ -11,10 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
-import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
-import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -66,7 +65,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
                     binding.playButton.setOnClickListener(v -> viewModel.resumeTimer());
                     break;
                 case EXPIRED:
-                    viewModel.clearTimeout();
+                    viewModel.resetTimeout();
                     NavHostFragment.findNavController(this)
                             .navigate(R.id.redirect_to_end_screen);
                     break;
@@ -75,7 +74,7 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 
         binding.resetButton.setOnClickListener((btnView) -> {
             NavHostFragment.findNavController(this).navigate(R.id.reset_timer_action);
-            viewModel.clearTimeout();
+            viewModel.resetTimeout();
         });
     }
 

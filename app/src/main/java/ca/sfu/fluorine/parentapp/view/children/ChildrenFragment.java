@@ -17,7 +17,7 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentChildrenBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -26,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ChildrenFragment extends Fragment {
 	private FragmentChildrenBinding binding;
-	private ChildrenViewModel viewModel;
+	private ChildrenListingViewModel viewModel;
+
 
     @Override
 	public View onCreateView(
@@ -40,7 +41,7 @@ public class ChildrenFragment extends Fragment {
             container,
             false
         );
-        viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ChildrenListingViewModel.class);
 		return binding.getRoot();
     }
     @Override
@@ -76,7 +77,11 @@ public class ChildrenFragment extends Fragment {
 
         @NonNull
         @Override
-        public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ChildViewHolder onCreateViewHolder(
+            @NonNull
+                ViewGroup parent,
+            int viewType
+        ) {
             View view = LayoutInflater.from(requireContext()).inflate(
                 R.layout.child_row_layout,
                 parent,
@@ -86,10 +91,14 @@ public class ChildrenFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
+        public void onBindViewHolder(
+            @NonNull
+                    ChildViewHolder holder,
+            int position
+        ) {
             // get child object from index
             Child child = children.get(position);
-            holder.populateData(child, requireContext(), viewModel.getIconService());
+            holder.populateData(requireContext(), child, viewModel.loadBitmapFrom(child));
         }
 
         @Override
