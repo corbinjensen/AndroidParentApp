@@ -7,7 +7,7 @@ import androidx.room.Room;
 
 import javax.inject.Singleton;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import ca.sfu.fluorine.parentapp.store.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;

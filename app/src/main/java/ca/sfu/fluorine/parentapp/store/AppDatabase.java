@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.model;
+package ca.sfu.fluorine.parentapp.store;
 
 
 import androidx.room.Database;
