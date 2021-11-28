@@ -18,16 +18,17 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
-import ca.sfu.fluorine.parentapp.viewmodel.CoinFlipViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.coin.CoinFlipViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * CoinAnimationFragment
  *
  * Represents the UI for the coin flip animation.
  */
+@AndroidEntryPoint
 public class CoinAnimationFragment extends NoActionBarFragment {
 	private FragmentCoinAnimationBinding binding;
 	private static final Random random = new Random();

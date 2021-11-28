@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
+import dagger.hilt.android.HiltAndroidApp;
 
 /**
  * ParentApp.java
  *
  * Class for the ParentApp Android App.
  */
+@HiltAndroidApp
 public class ParentApp extends Application {
 	@Override
 	public void onCreate() {

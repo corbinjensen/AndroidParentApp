@@ -1,6 +1,6 @@
-package ca.sfu.fluorine.parentapp.service;
+package ca.sfu.fluorine.parentapp.store;
 
-import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,65 +11,37 @@ import androidx.annotation.Nullable;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+
+import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.R;
 
 public class ImageInternalStorage {
-	private Context context;
+	private final Context context;
 	private static final String FILE_EXT = ".png";
 
-	@SuppressLint("StaticFieldLeak")
-	private static ImageInternalStorage INSTANCE;
-
-	private ImageInternalStorage() {
-	}
-
-	public static ImageInternalStorage getInstance(Context context) {
-		if (INSTANCE == null) {
-			INSTANCE = new ImageInternalStorage();
-			INSTANCE.context = context.getApplicationContext();
-		}
-		return INSTANCE;
+	@Inject
+	public ImageInternalStorage(Application application) {
+		context = application.getApplicationContext();
 	}
 
 	public void saveImage(@NonNull String fileName, @NonNull Bitmap image) {
-		FileOutputStream outputStream = null;
-		try {
-			outputStream = context.openFileOutput(fileName + FILE_EXT, Context.MODE_PRIVATE);
+		try (FileOutputStream outputStream =
+					 context.openFileOutput(fileName + FILE_EXT, Context.MODE_PRIVATE)) {
 			image.compress(Bitmap.CompressFormat.PNG, 95, outputStream);
-			outputStream.close();
 		} catch (Exception e) {
 			Toast.makeText(context, R.string.save_error, Toast.LENGTH_SHORT).show();
-		} finally {
-			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 
 	@Nullable
 	public Bitmap loadImage(@Nullable String fileName) {
 		if (fileName == null || fileName.isEmpty()) return null;
-		FileInputStream inputStream = null;
 		Bitmap bitmap = null;
-		try {
-			inputStream = context.openFileInput(fileName + FILE_EXT);
+		try (FileInputStream inputStream = context.openFileInput(fileName + FILE_EXT)) {
 			bitmap = BitmapFactory.decodeStream(inputStream);
 		} catch (Exception e) {
 			Toast.makeText(context, R.string.fetch_error, Toast.LENGTH_SHORT).show();
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return bitmap;
 	}

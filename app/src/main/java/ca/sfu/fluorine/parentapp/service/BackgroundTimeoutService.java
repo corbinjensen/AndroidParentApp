@@ -1,21 +1,27 @@
 package ca.sfu.fluorine.parentapp.service;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
-import ca.sfu.fluorine.parentapp.model.timeout.TimeoutTimer;
+import javax.inject.Inject;
 
 public class BackgroundTimeoutService {
-	public static void setAlarm(Context context, @NonNull TimeoutTimer timeoutTimer) {
-		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
-		context.getSystemService(AlarmManager.class)
-				.setExact(AlarmManager.RTC_WAKEUP, timeoutTimer.expiredTime, intent);
+	private final Context context;
+
+	@Inject
+	public BackgroundTimeoutService(Application application) {
+		context = application.getApplicationContext();
 	}
 
-	public static void removeAlarm(Context context) {
+	public void setAlarmAt(long expiredTime) {
+		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
+		context.getSystemService(AlarmManager.class)
+				.setExact(AlarmManager.RTC_WAKEUP, expiredTime, intent);
+	}
+
+	public void removeAlarm() {
 		PendingIntent intent = TimeoutExpiredReceiver.makePendingIntent(context);
 		context.getSystemService(AlarmManager.class).cancel(intent);
 	}

@@ -1,30 +1,35 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.children;
 
-import android.app.Application;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.Database;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
+import ca.sfu.fluorine.parentapp.service.IconService;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
  * Represents the view model for the children
  */
-public class ChildrenViewModel extends AndroidViewModel {
+@HiltViewModel
+public class ChildrenListingViewModel extends ViewModel {
     private final ChildDao childDao;
     private final LiveData<List<Child>> childrenLiveData;
     private final LiveData<List<Child>> childrenByCoinFlipsLiveData;
+    private final IconService iconService;
 
-    public ChildrenViewModel(@NonNull Application application) {
-        super(application);
-        childDao = AppDatabase.getInstance(application).childDao();
+    @Inject
+    public ChildrenListingViewModel(@NonNull ChildDao childDao, @NonNull IconService iconService) {
+        super();
+        this.iconService = iconService;
+        this.childDao = childDao;
         childrenLiveData = childDao.getAllChildren();
         childrenByCoinFlipsLiveData = childDao.getAllChildrenOrderByRecentCoinFlips();
     }
@@ -37,24 +42,11 @@ public class ChildrenViewModel extends AndroidViewModel {
         return childrenByCoinFlipsLiveData;
     }
 
-    @Nullable
-    public Child getChildById(int id) {
-        return childDao.getChildById(id);
-    }
-
-    public void updateChild(Child child) {
-        childDao.update(child);
-    }
-
-    public void addChild(Child child) {
-        childDao.add(child);
-    }
-
-    public void deleteChild(Child child) {
-        childDao.delete(child);
-    }
-
     public Child getNextChild(Child child) {
         return childDao.getNextChildId(child);
+    }
+
+    public Bitmap loadBitmapFrom(Child child) {
+        return iconService.loadBitmapFrom(child);
     }
 }

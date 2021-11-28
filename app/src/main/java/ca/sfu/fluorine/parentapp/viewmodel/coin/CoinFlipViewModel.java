@@ -1,26 +1,32 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.coin;
 
-import android.app.Application;
+import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
+import ca.sfu.fluorine.parentapp.service.IconService;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class CoinFlipViewModel extends AndroidViewModel {
+@HiltViewModel
+public class CoinFlipViewModel extends ViewModel {
     private final CoinResultDao coinResultDao;
     private final LiveData<List<CoinResultWithChild>> liveCoinResultsWithChildren;
+    private final IconService service;
 
-    public CoinFlipViewModel(@NonNull Application application) {
-        super(application);
-        coinResultDao = AppDatabase.getInstance(application).coinResultDao();
+    @Inject
+    public CoinFlipViewModel(CoinResultDao coinResultDao, IconService service) {
+        this.coinResultDao = coinResultDao;
+        this.service = service;
         liveCoinResultsWithChildren = coinResultDao.getAllCoinResultsWithChildren();
+
     }
 
     public LiveData<List<CoinResultWithChild>> getLiveCoinResultsWithChildren() {
@@ -29,5 +35,9 @@ public class CoinFlipViewModel extends AndroidViewModel {
 
     public void addNewCoinResult(CoinResult coinResult) {
         coinResultDao.add(coinResult);
+    }
+
+    public Bitmap loadChildIconFromCoinResult(CoinResultWithChild coinResult) {
+        return service.loadBitmapFrom(coinResult.getChild());
     }
 }

@@ -1,6 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.coin;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.icu.text.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		childIcon = itemView.findViewById(R.id.coin_flip_child_icon);
 	}
 
-	public void populateData(Context context, CoinResultWithChild coinResultWithChild) {
+	public void populateData(Context context, @NonNull CoinResultWithChild coinResultWithChild, Bitmap bitmap) {
 		CoinResult result = coinResultWithChild.getCoinResult();
 		Child child = coinResultWithChild.getChild();
 
@@ -48,6 +49,6 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 						: android.R.color.holo_red_dark,
 				null);
 		didPickerWinView.setTextColor(color);
-		Utility.setupImage(context, childIcon, child);
+		Utility.setupImage(child, bitmap, childIcon);
 	}
 }

@@ -13,15 +13,16 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.service.RingtoneController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
-import ca.sfu.fluorine.parentapp.viewmodel.TimeoutViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Represents the end screen when the timer reaches 0
  */
+@AndroidEntryPoint
 public class TimeoutFinishFragment extends NoActionBarFragment {
 	private RingtoneController ringtoneController;
 
@@ -29,10 +30,7 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		TimeoutExpiredNotification.hideNotification(requireContext());
-		BackgroundTimeoutService.removeAlarm(requireContext());
-		TimeoutViewModel viewModel =
-				new ViewModelProvider(this).get(TimeoutViewModel.class);
-		viewModel.getSetting().clear();
+		new ViewModelProvider(this).get(TimeoutLiteViewModel.class).clear();
 	}
 
 	@Override

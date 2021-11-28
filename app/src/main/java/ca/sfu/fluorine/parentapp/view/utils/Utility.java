@@ -14,7 +14,6 @@ import androidx.annotation.StringRes;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
-import ca.sfu.fluorine.parentapp.service.ImageInternalStorage;
 
 /**
  * Provides utility for the general application functions
@@ -43,17 +42,18 @@ public class Utility {
                 .show();
     }
 
-    public static void setupImage(Context context, ImageView imageView, @NonNull Child child) {
+    public static void setupImage(
+            @NonNull Child child,
+            @Nullable Bitmap bitmap,
+            ImageView imageView) {
         if (child.getId() == Child.getUnspecifiedChild().getId()) {
             imageView.setVisibility(ImageView.INVISIBLE);
         } else {
             imageView.setVisibility(ImageView.VISIBLE);
-            Bitmap image = ImageInternalStorage.getInstance(context)
-                    .loadImage(child.getPhotoFileName());
-            if (image == null) {
+            if (bitmap == null) {
                 imageView.setImageResource(R.drawable.default_icon);
             } else {
-                imageView.setImageBitmap(image);
+                imageView.setImageBitmap(bitmap);
             }
         }
     }
