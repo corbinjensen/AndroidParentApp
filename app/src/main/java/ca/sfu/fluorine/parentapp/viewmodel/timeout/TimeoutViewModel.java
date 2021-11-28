@@ -48,6 +48,8 @@ public class TimeoutViewModel extends ViewModel {
         return timerState;
     }
 
+    public long getTotalDuration() { return totalDuration; }
+
     // Methods for the views interact with this view model
     public void resumeTimer() {
         makeTimerFromSettings();
