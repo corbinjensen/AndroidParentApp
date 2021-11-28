@@ -11,6 +11,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
+import ca.sfu.fluorine.parentapp.view.task.history.TaskHistoryActivity;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
@@ -41,8 +42,8 @@ public class EditTaskActivity extends AddTaskActivity {
                 binding.buttonCompleteTask.setVisibility(View.VISIBLE);
                 binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
                 binding.buttonHistoryTask.setVisibility(View.VISIBLE);
-                binding.buttonHistoryTask.setOnClickListener( btnView -> {
-                    Intent i = new Intent(this, TaskHistoryActivity.class);
+                binding.buttonHistoryTask.setOnClickListener(btnView -> {
+                    Intent i = TaskHistoryActivity.makeIntent(this, taskId);
                     startActivity(i);
                 });
             }
@@ -57,10 +58,6 @@ public class EditTaskActivity extends AddTaskActivity {
         // Re-register watcher
         binding.editTaskName.addTextChangedListener(watcher);
         binding.dropdownSelection.addTextChangedListener(watcher);
-    }
-
-    public void viewHistoryIntent() {
-
     }
 
     private final View.OnClickListener editTaskDialogListener = (btnView) -> Utility.makeConfirmDialog(

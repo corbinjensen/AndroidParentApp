@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
-            android:name=".view.task.TaskHistoryActivity"
+            android:name=".view.task.history.TaskHistoryActivity"
             android:label="Task History"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".view.task.EditTaskActivity"/>
         <activity
             android:name=".view.calm.zen.ZenActivity"
             android:exported="false"
