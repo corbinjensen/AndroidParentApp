@@ -14,7 +14,7 @@ public abstract class WhoseTurnDao implements BaseDao<WhoseTurn> {
     @Query("SELECT children.*, completionTime FROM whose_turn " +
             "JOIN children ON child_id = assigned_child_id " +
             "JOIN tasks ON task_id = assigned_task_id " +
-            "WHERE assigned_child_id = :taskId " +
+            "WHERE assigned_task_id = :taskId " +
             "ORDER BY completionTime DESC")
     public abstract LiveData<List<WhoseTurnRecord>> getAllWhoseTurnHistoryFrom(int taskId);
 }

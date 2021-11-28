@@ -89,6 +89,14 @@ public class EditTaskActivity extends AddTaskActivity {
                 .setMessage(completeTaskMessage)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     Task task = taskWithChild.getTask();
+
+                    // Push the child who completed the task to the history
+                    Integer childId = previousChild.getId();
+                    if (childId != null) {
+                        taskViewModel.addChildrenToTaskHistory(task.getId(), childId);
+                    }
+
+                    // Update the next turn fot the task
                     task.update(task.getName(), nextChild.getId());
                     taskViewModel.updateTask(task);
                     finish();
