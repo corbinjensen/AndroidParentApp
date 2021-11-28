@@ -44,6 +44,18 @@ public class TimeoutViewModel extends AndroidViewModel {
         return timerState;
     }
 
+    //Gives an int to represent time elapsed since timer's creation (on scale low:0-high:100)
+    public int getProgressInt(){
+        long totalMillis = totalDuration / 100 ;
+        long currentMillis = 0;
+
+        if (millisLeft.getValue() != null){
+            currentMillis = millisLeft.getValue();
+        }
+        int progressCounter = (int) (currentMillis / totalMillis);
+        return (100 - progressCounter);
+    }
+
     // Methods for the views interact with this view model
     public void resumeTimer() {
         makeTimerFromSettings();
