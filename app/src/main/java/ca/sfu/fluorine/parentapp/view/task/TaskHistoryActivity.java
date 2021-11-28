@@ -10,7 +10,7 @@ import ca.sfu.fluorine.parentapp.databinding.ActivityTaskHistoryBinding;
  * TaskHistory.java - represents a page to view a feed that displays
  * the history of which child had a turn at completing the task.
  */
-public class TaskHistory extends AppCompatActivity {
+public class TaskHistoryActivity extends AppCompatActivity {
     ActivityTaskHistoryBinding binding;
 
     @Override

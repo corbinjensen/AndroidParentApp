@@ -11,7 +11,6 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
-import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutActivity;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
@@ -43,7 +42,7 @@ public class EditTaskActivity extends AddTaskActivity {
                 binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
                 binding.buttonHistoryTask.setVisibility(View.VISIBLE);
                 binding.buttonHistoryTask.setOnClickListener( btnView -> {
-                    Intent i = new Intent(this, TaskHistory.class);
+                    Intent i = new Intent(this, TaskHistoryActivity.class);
                     startActivity(i);
                 });
             }

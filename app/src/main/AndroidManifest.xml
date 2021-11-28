@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
-            android:name=".view.task.TaskHistory"
+            android:name=".view.task.TaskHistoryActivity"
             android:label="Task History"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
