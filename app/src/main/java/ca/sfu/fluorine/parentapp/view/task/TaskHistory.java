@@ -16,6 +16,7 @@ public class TaskHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityTaskHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
 }

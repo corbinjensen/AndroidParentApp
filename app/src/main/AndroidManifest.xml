@@ -17,7 +17,9 @@
         android:theme="@style/Theme.ParentApp">
         <activity
             android:name=".view.task.TaskHistory"
-            android:exported="false" />
+            android:label="Task History"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".view.calm.zen.ZenActivity"
             android:exported="false"
