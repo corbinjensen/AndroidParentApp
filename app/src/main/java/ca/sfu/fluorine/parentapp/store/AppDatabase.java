@@ -1,6 +1,5 @@
 package ca.sfu.fluorine.parentapp.store;
 
-
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
@@ -11,6 +10,7 @@ import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
+import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
 
 /**
  * Represents the whole database of the app
@@ -25,4 +25,5 @@ public abstract class AppDatabase extends RoomDatabase {
 	public abstract ChildDao childDao();
 	public abstract CoinResultDao coinResultDao();
 	public abstract TaskDao taskDao();
+	public abstract WhoseTurnDao whoseTurnDao();
 }

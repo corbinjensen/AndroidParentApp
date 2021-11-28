@@ -7,6 +7,7 @@ import androidx.room.Room;
 
 import javax.inject.Singleton;
 
+import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
 import ca.sfu.fluorine.parentapp.store.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResultDao;
@@ -47,5 +48,11 @@ public class DatabaseModule {
     @Provides
     public TaskDao provideTaskDao(@NonNull AppDatabase database) {
         return database.taskDao();
+    }
+
+    @Singleton
+    @Provides
+    public WhoseTurnDao provideWhoseTurnDao(@NonNull AppDatabase database) {
+        return database.whoseTurnDao();
     }
 }
