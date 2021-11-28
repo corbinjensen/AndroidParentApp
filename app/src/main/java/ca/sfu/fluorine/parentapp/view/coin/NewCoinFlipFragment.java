@@ -16,7 +16,7 @@ import ca.sfu.fluorine.parentapp.databinding.FragmentNewCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
-import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 
 /**
  * NewCoinFlipFragment
@@ -26,12 +26,12 @@ import ca.sfu.fluorine.parentapp.viewmodel.ChildrenViewModel;
 public class NewCoinFlipFragment extends Fragment {
 	private FragmentNewCoinFlipBinding binding;
 	private ChildrenAutoCompleteAdapter childrenArrayAdapter;
-	private ChildrenViewModel viewModel;
+	private ChildrenListingViewModel viewModel;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		viewModel = new ViewModelProvider(this).get(ChildrenViewModel.class);
+		viewModel = new ViewModelProvider(this).get(ChildrenListingViewModel.class);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class NewCoinFlipFragment extends Fragment {
 			if (children.isEmpty()) {
 				NavHostFragment.findNavController(this).navigate(R.id.flipping_coin_action);
 			}
-			childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, true);
+			childrenArrayAdapter = new ChildrenAutoCompleteAdapter(requireContext(), children, viewModel);
 			binding.dropdownSelection.setAdapter(childrenArrayAdapter);
 			setupMenuWithImages();
 		});
@@ -62,13 +62,13 @@ public class NewCoinFlipFragment extends Fragment {
 		childrenArrayAdapter.setSelectedChild(first);
 		binding.dropdownSelection.setText(Utility.formatChildName(requireContext(), first));
 		binding.dropdownSelection.setAdapter(childrenArrayAdapter);
-		Utility.setupImage(requireContext(), binding.currentChild, first);
+		Utility.setupImage(first, viewModel.loadBitmapFrom(first), binding.currentChild);
 
 		// Add listener
 		binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
 			Child child = childrenArrayAdapter.getItem(i);
 			childrenArrayAdapter.setSelectedChild(child);
-			Utility.setupImage(requireContext(), binding.currentChild, child);
+			Utility.setupImage(child, viewModel.loadBitmapFrom(child), binding.currentChild);
 		});
 	}
 

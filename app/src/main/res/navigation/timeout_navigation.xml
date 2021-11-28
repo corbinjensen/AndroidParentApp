@@ -14,10 +14,6 @@
             app:destination="@id/timeout_selector"
             app:popUpTo="@id/timeout_running"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="expiredTime"
-            android:defaultValue="-1L"
-            app:argType="long" />
         <action
             android:id="@+id/redirect_to_end_screen"
             app:destination="@id/timeout_finish_fragment"

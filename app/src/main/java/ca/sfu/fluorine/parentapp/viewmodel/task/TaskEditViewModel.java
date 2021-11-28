@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.task;
 
 import android.app.Application;
 
@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
-import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 import ca.sfu.fluorine.parentapp.model.task.Task;
@@ -18,22 +17,15 @@ import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
 
-public class TaskViewModel extends AndroidViewModel {
+public class TaskEditViewModel extends AndroidViewModel {
     private final TaskDao taskDao;
     private final WhoseTurnDao whoseTurnDao;
 
-    private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
-
-    public TaskViewModel(@NonNull Application application) {
+    public TaskEditViewModel(@NonNull Application application) {
         super(application);
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         taskDao = appDatabase.taskDao();
-        liveTasksWithChildren = taskDao.getAllTasksWithChildren();
         whoseTurnDao = appDatabase.whoseTurnDao();
-    }
-
-    public LiveData<List<TaskWithChild>> getLiveTasksWithChildren() {
-        return liveTasksWithChildren;
     }
 
     public void addTask(Task task) {
@@ -56,9 +48,5 @@ public class TaskViewModel extends AndroidViewModel {
     public void addChildrenToTaskHistory(int taskId, int childrenId) {
         WhoseTurn turn = new WhoseTurn(taskId, childrenId);
         whoseTurnDao.add(turn);
-    }
-
-    public LiveData<List<WhoseTurnRecord>> getTaskHistoryById(int taskId) {
-        return whoseTurnDao.getAllWhoseTurnHistoryFrom(taskId);
     }
 }
