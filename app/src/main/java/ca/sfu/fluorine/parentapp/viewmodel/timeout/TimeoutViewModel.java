@@ -86,7 +86,8 @@ public class TimeoutViewModel extends ViewModel {
         }
         timerState.setValue(TimeoutState.PAUSED);
         totalDuration = storage.getTotalDuration();
-        makeTimerFromSettings();
+        invalidateTimer();
+        timer = makeTimerFromSettings();
         if (storage.isTimerRunning()) {
             timerState.setValue(TimeoutState.RUNNING);
             timer.start();
@@ -130,14 +131,11 @@ public class TimeoutViewModel extends ViewModel {
     }
 
     // Interact with the timeout preferences
-    private void makeTimerFromSettings() {
+    private CountDownTimer makeTimerFromSettings() {
         long duration = storage.calculateRemainingMillis();
         realMillisLeft.setValue(duration);
         speed.setValue(storage.getSpeedPercentage());
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = makeTimer(duration);
+        return makeTimer(duration);
     }
 
     public void resetTimeout() {
