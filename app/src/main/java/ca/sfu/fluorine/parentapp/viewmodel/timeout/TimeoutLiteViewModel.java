@@ -23,6 +23,7 @@ public class TimeoutLiteViewModel extends ViewModel {
                 .putLong(TimeoutStorage.EXPIRED_TIME, System.currentTimeMillis() + totalDuration)
                 .putLong(TimeoutStorage.REMAINING_TIME, totalDuration)
                 .putBoolean(TimeoutStorage.IS_RUNNING, true)
+                .putInt(TimeoutStorage.SPEED_PERCENTAGE, TimeoutStorage.NORMAL_PERCENTAGE)
                 .apply();
     }
 
