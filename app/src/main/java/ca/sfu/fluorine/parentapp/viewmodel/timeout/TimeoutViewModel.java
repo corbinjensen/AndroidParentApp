@@ -1,24 +1,26 @@
 package ca.sfu.fluorine.parentapp.viewmodel.timeout;
 
-import android.app.Application;
 import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TimeoutViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TimeoutViewModel extends ViewModel {
     // Services and storages
     private final TimeoutStorage storage;
     private final BackgroundTimeoutService service;
 
     // Constants
     private final long INTERVAL = 100;
-
     public enum TimeoutState {RUNNING, PAUSED, EXPIRED}
 
     // Live data
@@ -29,10 +31,12 @@ public class TimeoutViewModel extends AndroidViewModel {
 
     private CountDownTimer timer;
 
-    public TimeoutViewModel(@NonNull Application application) {
-        super(application);
-        storage = TimeoutStorage.getInstance(application);
-        service = new BackgroundTimeoutService(application);
+    @Inject
+    public TimeoutViewModel(
+            @NonNull TimeoutStorage timeoutStorage,
+            @NonNull BackgroundTimeoutService backgroundTimeoutService) {
+        storage = timeoutStorage;
+        service = backgroundTimeoutService;
     }
 
     // Emits data to the view

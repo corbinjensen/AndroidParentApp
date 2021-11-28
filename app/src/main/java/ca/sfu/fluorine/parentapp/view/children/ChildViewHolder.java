@@ -16,8 +16,8 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class ChildViewHolder extends RecyclerView.ViewHolder {
-    TextView titleCreationName;
-    ImageView childImage;
+    final TextView titleCreationName;
+    final ImageView childImage;
 
     public ChildViewHolder(@NonNull View itemView) {
         super(itemView);

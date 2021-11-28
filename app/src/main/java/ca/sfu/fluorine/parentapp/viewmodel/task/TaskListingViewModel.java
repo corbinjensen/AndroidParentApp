@@ -1,29 +1,28 @@
 package ca.sfu.fluorine.parentapp.viewmodel.task;
 
-import android.app.Application;
 import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
+import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 import ca.sfu.fluorine.parentapp.service.IconService;
-import ca.sfu.fluorine.parentapp.store.ImageInternalStorage;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TaskListingViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TaskListingViewModel extends ViewModel {
     private final IconService service;
-
     private final LiveData<List<TaskWithChild>> liveTasksWithChildren;
 
-    public TaskListingViewModel(@NonNull Application application) {
-        super(application);
-        AppDatabase appDatabase = AppDatabase.getInstance(application);
-        liveTasksWithChildren = appDatabase.taskDao().getAllTasksWithChildren();
-        service = new IconService(ImageInternalStorage.getInstance(application));
+    @Inject
+    public TaskListingViewModel(TaskDao taskDao, IconService service) {
+        liveTasksWithChildren = taskDao.getAllTasksWithChildren();
+        this.service = service;
     }
 
     public LiveData<List<TaskWithChild>> getLiveTasksWithChildren() {

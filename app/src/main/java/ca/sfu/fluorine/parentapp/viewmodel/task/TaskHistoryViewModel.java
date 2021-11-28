@@ -1,23 +1,23 @@
 package ca.sfu.fluorine.parentapp.viewmodel.task;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TaskHistoryViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TaskHistoryViewModel extends ViewModel {
     private final WhoseTurnDao whoseTurnDao;
 
-    public TaskHistoryViewModel(@NonNull Application application) {
-        super(application);
-        whoseTurnDao = AppDatabase.getInstance(application).whoseTurnDao();
+    @Inject
+    public TaskHistoryViewModel(WhoseTurnDao whoseTurnDao) {
+        this.whoseTurnDao = whoseTurnDao;
     }
 
     public LiveData<List<WhoseTurnRecord>> getTaskHistoryById(int taskId) {

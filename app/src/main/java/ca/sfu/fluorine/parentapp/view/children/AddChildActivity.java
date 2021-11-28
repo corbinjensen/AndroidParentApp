@@ -15,11 +15,13 @@ import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.service.CropImageService;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenEditViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * AddChildActivity.java - represents a user input form
  * activity to add a new, or modify info on a child.
  */
+@AndroidEntryPoint
 public class AddChildActivity extends AppCompatActivity {
     ActivityChildFormBinding binding;
     Bitmap icon = null;
@@ -36,8 +38,6 @@ public class AddChildActivity extends AppCompatActivity {
 
         // Set up the view model
         viewModel = new ViewModelProvider(this).get(ChildrenEditViewModel.class);
-
-        // Set up the image storage
 
         // Add watcher to the fields
         binding.editTextFirstName.addTextChangedListener(watcher);
@@ -75,7 +75,7 @@ public class AddChildActivity extends AppCompatActivity {
             (dialogInterface, i) -> {
                 String firstName = binding.editTextFirstName.getText().toString();
                 String lastName = binding.editTextLastName.getText().toString();
-                Child newChild = new Child(firstName, lastName, null);
+                Child newChild = new Child(firstName, lastName);
                 viewModel.addChild(newChild, icon);
                 finish();
             }

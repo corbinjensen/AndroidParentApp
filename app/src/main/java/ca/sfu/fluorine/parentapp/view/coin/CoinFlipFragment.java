@@ -18,12 +18,14 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
 import ca.sfu.fluorine.parentapp.viewmodel.coin.CoinFlipViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * CoinFlipFragment
  *
  * Represents the UI for the coin flip animation and user input.
  */
+@AndroidEntryPoint
 public class CoinFlipFragment extends Fragment {
 	private FragmentCoinFlipBinding binding;
 	private CoinFlipViewModel viewModel;

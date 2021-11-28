@@ -1,26 +1,26 @@
 package ca.sfu.fluorine.parentapp.viewmodel.children;
 
-import android.app.Application;
 import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.service.IconService;
-import ca.sfu.fluorine.parentapp.store.ImageInternalStorage;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class ChildrenEditViewModel extends AndroidViewModel {
+@HiltViewModel
+public class ChildrenEditViewModel extends ViewModel {
     private final ChildDao childDao;
     private final IconService iconService;
 
-    public ChildrenEditViewModel(@NonNull Application application) {
-        super(application);
-        childDao = AppDatabase.getInstance(application).childDao();
-        iconService = new IconService(ImageInternalStorage.getInstance(application));
+    @Inject
+    public ChildrenEditViewModel(ChildDao childDao, IconService iconService) {
+        this.childDao = childDao;
+        this.iconService = iconService;
     }
 
     @Nullable

@@ -20,9 +20,9 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
  */
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
-	TextView taskName;
-	TextView childNameTask;
-	ImageView childPhotoTask;
+	final TextView taskName;
+	final TextView childNameTask;
+	final ImageView childPhotoTask;
 
 	public TaskViewHolder(@NonNull View itemView) {
 		super(itemView);

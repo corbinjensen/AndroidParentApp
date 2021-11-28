@@ -22,10 +22,9 @@ public class Child {
     // Singleton for unspecified child
     private static Child UNSPECIFIED;
 
-    public Child(@NonNull String firstName, @NonNull String lastName, @Nullable String photoFileName) {
+    public Child(@NonNull String firstName, @NonNull String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.photoFileName = photoFileName;
         this.createdTime = System.currentTimeMillis(); // Current UNIX time
     }
 
@@ -52,7 +51,7 @@ public class Child {
 
     public static Child getUnspecifiedChild() {
         if (UNSPECIFIED == null) {
-            UNSPECIFIED = new Child("", "", null);
+            UNSPECIFIED = new Child("", "");
         }
         return UNSPECIFIED;
     }
@@ -70,7 +69,7 @@ public class Child {
         return photoFileName;
     }
 
-    public void updatePhotoFileName(@Nullable String photoFileName) {
+    public void setPhotoFileName(@Nullable String photoFileName) {
         this.photoFileName = photoFileName;
     }
 }

@@ -5,9 +5,12 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 
+import javax.inject.Inject;
+
 public class BackgroundTimeoutService {
 	private final Context context;
 
+	@Inject
 	public BackgroundTimeoutService(Application application) {
 		context = application.getApplicationContext();
 	}
