@@ -1,18 +1,19 @@
 package ca.sfu.fluorine.parentapp.viewmodel.timeout;
 
-import android.app.Application;
+import androidx.lifecycle.ViewModel;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
-public class TimeoutLiteViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TimeoutLiteViewModel extends ViewModel {
     private final TimeoutStorage storage;
 
-    public TimeoutLiteViewModel(@NonNull Application application) {
-        super(application);
-        storage = TimeoutStorage.getInstance(application);
+    @Inject
+    public TimeoutLiteViewModel(TimeoutStorage storage) {
+        this.storage = storage;
     }
 
     public void initializeTimeout(long totalDuration) {

@@ -1,31 +1,27 @@
 package ca.sfu.fluorine.parentapp.viewmodel.task;
 
-import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
-import java.util.List;
+import javax.inject.Inject;
 
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
-import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.task.TaskDao;
-import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
 
-public class TaskEditViewModel extends AndroidViewModel {
+@HiltViewModel
+public class TaskEditViewModel extends ViewModel {
     private final TaskDao taskDao;
     private final WhoseTurnDao whoseTurnDao;
 
-    public TaskEditViewModel(@NonNull Application application) {
-        super(application);
-        AppDatabase appDatabase = AppDatabase.getInstance(application);
-        taskDao = appDatabase.taskDao();
-        whoseTurnDao = appDatabase.whoseTurnDao();
+    @Inject
+    public TaskEditViewModel(TaskDao taskDao, WhoseTurnDao whoseTurnDao) {
+        this.taskDao = taskDao;
+        this.whoseTurnDao = whoseTurnDao;
     }
 
     public void addTask(Task task) {

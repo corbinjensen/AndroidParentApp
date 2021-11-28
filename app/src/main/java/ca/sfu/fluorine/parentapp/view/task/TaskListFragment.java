@@ -19,12 +19,14 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTaskListBinding;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
 import ca.sfu.fluorine.parentapp.viewmodel.task.TaskListingViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
  * TaskListFragment.java - Represents a home screen and feed/list of tasks
  *  user can create a new task, or edit existing ones.
  */
+@AndroidEntryPoint
 public class TaskListFragment extends Fragment {
     private FragmentTaskListBinding binding;
     private TaskListingViewModel viewModel;

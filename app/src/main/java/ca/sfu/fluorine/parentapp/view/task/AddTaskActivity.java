@@ -16,7 +16,9 @@ import ca.sfu.fluorine.parentapp.view.utils.ChildrenAutoCompleteAdapter;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 import ca.sfu.fluorine.parentapp.viewmodel.task.TaskEditViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class AddTaskActivity extends AppCompatActivity {
     ActivityTaskFormBinding binding;
     ChildrenAutoCompleteAdapter childrenArrayAdapter;
@@ -90,7 +92,7 @@ public class AddTaskActivity extends AppCompatActivity {
         binding.dropdownSelection.setOnItemClickListener((adapterView, view, i, l) -> {
             Child child = childrenArrayAdapter.getItem(i);
             childrenArrayAdapter.setSelectedChild(child);
-            Utility.setupImage(child, childrenViewModel.loadBitmapFrom(selectedChild), binding.currentChildPhoto);
+            Utility.setupImage(child, childrenViewModel.loadBitmapFrom(child), binding.currentChildPhoto);
         });
     }
 }

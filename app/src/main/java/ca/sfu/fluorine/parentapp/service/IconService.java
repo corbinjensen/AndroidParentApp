@@ -7,27 +7,30 @@ import androidx.annotation.Nullable;
 
 import java.util.UUID;
 
+import javax.inject.Inject;
+
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.store.ImageInternalStorage;
 
 public class IconService {
-    ImageInternalStorage storage;
+    private final ImageInternalStorage storage;
 
+    @Inject
     public IconService(ImageInternalStorage storage) {
         this.storage = storage;
     }
 
-    public void saveImageToChild(Child child, @Nullable Bitmap bitmap) {
+    public void saveImageToChild(@NonNull Child child, @Nullable Bitmap bitmap) {
         String fileName = child.getPhotoFileName();
         if (bitmap == null) {
             storage.deleteImage(fileName);
-            child.updatePhotoFileName(null);
+            child.setPhotoFileName(null);
         } else {
             if (fileName == null) {
                 fileName = UUID.randomUUID().toString();
                 storage.saveImage(fileName, bitmap);
             }
-            child.updatePhotoFileName(fileName);
+            child.setPhotoFileName(fileName);
         }
     }
 

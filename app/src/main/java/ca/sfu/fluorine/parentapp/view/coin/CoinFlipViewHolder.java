@@ -32,7 +32,7 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		childIcon = itemView.findViewById(R.id.coin_flip_child_icon);
 	}
 
-	public void populateData(Context context, CoinResultWithChild coinResultWithChild, Bitmap bitmap) {
+	public void populateData(Context context, @NonNull CoinResultWithChild coinResultWithChild, Bitmap bitmap) {
 		CoinResult result = coinResultWithChild.getCoinResult();
 		Child child = coinResultWithChild.getChild();
 
