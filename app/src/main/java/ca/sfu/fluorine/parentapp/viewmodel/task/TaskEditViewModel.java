@@ -5,6 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
 
 import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
@@ -22,12 +25,7 @@ public class TaskEditViewModel extends AndroidViewModel {
         super(application);
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         taskDao = appDatabase.taskDao();
-        liveTasksWithChildren = taskDao.getAllTasksWithChildren();
         whoseTurnDao = appDatabase.whoseTurnDao();
-    }
-
-    public LiveData<List<TaskWithChild>> getLiveTasksWithChildren() {
-        return liveTasksWithChildren;
     }
 
     public void addTask(Task task) {
@@ -50,9 +48,5 @@ public class TaskEditViewModel extends AndroidViewModel {
     public void addChildrenToTaskHistory(int taskId, int childrenId) {
         WhoseTurn turn = new WhoseTurn(taskId, childrenId);
         whoseTurnDao.add(turn);
-    }
-
-    public LiveData<List<WhoseTurnRecord>> getTaskHistoryById(int taskId) {
-        return whoseTurnDao.getAllWhoseTurnHistoryFrom(taskId);
     }
 }
