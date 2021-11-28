@@ -48,16 +48,7 @@ public class TimeoutViewModel extends ViewModel {
         return timerState;
     }
 
-    //Gives int to represent percent time elapsed since timer's creation (on scale low:0-high:100)
-    public int getProgressInt(){
-        long totalMillis = totalDuration / 100 ;
-        long currentMillis = 0;
-        if (millisLeft.getValue() != null){
-            currentMillis = millisLeft.getValue();
-        }
-        int progressCounter = (int) (currentMillis / totalMillis);
-        return (100 - progressCounter);
-    }
+    public long getTotalDuration() { return totalDuration; }
 
     // Methods for the views interact with this view model
     public void resumeTimer() {

@@ -44,11 +44,13 @@ public class TimeoutRunningFragment extends NoActionBarFragment {
 
         // Set up the timer
         viewModel.loadTimerFromStorage();
+        binding.progressBarTimer.setMax((int)viewModel.getTotalDuration());
 
         // UI observes view model
         viewModel.getMillisLeft().observe(getViewLifecycleOwner(), millisLeft -> {
             long remainingInSeconds = millisLeft / 1000;
-            binding.progressBarTimer.setProgress(viewModel.getProgressInt());
+            int intMillisLeft = (millisLeft != null) ? millisLeft.intValue() : 0;
+            binding.progressBarTimer.setProgress(intMillisLeft);
             binding.countDownText.setText(getString(
                     R.string.remaining_time,
                     remainingInSeconds / 60,
