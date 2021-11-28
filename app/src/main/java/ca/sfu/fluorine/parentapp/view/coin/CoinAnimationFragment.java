@@ -18,10 +18,9 @@ import java.util.Random;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinAnimationBinding;
-import ca.sfu.fluorine.parentapp.model.AppDatabase;
 import ca.sfu.fluorine.parentapp.model.coinflip.CoinResult;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
-import ca.sfu.fluorine.parentapp.viewmodel.CoinFlipViewModel;
+import ca.sfu.fluorine.parentapp.viewmodel.coin.CoinFlipViewModel;
 
 /**
  * CoinAnimationFragment
