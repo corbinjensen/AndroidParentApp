@@ -16,7 +16,10 @@ public class TimeoutStorage {
     public final static String EXPIRED_TIME = "expired";
     public final static String REMAINING_TIME = "remaining";
     public final static String TOTAL_DURATION = "duration";
+    public final static String SPEED_PERCENTAGE = "percentage";
     private final SharedPreferences preferences;
+
+    public final static int NORMAL_PERCENTAGE = 100;
 
     @Inject
     public TimeoutStorage(@NonNull Application application) {
@@ -41,6 +44,10 @@ public class TimeoutStorage {
 
     public long getTotalDuration() {
         return preferences.getLong(TOTAL_DURATION, 0);
+    }
+
+    public int getSpeedPercentage() {
+        return preferences.getInt(SPEED_PERCENTAGE, NORMAL_PERCENTAGE);
     }
 
     public SharedPreferences.Editor getEditor() {
