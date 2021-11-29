@@ -3,9 +3,6 @@ package ca.sfu.fluorine.parentapp.view.coin;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.icu.text.DateFormat;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,14 +27,10 @@ public class CoinFlipViewHolder extends RecyclerView.ViewHolder {
 		CoinResult result = coinResultWithChild.getCoinResult();
 		Child child = coinResultWithChild.getChild();
 
-		String formatDateTime = DateFormat
-				.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-				.format(new Date(result.getDateTimeOfFlip()));
-
 		binding.coinImageView.setImageResource(
 				result.getResultIsHead() ? R.drawable.heads : R.drawable.tails
 		);
-		binding.dateTimeFlip.setText(formatDateTime);
+		binding.dateTimeFlip.setText(Utility.formatUnixTime(result.getDateTimeOfFlip()));
 		binding.childNameCoinView.setText(Utility.formatChildName(context, child));
 		binding.didPickerWin.setText(result.didPickerWin() ? R.string.win : R.string.lose);
 		int color = context.getResources().getColor(
