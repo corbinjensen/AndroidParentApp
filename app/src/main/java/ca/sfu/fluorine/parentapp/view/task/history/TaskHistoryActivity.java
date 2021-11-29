@@ -1,6 +1,7 @@
 package ca.sfu.fluorine.parentapp.view.task.history;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -33,6 +35,12 @@ public class TaskHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTaskHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Set up action bar
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         viewModel = new ViewModelProvider(this).get(TaskHistoryViewModel.class);
         int taskId = getIntent().getIntExtra(TASK_ID, 0);
@@ -85,4 +93,13 @@ public class TaskHistoryActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
