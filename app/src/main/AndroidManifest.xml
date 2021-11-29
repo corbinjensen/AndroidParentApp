@@ -16,14 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
+            android:name=".view.task.history.TaskHistoryActivity"
+            android:label="Task History"
+            android:exported="false"
+            android:parentActivityName=".view.task.EditTaskActivity"/>
+        <activity
             android:name=".view.calm.zen.ZenActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".view.calm.timeout.TimeoutActivity"
             android:exported="false"
             android:label="@string/title_timeout"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:label="@string/crop_image_title" />

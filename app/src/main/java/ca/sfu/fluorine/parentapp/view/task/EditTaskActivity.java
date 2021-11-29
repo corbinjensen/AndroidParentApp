@@ -11,6 +11,7 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.model.task.Task;
 import ca.sfu.fluorine.parentapp.model.composite.TaskWithChild;
+import ca.sfu.fluorine.parentapp.view.task.history.TaskHistoryActivity;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
@@ -40,6 +41,11 @@ public class EditTaskActivity extends AddTaskActivity {
             } else {
                 binding.buttonCompleteTask.setVisibility(View.VISIBLE);
                 binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
+                binding.buttonHistoryTask.setVisibility(View.VISIBLE);
+                binding.buttonHistoryTask.setOnClickListener(btnView -> {
+                    Intent i = TaskHistoryActivity.makeIntent(this, taskId);
+                    startActivity(i);
+                });
             }
             populateDropDown(previousChild);
         }
@@ -83,6 +89,14 @@ public class EditTaskActivity extends AddTaskActivity {
                 .setMessage(completeTaskMessage)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     Task task = taskWithChild.getTask();
+
+                    // Push the child who completed the task to the history
+                    Integer childId = previousChild.getId();
+                    if (childId != null) {
+                        taskViewModel.addChildrenToTaskHistory(task.getId(), childId);
+                    }
+
+                    // Update the next turn fot the task
                     task.update(task.getName(), nextChild.getId());
                     taskViewModel.updateTask(task);
                     finish();
