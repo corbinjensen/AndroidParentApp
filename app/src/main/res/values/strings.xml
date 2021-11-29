@@ -176,4 +176,7 @@
     <string name="calm_title">Calm</string>
     <string name="crop_image_title">Crop Image</string>
     <string name="zen">Zen</string>
+    <string name="view_task_history">View Who\'s Turn History</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.icu.text.DateFormat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ImageView;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+
+import java.util.Date;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -83,5 +86,11 @@ public class Utility {
 
             }
         };
+    }
+
+    public static String formatUnixTime(long unixTime) {
+        return DateFormat
+            .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+            .format(new Date(unixTime));
     }
 }
