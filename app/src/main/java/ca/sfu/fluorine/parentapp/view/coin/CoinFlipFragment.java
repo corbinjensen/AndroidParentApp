@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.sfu.fluorine.parentapp.R;
+import ca.sfu.fluorine.parentapp.databinding.CoinFlipRowLayoutBinding;
 import ca.sfu.fluorine.parentapp.databinding.FragmentCoinFlipBinding;
 import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
 import ca.sfu.fluorine.parentapp.viewmodel.coin.CoinFlipViewModel;
@@ -73,9 +74,10 @@ public class CoinFlipFragment extends Fragment {
 		@NonNull
 		@Override
 		public CoinFlipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-			View view = LayoutInflater.from(requireContext()).inflate(
-					R.layout.coin_flip_row_layout, parent, false);
-			return new CoinFlipViewHolder(view);
+			CoinFlipRowLayoutBinding binding = CoinFlipRowLayoutBinding.inflate(
+					LayoutInflater.from(requireContext()), parent, false
+			);
+			return new CoinFlipViewHolder(binding);
 		}
 
 		@Override

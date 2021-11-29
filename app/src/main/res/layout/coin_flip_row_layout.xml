@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/coinResultCard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,10 +15,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_child_icon"
-        app:layout_constraintStart_toStartOf="@+id/childNameCoinView" />
+        app:layout_constraintStart_toStartOf="@+id/child_name_coin_view" />
 
     <TextView
-        android:id="@+id/childNameCoinView"
+        android:id="@+id/child_name_coin_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,12 +26,12 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/coin_image_view"
         app:layout_constraintStart_toEndOf="@+id/coin_flip_child_icon"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_child_icon" />
 
     <TextView
-        android:id="@+id/didPickerWin"
+        android:id="@+id/did_picker_win"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -41,7 +40,7 @@
         app:layout_constraintStart_toEndOf="@+id/dateTimeFlip" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/coin_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/heads_desc"
