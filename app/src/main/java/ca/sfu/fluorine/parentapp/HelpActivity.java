@@ -26,6 +26,7 @@ public class HelpActivity extends AppCompatActivity {
         binding.citationChildren.setMovementMethod(LinkMovementMethod.getInstance());
         binding.citationCoinFlip.setMovementMethod(LinkMovementMethod.getInstance());
         binding.citationBox.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.windIconCitation.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 }

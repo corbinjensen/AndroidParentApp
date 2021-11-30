@@ -137,6 +137,15 @@
         app:layout_constraintTop_toBottomOf="@+id/timer_icon_citation" />
 
     <TextView
+        android:id="@+id/wind_icon_citation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wind_icon_citation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/robot_icon_citation" />
+
+    <TextView
         android:id="@+id/external_libraries_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -144,7 +153,7 @@
         android:text="@string/external_libraries"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/robot_icon_citation" />
+        app:layout_constraintTop_toBottomOf="@+id/wind_icon_citation" />
 
     <TextView
         android:id="@+id/external_libraries_header2"
