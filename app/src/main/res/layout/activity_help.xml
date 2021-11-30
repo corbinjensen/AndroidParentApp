@@ -193,6 +193,15 @@
         app:layout_constraintTop_toBottomOf="@+id/citation_coin_flip" />
 
     <TextView
+        android:id="@+id/citation_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clip_art_box_citation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/citation_children" />
+
+    <TextView
         android:id="@+id/image_cropper_citation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
