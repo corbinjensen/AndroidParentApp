@@ -140,6 +140,7 @@ public class TimeoutViewModel extends ViewModel {
 
     public void resetTimeout() {
         invalidateTimer();
+        timerState.setValue(TimeoutState.PAUSED);
         totalDuration = 0;
     }
 
