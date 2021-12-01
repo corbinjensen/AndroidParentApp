@@ -2,6 +2,7 @@ package ca.sfu.fluorine.parentapp.view.calm.timeout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,13 +11,14 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
-import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -24,17 +26,33 @@ import dagger.hilt.android.AndroidEntryPoint;
  * Represents the screen of the timer counting down
  */
 @AndroidEntryPoint
-public class TimeoutRunningFragment extends NoActionBarFragment {
+public class TimeoutRunningFragment extends Fragment {
     private FragmentTimeoutRunningBinding binding;
     private TimeoutViewModel viewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.timeout_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // TODO: Handle the options from the toolbar menu
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTimeoutRunningBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
-
         return binding.getRoot();
     }
 

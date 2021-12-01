@@ -97,7 +97,7 @@ public class TimeoutViewModel extends ViewModel {
     // Methods for the views interact with this view model
     public void resumeTimer() {
         if (timer == null) {
-            makeTimerFromSettings();
+            timer = makeTimerFromSettings();
         }
         timer.start();
         timerState.setValue(TimeoutState.RUNNING);
@@ -140,6 +140,7 @@ public class TimeoutViewModel extends ViewModel {
 
     public void resetTimeout() {
         invalidateTimer();
+        timerState.setValue(TimeoutState.PAUSED);
         totalDuration = 0;
     }
 

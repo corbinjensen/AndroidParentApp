@@ -46,7 +46,7 @@
         android:id="@+id/timeout_selector"
         android:name="ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutSelectorFragment"
         tools:layout="@layout/fragment_timeout_selector"
-        android:label="@string/title_timeout">
+        android:label="@string/select_a_timer">
         <action
             android:id="@+id/start_preset_timer_action"
             app:destination="@id/timeout_running"

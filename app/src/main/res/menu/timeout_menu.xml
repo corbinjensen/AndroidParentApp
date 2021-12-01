@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Speed"
+        app:showAsAction="always">
+        <menu>
+            <!--  TODO:  Create all speed options is here -->
+            <item android:id="@+id/fast" android:title="Fast" />
+            <item android:id="@+id/slow" android:title="Slow" />
+        </menu>
+    </item>
+</menu>
