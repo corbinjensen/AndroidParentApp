@@ -5,6 +5,7 @@
         android:id="@+id/change_timer_speed"
         android:icon="@drawable/ic_stopwatch_solid"
         android:title="@string/timer_button_desc"
+        android:tint="?attr/colorOnPrimary"
         app:showAsAction="always">
         <menu>
             <!--  TODO:  Create all speed options is here -->
