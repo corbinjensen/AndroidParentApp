@@ -193,4 +193,5 @@
     <string name="breathe_again">again</string>
     <string name="breathe_finish">finish</string>
     <string name="release_button">Release the button</string>
+    <string name="good_job">Good job</string>
 </resources>

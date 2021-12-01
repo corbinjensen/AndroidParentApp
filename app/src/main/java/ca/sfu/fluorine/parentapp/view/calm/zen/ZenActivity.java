@@ -30,11 +30,11 @@ public class ZenActivity extends AppCompatActivity {
 
         viewModel.getLiveBreathingState().observe(this, state -> {
             if (!state.hasBreathingStarted()) {
-                showUIOnStartBreathing();
+                showUIBeforeBreathing();
                 return;
             }
             if (state.hasBreathingFinished()) {
-                showUIOnFinishBreathing();
+                showUIAfterBreathing();
                 return;
             }
             showUIWhileBreathing();
@@ -57,15 +57,27 @@ public class ZenActivity extends AppCompatActivity {
         }
     }
 
-    private void showUIOnStartBreathing() {
-
+    private void showUIBeforeBreathing() {
+        binding.breathCountSelection.setVisibility(View.VISIBLE);
+        binding.breathingFinishedOption.setVisibility(View.GONE);
+        binding.releaseButton.setVisibility(View.GONE);
+        binding.breathsLeft.setVisibility(View.GONE);
+        binding.breatheButton.setText(R.string.begin);
     }
 
-    private void showUIOnFinishBreathing() {
-
+    private void showUIAfterBreathing() {
+        binding.breathCountSelection.setVisibility(View.GONE);
+        binding.breathingFinishedOption.setVisibility(View.VISIBLE);
+        binding.releaseButton.setVisibility(View.GONE);
+        binding.breathsLeft.setVisibility(View.GONE);
+        binding.breatheButton.setVisibility(View.VISIBLE);
+        binding.breatheButton.setText(R.string.good_job);
     }
 
     private void showUIWhileBreathing() {
-
+        binding.breathCountSelection.setVisibility(View.GONE);
+        binding.breathingFinishedOption.setVisibility(View.GONE);
+        binding.breathsLeft.setVisibility(View.VISIBLE);
+        binding.breatheButton.setVisibility(View.VISIBLE);
     }
 }
