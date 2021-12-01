@@ -48,6 +48,16 @@
         Tap to dismiss this notification
     </string>
 
+    <!-- Timeout speeds -->
+    <string name="timer_speed_0_25x">0.25x</string>
+    <string name="timer_speed_0_50x">0.50x</string>
+    <string name="timer_speed_0_75x">0.75x</string>
+    <string name="timer_speed_1_0x">1.0x</string>
+    <string name="timer_speed_2_0x">2.0x</string>
+    <string name="timer_speed_3_0x">3.0x</string>
+    <string name="timer_speed_4_0x">4.0x</string>
+    <string name="timer_button_desc">Change Timer Speed</string>
+
     <!--  Add child activity  -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -180,4 +190,5 @@
     <string name="view_task_history">View Who\'s Turn History</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
