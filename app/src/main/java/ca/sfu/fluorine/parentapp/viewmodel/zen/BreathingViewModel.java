@@ -21,10 +21,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 public class BreathingViewModel {
     // Storage
     private final BreathingStorage storage;
-    private final MutableLiveData<BreathingState> liveBreathingState;
 
     // Live and observable states
     private long millisSecondsLeft;
+    private final MutableLiveData<BreathingState> liveBreathingState;
 
     // Constants
     public final long TOTAL_DURATION;
@@ -68,7 +68,7 @@ public class BreathingViewModel {
 
             @Override
             public void onFinish() {
-                changeState(state -> state.isButtonPressingTooLong = true);
+                changeState(state -> state.setButtonPressingTooLong(true));
             }
         };
         timer.start();
@@ -79,20 +79,11 @@ public class BreathingViewModel {
         if (timer != null) {
             timer.cancel();
         }
-        if (millisSecondsLeft <= TRANSITION) {
-            decrementBreathCycleCount();
-        }
-        millisSecondsLeft = TOTAL_DURATION;
-    }
-
-    private void decrementBreathCycleCount() {
         changeState(state -> {
-            state.isButtonPressingTooLong = false;
-            state.breathingInOut--;
-            if (state.breathingInOut == 0) {
-                state.isBreathingFinish = true;
-            }
+            state.setButtonPressingTooLong(false);
+            if (millisSecondsLeft <= TRANSITION) state.decrementBreathInOut();
         });
+        millisSecondsLeft = TOTAL_DURATION;
     }
 
     private void changeState(@Nullable Consumer<BreathingState> stateModifier) {
