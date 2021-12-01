@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutRunningBinding;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
-import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint;
  * Represents the screen of the timer counting down
  */
 @AndroidEntryPoint
-public class TimeoutRunningFragment extends NoActionBarFragment {
+public class TimeoutRunningFragment extends Fragment {
     private FragmentTimeoutRunningBinding binding;
     private TimeoutViewModel viewModel;
 
