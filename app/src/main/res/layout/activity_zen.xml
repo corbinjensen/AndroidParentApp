@@ -1,11 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_host_fragment_activity_zen"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:defaultNavHost="true"
-    android:name="androidx.navigation.fragment.NavHostFragment"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/breathing_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.calm.zen.ZenActivity"
-    tools:ignore="FragmentTagUsage" />
+    android:padding="32dp"
+    tools:context=".view.calm.zen.ZenActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/breathing_finished_option"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/breathing_finished"
+            android:layout_width="116dp"
+            android:layout_height="61dp"
+            android:text="@string/breathe_finish"
+            android:onClick="onFinishButtonClicked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/breathe_again"
+            android:layout_width="116dp"
+            android:layout_height="61dp"
+            android:text="@string/breathe_again"
+            android:onClick="onAgainButtonClicked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/breath_count_selection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/breathCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/add_breath"
+            app:layout_constraintStart_toEndOf="@+id/subtract_breath"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/add_breath"
+            android:layout_width="49dp"
+            android:layout_height="51dp"
+            android:text="@string/add_breath"
+            android:onClick="incrementBreathCount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/subtract_breath"
+            android:layout_width="49dp"
+            android:layout_height="51dp"
+            android:text="@string/subtract_breath"
+            android:onClick="decrementBreathCount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/breathe_button"
+        android:layout_width="197dp"
+        android:layout_height="88dp"
+        android:text="@string/begin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/breaths_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breath_count_selection" />
+
+    <TextView
+        android:id="@+id/release_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/release_button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/breathe_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
