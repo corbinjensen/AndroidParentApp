@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -48,7 +49,7 @@ public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 		childName.setText(Utility.formatChildName(getContext(), child));
 		Utility.setupImage(child, viewModel.loadBitmapFrom(child), childIcon);
 		checkmark.setVisibility(
-				(child.getId() == selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
+				Objects.equals(child.getId(), selectedChild.getId()) ? View.VISIBLE : View.INVISIBLE);
 		return convertView;
 	}
 

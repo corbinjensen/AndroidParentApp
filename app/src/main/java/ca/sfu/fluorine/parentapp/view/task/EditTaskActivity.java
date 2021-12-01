@@ -65,7 +65,7 @@ public class EditTaskActivity extends AddTaskActivity {
             R.string.edit_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
-                String taskName = binding.editTaskName.getText().toString();
+                String taskName = Utility.getTextFromInput(binding.editTaskName);
                 taskWithChild.getTask().update(taskName, childrenArrayAdapter.getSelectedChild().getId());
                 taskViewModel.updateTask(taskWithChild.getTask());
                 finish();

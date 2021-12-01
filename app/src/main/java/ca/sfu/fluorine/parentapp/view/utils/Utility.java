@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.icu.text.DateFormat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import java.util.Date;
+import java.util.Objects;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -49,7 +51,7 @@ public class Utility {
             @NonNull Child child,
             @Nullable Bitmap bitmap,
             ImageView imageView) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+        if (Objects.equals(child.getId(), Child.getUnspecifiedChild().getId())) {
             imageView.setVisibility(ImageView.INVISIBLE);
         } else {
             imageView.setVisibility(ImageView.VISIBLE);
@@ -62,7 +64,7 @@ public class Utility {
     }
 
     public static String formatChildName(Context context, @NonNull Child child) {
-        if (child.getId() == Child.getUnspecifiedChild().getId()) {
+        if (Objects.equals(child.getId(), Child.getUnspecifiedChild().getId())) {
             return context.getString(R.string.no_children);
         } else {
             return context.getString(R.string.full_name, child.getFirstName(), child.getLastName());
@@ -92,5 +94,12 @@ public class Utility {
         return DateFormat
             .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
             .format(new Date(unixTime));
+    }
+
+    @NonNull
+    public static String getTextFromInput(EditText editText) {
+        Editable editable = editText.getText();
+        if (editable == null) return "";
+        return editable.toString();
     }
 }

@@ -20,8 +20,6 @@ public class EditChildActivity extends AddChildActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setTitle(R.string.edit_child);
-
 		// Populate the data
 		int childId = getIntent().getIntExtra(CHILD_ID, DEFAULT);
 		child = viewModel.getChildById(childId);
@@ -59,8 +57,8 @@ public class EditChildActivity extends AddChildActivity {
 			R.string.edit_child,
 			R.string.edit_child_confirm,
 			(dialogInterface, i) -> {
-				String firstName = binding.editTextFirstName.getText().toString();
-				String lastName = binding.editTextLastName.getText().toString();
+				String firstName = Utility.getTextFromInput(binding.editTextFirstName);
+				String lastName = Utility.getTextFromInput(binding.editTextLastName);
 				child.updateName(firstName, lastName);
 				viewModel.updateChild(child, icon);
 				finish();

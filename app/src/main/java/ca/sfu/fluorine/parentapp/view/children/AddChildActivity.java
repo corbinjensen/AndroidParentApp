@@ -43,7 +43,6 @@ public class AddChildActivity extends AppCompatActivity {
         binding.editTextFirstName.addTextChangedListener(watcher);
         binding.editTextLastName.addTextChangedListener(watcher);
 
-        setTitle(R.string.add_new_child);
         binding.buttonSaveChild.setOnClickListener(addChildrenDialogListener);
 
         // Set up crop image service
@@ -62,8 +61,8 @@ public class AddChildActivity extends AppCompatActivity {
             binding.buttonSaveChild.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
-        String firstName = binding.editTextFirstName.getText().toString();
-        String lastName = binding.editTextLastName.getText().toString();
+        String firstName = Utility.getTextFromInput(binding.editTextFirstName);
+        String lastName = Utility.getTextFromInput(binding.editTextLastName);
         return !firstName.isEmpty() && !lastName.isEmpty();
     }
 
@@ -73,8 +72,8 @@ public class AddChildActivity extends AppCompatActivity {
             R.string.add_new_child,
             R.string.edit_child_confirm,
             (dialogInterface, i) -> {
-                String firstName = binding.editTextFirstName.getText().toString();
-                String lastName = binding.editTextLastName.getText().toString();
+                String firstName = Utility.getTextFromInput(binding.editTextFirstName);
+                String lastName = Utility.getTextFromInput(binding.editTextLastName);
                 Child newChild = new Child(firstName, lastName);
                 viewModel.addChild(newChild, icon);
                 finish();
