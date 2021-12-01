@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
 import android.app.Application;
 import android.os.CountDownTimer;
@@ -9,10 +9,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-public class BreathingViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+import ca.sfu.fluorine.parentapp.store.BreathingStorage;
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
+public class BreathingViewModel {
+    // Storage
+    private final BreathingStorage storage;
+
     // Live and observable states
     private final MutableLiveData<Integer> breathCycleCount;
-    private final MutableLiveData<Long> millisSecondsLeft;
+    private long millisSecondsLeft;
     private final LiveData<Boolean> breathingState;
     private final LiveData<Integer> breathsLeft; // whether breath in or out
     private final MutableLiveData<Boolean> buttonStillPressing = new MutableLiveData<>(false);
@@ -23,9 +32,11 @@ public class BreathingViewModel extends AndroidViewModel {
     public static final long INTERVAL = 500;
     private CountDownTimer timer;
 
-    public BreathingViewModel(@NonNull Application application) {
-        super(application);
-        millisSecondsLeft = new MutableLiveData<>(TOTAL_DURATION);
+    @Inject
+    public BreathingViewModel(@NonNull BreathingStorage storage) {
+        super();
+        this.storage = storage;
+        millisSecondsLeft = TOTAL_DURATION;
         breathCycleCount = new MutableLiveData<>(0);
         breathsLeft = Transformations.map(breathCycleCount, cycleCount -> (cycleCount + 1) / 2);
         breathingState = Transformations.map(breathCycleCount, count -> count % 2 == 0);
@@ -33,6 +44,7 @@ public class BreathingViewModel extends AndroidViewModel {
     }
 
     public void setBreathCount(int breathCount) {
+        storage.storeBreathCount(breathCount);
         breathCycleCount.setValue(breathCount * 2);
     }
 
@@ -50,12 +62,12 @@ public class BreathingViewModel extends AndroidViewModel {
 
     // Press the button
     public void startBreathing() {
-        millisSecondsLeft.setValue(TOTAL_DURATION);
+        millisSecondsLeft = TOTAL_DURATION;
         buttonStillPressing.setValue(false);
         timer = new CountDownTimer(TOTAL_DURATION, INTERVAL) {
             @Override
             public void onTick(long millisLeft) {
-                millisSecondsLeft.setValue(millisLeft);
+                millisSecondsLeft = TOTAL_DURATION;
             }
 
             @Override
@@ -72,11 +84,10 @@ public class BreathingViewModel extends AndroidViewModel {
         if (timer != null) {
             timer.cancel();
         }
-        Long millisLeft = millisSecondsLeft.getValue();
-        if (millisLeft != null && millisLeft <= TRANSITION) {
+        if (millisSecondsLeft <= TRANSITION) {
             decrementBreathCycleCount();
         }
-        millisSecondsLeft.setValue(TOTAL_DURATION);
+        millisSecondsLeft = TOTAL_DURATION;
     }
 
     private void decrementBreathCycleCount() {

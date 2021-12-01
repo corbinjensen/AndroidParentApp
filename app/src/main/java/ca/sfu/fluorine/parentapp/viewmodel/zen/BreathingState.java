@@ -1,4 +1,4 @@
-package ca.sfu.fluorine.parentapp.viewmodel;
+package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
- * Represent the data object of the the state
+ * Represent the data object of the the view state
  *
  * The UI will change if new state replace the old state
  */
