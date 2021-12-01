@@ -146,6 +146,14 @@
         <a href="https://www.flaticon.com/premium-icon/coin_1540515">CoinFlip</a> by Freepik
     </string>
 
+    <string name="clip_art_box_citation">
+        <a href="https://www.flaticon.com/premium-icon/wallet_1992003?term=empty&amp;page=1&amp;position=11&amp;page=1&amp;position=11&amp;related_id=1992003&amp;origin=search">Empty Box Icon</a> By: juicy_fish
+    </string>
+
+    <string name="wind_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/wind?style=solid">Wind Icon</a> by FontAwesome
+    </string>
+
 
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
