@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="min_breath_count">1</integer>
+    <integer name="max_breath_count">10</integer>
+    <integer name="default_breath_count">5</integer>
+
+    <integer name="total_breath_duration">10000</integer>
+    <integer name="breath_release">3000</integer>
+</resources>
