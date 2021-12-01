@@ -24,17 +24,24 @@ public class BreathingState {
         breathingInOut = breathCount * 2;
     }
 
-    // Return new instance of BreathingState with a few modifications
-    public BreathingState change(@NonNull BreathingState oldState,
-                               @Nullable Consumer<BreathingState> stateModifier) {
+    // Return new copy instance of BreathingState with a few modifications
+    public BreathingState change(@Nullable Consumer<BreathingState> stateModifier) {
         BreathingState newState = new BreathingState();
-        newState.isBreathingBegin = oldState.isBreathingBegin;
-        newState.breathingInOut = oldState.breathingInOut;
-        newState.isButtonPressingTooLong = oldState.isButtonPressingTooLong;
-        newState.isBreathingFinish = oldState.isBreathingFinish;
+        newState.isBreathingBegin = isBreathingBegin;
+        newState.breathingInOut = breathingInOut;
+        newState.isButtonPressingTooLong = isButtonPressingTooLong;
+        newState.isBreathingFinish = isBreathingFinish;
         if (stateModifier != null) {
             stateModifier.accept(newState);
         }
         return newState;
+    }
+
+    public int getRemainingBreathCount() {
+        return (breathingInOut + 1) % 2;
+    }
+
+    public boolean isInhaling() {
+        return breathingInOut % 2 == 0;
     }
 }

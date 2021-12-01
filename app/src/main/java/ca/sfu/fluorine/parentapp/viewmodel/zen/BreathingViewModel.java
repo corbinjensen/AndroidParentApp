@@ -1,13 +1,13 @@
 package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
-import android.app.Application;
 import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
+
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -18,13 +18,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class BreathingViewModel {
     // Storage
     private final BreathingStorage storage;
+    private final MutableLiveData<BreathingState> liveBreathingState;
 
     // Live and observable states
-    private final MutableLiveData<Integer> breathCycleCount;
     private long millisSecondsLeft;
-    private final LiveData<Boolean> breathingState;
-    private final LiveData<Integer> breathsLeft; // whether breath in or out
-    private final MutableLiveData<Boolean> buttonStillPressing = new MutableLiveData<>(false);
 
     // Constants
     public static final long TOTAL_DURATION = 100000;
@@ -37,33 +34,26 @@ public class BreathingViewModel {
         super();
         this.storage = storage;
         millisSecondsLeft = TOTAL_DURATION;
-        breathCycleCount = new MutableLiveData<>(0);
-        breathsLeft = Transformations.map(breathCycleCount, cycleCount -> (cycleCount + 1) / 2);
-        breathingState = Transformations.map(breathCycleCount, count -> count % 2 == 0);
+        liveBreathingState =
+                new MutableLiveData<>(new BreathingState(storage.getBreathCount()));
+    }
 
+    public LiveData<BreathingState> getLiveBreathingState() {
+        return liveBreathingState;
     }
 
     public void setBreathCount(int breathCount) {
         storage.storeBreathCount(breathCount);
-        breathCycleCount.setValue(breathCount * 2);
+        liveBreathingState.setValue(new BreathingState(breathCount));
     }
 
-    public LiveData<Boolean> getBreathingState() {
-        return breathingState;
-    }
-
-    public LiveData<Integer> getBreathsLeft() {
-        return breathsLeft;
-    }
-
-    public MutableLiveData<Boolean> isButtonStillPressing() {
-        return buttonStillPressing;
+    public void resetBreathingState() {
+        liveBreathingState.setValue(new BreathingState(storage.getBreathCount()));
     }
 
     // Press the button
     public void startBreathing() {
         millisSecondsLeft = TOTAL_DURATION;
-        buttonStillPressing.setValue(false);
         timer = new CountDownTimer(TOTAL_DURATION, INTERVAL) {
             @Override
             public void onTick(long millisLeft) {
@@ -72,7 +62,7 @@ public class BreathingViewModel {
 
             @Override
             public void onFinish() {
-                buttonStillPressing.setValue(true);
+                changeState(state -> state.isButtonPressingTooLong = true);
             }
         };
         timer.start();
@@ -80,7 +70,6 @@ public class BreathingViewModel {
 
     // Release the button
     public void stopBreathing() {
-        buttonStillPressing.setValue(false);
         if (timer != null) {
             timer.cancel();
         }
@@ -91,11 +80,21 @@ public class BreathingViewModel {
     }
 
     private void decrementBreathCycleCount() {
-        Integer cycleCount = breathCycleCount.getValue();
-        if (cycleCount != null) {
-            breathCycleCount.setValue(cycleCount - 1);
+        changeState(state -> {
+            state.isButtonPressingTooLong = false;
+            state.breathingInOut--;
+            if (state.breathingInOut == 0) {
+                state.isBreathingFinish = true;
+            }
+        });
+    }
+
+    private void changeState(@Nullable Consumer<BreathingState> stateModifier) {
+        BreathingState oldState = liveBreathingState.getValue();
+        if (oldState == null) {
+            liveBreathingState.setValue(new BreathingState(storage.getBreathCount()));
         } else {
-            breathCycleCount.setValue(0);
+            liveBreathingState.setValue(oldState.change(stateModifier));
         }
     }
 }
