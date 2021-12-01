@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import ca.sfu.fluorine.parentapp.databinding.FragmentCalmBinding;
 import ca.sfu.fluorine.parentapp.view.calm.timeout.TimeoutActivity;
+import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
 
 /**
  * Represents the calm screens, consisting of two features buttons
@@ -29,6 +30,11 @@ public class CalmFragment extends Fragment {
         // Add listeners to the button
         binding.timeoutButton.setOnClickListener(btnView -> {
             Intent i = new Intent(requireContext(), TimeoutActivity.class);
+            startActivity(i);
+        });
+
+        binding.zenButton.setOnClickListener(btnView -> {
+            Intent i = new Intent(requireContext(), ZenActivity.class);
             startActivity(i);
         });
 

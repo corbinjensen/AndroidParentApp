@@ -37,7 +37,7 @@ public class BreathingState {
     }
 
     public int getRemainingBreathCount() {
-        return (breathingInOut + 1) % 2;
+        return (breathingInOut + 1) / 2;
     }
 
     public boolean isInhaling() {
@@ -68,7 +68,7 @@ public class BreathingState {
         if (breathingInOut > 0) breathingInOut--;
         if (breathingInOut <= 0) {
             breathingFinished = true;
-            breathingBegan = false;
+            breathingBegan = true;
         }
     }
 }

@@ -69,7 +69,7 @@ public class BreathingViewModel extends ViewModel {
         timer = new CountDownTimer(TOTAL_DURATION, INTERVAL) {
             @Override
             public void onTick(long millisLeft) {
-                millisSecondsLeft = TOTAL_DURATION;
+                millisSecondsLeft = millisLeft;
             }
 
             @Override

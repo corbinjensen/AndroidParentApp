@@ -185,8 +185,6 @@
     <string name="crop_image_title">Crop Image</string>
     <string name="zen">Zen</string>
     <string name="view_task_history">View Who\'s Turn History</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="subtract_breath">-</string>
     <string name="add_breath">+</string>
     <string name="begin">begin</string>
@@ -194,4 +192,14 @@
     <string name="breathe_finish">finish</string>
     <string name="release_button">Release the button</string>
     <string name="good_job">Good job</string>
+    <string name="breath_left">%d breaths left</string>
+    <string name="last_breath">Last breath</string>
+    <string name="in">in</string>
+    <string name="out">out</string>
+
+    <plurals name="breath_count">
+        <item quantity="one">%d breath</item>
+        <item quantity="other">%d breaths</item>
+    </plurals>
+
 </resources>

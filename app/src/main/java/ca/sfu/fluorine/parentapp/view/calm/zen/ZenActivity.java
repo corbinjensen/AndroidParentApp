@@ -3,11 +3,14 @@ package ca.sfu.fluorine.parentapp.view.calm.zen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityZenBinding;
+import ca.sfu.fluorine.parentapp.viewmodel.zen.BreathingState;
 import ca.sfu.fluorine.parentapp.viewmodel.zen.BreathingViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -17,6 +20,7 @@ public class ZenActivity extends AppCompatActivity {
     private BreathingViewModel viewModel;
     private int breathCount, minBreathCount, maxBreathCount;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,7 @@ public class ZenActivity extends AppCompatActivity {
         minBreathCount = getResources().getInteger(R.integer.min_breath_count);
         maxBreathCount = getResources().getInteger(R.integer.max_breath_count);
         breathCount = viewModel.getBreathCount();
+        updateBreathCount();
 
         viewModel.getLiveBreathingState().observe(this, state -> {
             if (!state.hasBreathingStarted()) {
@@ -37,24 +42,27 @@ public class ZenActivity extends AppCompatActivity {
                 showUIAfterBreathing();
                 return;
             }
-            showUIWhileBreathing();
+            showUIWhileBreathing(state);
         });
+        binding.breatheButton.setOnTouchListener(onTouch);
     }
 
     public void incrementBreathCount(View v) {
         if (breathCount >= maxBreathCount) {
-            viewModel.setBreathCount(maxBreathCount);
+            breathCount = maxBreathCount;
         } else {
-            viewModel.setBreathCount(++breathCount);
+            breathCount++;
         }
+        updateBreathCount();
     }
 
     public void decrementBreathCount(View v) {
-        if (breathCount <= maxBreathCount) {
-            viewModel.setBreathCount(minBreathCount);
+        if (breathCount <= minBreathCount) {
+            breathCount = minBreathCount;
         } else {
-            viewModel.setBreathCount(--breathCount);
+            breathCount--;
         }
+        updateBreathCount();
     }
 
     private void showUIBeforeBreathing() {
@@ -74,10 +82,45 @@ public class ZenActivity extends AppCompatActivity {
         binding.breatheButton.setText(R.string.good_job);
     }
 
-    private void showUIWhileBreathing() {
+    private void showUIWhileBreathing(BreathingState state) {
         binding.breathCountSelection.setVisibility(View.GONE);
         binding.breathingFinishedOption.setVisibility(View.GONE);
         binding.breathsLeft.setVisibility(View.VISIBLE);
         binding.breatheButton.setVisibility(View.VISIBLE);
+        binding.breatheButton.setText(state.isInhaling() ? R.string.in : R.string.out);
+        binding.releaseButton.setVisibility(state.isButtonPressingTooLong() ? View.VISIBLE : View.GONE);
+        int breathLeft = state.getRemainingBreathCount();
+        if (breathLeft <= 1) {
+            binding.breathsLeft.setText(R.string.last_breath);
+        } else {
+            binding.breathsLeft.setText(getString(R.string.breath_left, breathLeft));
+        }
+    }
+
+    private void updateBreathCount() {
+        String breathCountDisplay = getResources()
+                .getQuantityString(R.plurals.breath_count, breathCount, breathCount);
+        binding.breathCount.setText(breathCountDisplay);
+        viewModel.setBreathCount(breathCount);
+    }
+
+    private final View.OnTouchListener onTouch = (View v, MotionEvent event) -> {
+        v.performClick();
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            viewModel.startBreathing();
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            viewModel.stopBreathing();
+        }
+        return false;
+    };
+
+
+    // TODO: Implement these methods
+    public void onAgainButtonClicked(View v) {
+
+    }
+
+    public void onFinishButtonClicked(View v) {
+
     }
 }
