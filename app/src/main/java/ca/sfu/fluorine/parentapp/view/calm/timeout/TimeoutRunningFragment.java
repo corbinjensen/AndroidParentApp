@@ -7,8 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,7 +42,56 @@ public class TimeoutRunningFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // TODO: Handle the options from the toolbar menu
+        Integer speed;
+        int setSpeed25P = 25;
+        int setSpeed50P = 50;
+        int setSpeed75P = 75;
+        int setSpeed100P = 100;
+        int setSpeed200P = 200;
+        int setSpeed300P = 300;
+        int setSpeed400P = 400;
+
+        speed = viewModel.getSpeed().getValue();
+        assert speed != null;
+
+        switch (item.getItemId()) {
+            case R.id.timer_speed_0_25x:
+                if(!speed.equals(setSpeed25P)){
+                    viewModel.setSpeed(setSpeed25P);
+                }
+                break;
+            case R.id.timer_speed_0_50x:
+                if(!speed.equals(setSpeed50P)){
+                    viewModel.setSpeed(setSpeed50P);
+                }
+                break;
+            case R.id.timer_speed_0_75x:
+                if(!speed.equals(setSpeed75P)){
+                    viewModel.setSpeed(setSpeed75P);
+                }
+                break;
+            case R.id.timer_speed_1_0x:
+                if(!speed.equals(setSpeed100P)){
+                    viewModel.setSpeed(setSpeed100P);
+                }
+                break;
+            case R.id.timer_speed_2_0x:
+                if(!speed.equals(setSpeed200P)){
+                    viewModel.setSpeed(setSpeed200P);
+                }
+                break;
+            case R.id.timer_speed_3_0x:
+                if(!speed.equals(setSpeed300P)){
+                    viewModel.setSpeed(setSpeed300P);
+                }
+                break;
+            case R.id.timer_speed_4_0x:
+                if(!speed.equals(setSpeed400P)){
+                    viewModel.setSpeed(setSpeed400P);
+                }
+                break;
+        }
+        binding.timerVisualCue.setText(timerSpeedCueString());
         return super.onOptionsItemSelected(item);
     }
 
@@ -62,7 +109,7 @@ public class TimeoutRunningFragment extends Fragment {
         viewModel.removeAlarm();
         TimeoutExpiredNotification.hideNotification(requireContext().getApplicationContext());
 
-        // Start the pulsator
+        // Start the pulsate animation
         binding.pulsator.start();
 
         // Set up the timer
@@ -116,77 +163,10 @@ public class TimeoutRunningFragment extends Fragment {
         super.onStop();
     }
 
-    public void showTimerSpeedMenu(View v) {
-        PopupMenu timerSpeedMenu = new PopupMenu(getContext(), v);
-        MenuInflater inflater = timerSpeedMenu.getMenuInflater();
-        inflater.inflate(R.menu.timeout_time_select_menu, timerSpeedMenu.getMenu());
-        timerSpeedMenu.setOnMenuItemClickListener(menuItem -> onMenuItemSelect(menuItem));
-        timerSpeedMenu.show();
-    }
-
-    public boolean onMenuItemSelect(MenuItem item) {
-        Integer speed;
-        int setSpeed25P = 25;
-        int setSpeed50P = 50;
-        int setSpeed75P = 75;
-        int setSpeed100P = 100;
-        int setSpeed200P = 200;
-        int setSpeed300P = 300;
-        int setSpeed400P = 400;
-
-        switch (item.getItemId()) {
-            case R.id.timer_speed_0_25x:
-               speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed25P)){
-                    viewModel.setSpeed(setSpeed25P);
-                }
-                break;
-            case R.id.timer_speed_0_50x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed50P)){
-                    viewModel.setSpeed(setSpeed50P);
-                }
-                break;
-            case R.id.timer_speed_0_75x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed75P)){
-                    viewModel.setSpeed(setSpeed75P);
-                }
-                break;
-            case R.id.timer_speed_1_0x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed100P)){
-                    viewModel.setSpeed(setSpeed100P);
-                }
-                break;
-            case R.id.timer_speed_2_0x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed200P)){
-                    viewModel.setSpeed(setSpeed200P);
-                }
-                break;
-            case R.id.timer_speed_3_0x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed300P)){
-                    viewModel.setSpeed(setSpeed300P);
-                }
-                break;
-            case R.id.timer_speed_4_0x:
-                speed = viewModel.getSpeed().getValue();
-                assert speed != null;
-                if(!speed.equals(setSpeed400P)){
-                    viewModel.setSpeed(setSpeed400P);
-                }
-                break;
-            default:
-                return false;
-        }return true;
+    private String timerSpeedCueString(){
+        assert viewModel.getSpeed().getValue() != null;
+        int speedTimer = viewModel.getSpeed().getValue();
+        return (speedTimer/100) + "x " + getString(R.string.timer_speed_cue);
     }
 
 }

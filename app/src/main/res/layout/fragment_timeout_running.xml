@@ -7,16 +7,6 @@
     android:background="@drawable/gradient_1"
     tools:context=".view.calm.timeout.TimeoutRunningFragment">
 
-    <ImageButton
-        android:id="@+id/timer_speed_button"
-        android:contentDescription="@string/timer_button_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showTimerSpeedMenu"
-        android:src="@drawable/ic_stopwatch_solid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <pl.bclogic.pulsator4droid.library.PulsatorLayout
         android:id="@+id/pulsator"
         android:layout_width="match_parent"
@@ -88,6 +78,15 @@
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/count_down_text" />
+
+    <TextView
+        android:id="@+id/timer_visual_cue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reset_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

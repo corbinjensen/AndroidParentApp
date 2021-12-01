@@ -57,6 +57,7 @@
     <string name="timer_speed_3_0x">3.0x</string>
     <string name="timer_speed_4_0x">4.0x</string>
     <string name="timer_button_desc">Change Timer Speed</string>
+    <string name="timer_speed_cue">Time</string>
 
     <!--  Add child activity  -->
     <string name="first_name">First Name</string>
