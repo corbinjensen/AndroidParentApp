@@ -44,11 +44,6 @@ public class EditTaskActivity extends AddTaskActivity {
             } else {
                 binding.buttonCompleteTask.setVisibility(View.VISIBLE);
                 binding.buttonCompleteTask.setOnClickListener(confirmTaskDialogListener);
-                binding.buttonHistoryTask.setVisibility(View.VISIBLE);
-                binding.buttonHistoryTask.setOnClickListener(btnView -> {
-                    Intent i = TaskHistoryActivity.makeIntent(this, taskId);
-                    startActivity(i);
-                });
             }
             populateDropDown(previousChild);
         }
