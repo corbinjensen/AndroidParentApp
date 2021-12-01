@@ -45,7 +45,6 @@ public class TimeoutRunningFragment extends Fragment {
         //set speed from the item.
         int speed = Integer.parseInt(item.toString());
         float speedPercent = (float)(speed / 100);
-
         binding.timerVisualCue.setText(String.format(String.valueOf(R.string.timer_speed_cue), speedPercent));
         return super.onOptionsItemSelected(item);
     }
@@ -83,6 +82,11 @@ public class TimeoutRunningFragment extends Fragment {
                     R.string.remaining_time,
                     remainingInSeconds / 60,
                     remainingInSeconds % 60));
+        });
+
+        viewModel.getSpeed().observe(getViewLifecycleOwner(), speed -> {
+            float speedPercent = (float)(speed / 100);
+            binding.timerVisualCue.setText(String.format(String.valueOf(R.string.timer_speed_cue), speedPercent));
         });
 
         viewModel.getTimerState().observe(getViewLifecycleOwner(), state -> {
