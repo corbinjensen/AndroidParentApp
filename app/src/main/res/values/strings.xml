@@ -187,4 +187,10 @@
     <string name="view_task_history">View Who\'s Turn History</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="subtract_breath">-</string>
+    <string name="add_breath">+</string>
+    <string name="begin">begin</string>
+    <string name="breathe_again">again</string>
+    <string name="breathe_finish">finish</string>
+    <string name="release_button">Release the button</string>
 </resources>
