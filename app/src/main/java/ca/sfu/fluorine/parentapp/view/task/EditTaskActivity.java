@@ -3,6 +3,8 @@ package ca.sfu.fluorine.parentapp.view.task;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
 public class EditTaskActivity extends AddTaskActivity {
     private static final String TASK_ID = "taskIndex";
+    private int taskId;
     private TaskWithChild taskWithChild;
     private Child previousChild;
 
@@ -29,7 +32,7 @@ public class EditTaskActivity extends AddTaskActivity {
         binding.dropdownSelection.removeTextChangedListener(watcher);
 
         // Get the task id from intent then fetch from database
-        int taskId = getIntent().getIntExtra(TASK_ID, 0);
+        taskId = getIntent().getIntExtra(TASK_ID, 0);
         taskWithChild = taskViewModel.getTaskByIdWithChild(taskId);
 
         // Populate the data
@@ -109,5 +112,20 @@ public class EditTaskActivity extends AddTaskActivity {
         Intent intent = new Intent(context, EditTaskActivity.class);
         intent.putExtra(TASK_ID, taskId);
         return intent;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.show_history) {
+            Intent i = TaskHistoryActivity.makeIntent(this, taskId);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
