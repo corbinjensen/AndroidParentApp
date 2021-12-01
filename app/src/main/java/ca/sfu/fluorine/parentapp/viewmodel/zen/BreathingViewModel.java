@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.function.Consumer;
 
@@ -18,7 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
-public class BreathingViewModel {
+public class BreathingViewModel extends ViewModel {
     // Storage
     private final BreathingStorage storage;
 
