@@ -49,6 +49,10 @@ public class BreathingViewModel extends ViewModel {
         return liveBreathingState;
     }
 
+    public int getBreathCount() {
+        return storage.getBreathCount();
+    }
+
     public void setBreathCount(int breathCount) {
         storage.storeBreathCount(breathCount);
         liveBreathingState.setValue(new BreathingState(breathCount));

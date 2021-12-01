@@ -24,7 +24,7 @@ public class BreathingState {
     }
 
     // Return new copy instance of BreathingState with a few modifications
-    public BreathingState change(@Nullable Consumer<BreathingState> stateModifier) {
+    BreathingState change(@Nullable Consumer<BreathingState> stateModifier) {
         BreathingState newState = new BreathingState();
         newState.breathingBegan = breathingBegan;
         newState.breathingInOut = breathingInOut;
