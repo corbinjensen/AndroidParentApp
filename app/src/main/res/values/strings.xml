@@ -157,6 +157,14 @@
         <a href="https://www.flaticon.com/premium-icon/coin_1540515">CoinFlip</a> by Freepik
     </string>
 
+    <string name="clip_art_box_citation">
+        <a href="https://www.flaticon.com/premium-icon/wallet_1992003?term=empty&amp;page=1&amp;position=11&amp;page=1&amp;position=11&amp;related_id=1992003&amp;origin=search">Empty Box Icon</a> By: juicy_fish
+    </string>
+
+    <string name="wind_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/wind?style=solid">Wind Icon</a> by FontAwesome
+    </string>
+
 
     <!--  Tasks  -->
     <string name="tasks">Tasks</string>
@@ -175,6 +183,7 @@
     <string name="complete_task_message">Next turn will be <b>%s</b></string>
     <string name="next_turn_info">Next turn: %s</string>
     <string name="next_turn">Next turn</string>
+    <string name="history">History</string>
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
@@ -187,8 +196,4 @@
     <string name="calm_title">Calm</string>
     <string name="crop_image_title">Crop Image</string>
     <string name="zen">Zen</string>
-    <string name="view_task_history">View Who\'s Turn History</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>
