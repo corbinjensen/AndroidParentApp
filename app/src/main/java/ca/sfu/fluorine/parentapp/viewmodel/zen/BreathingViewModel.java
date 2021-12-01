@@ -60,6 +60,7 @@ public class BreathingViewModel {
     // Press the button
     public void startBreathing() {
         millisSecondsLeft = TOTAL_DURATION;
+        changeState(BreathingState::beginBreathing);
         timer = new CountDownTimer(TOTAL_DURATION, INTERVAL) {
             @Override
             public void onTick(long millisLeft) {

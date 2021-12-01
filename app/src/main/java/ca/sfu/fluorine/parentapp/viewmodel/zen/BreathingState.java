@@ -44,11 +44,11 @@ public class BreathingState {
         return breathingInOut % 2 == 0;
     }
 
-    public boolean isBreathingBegan() {
+    public boolean hasBreathingStarted() {
         return breathingBegan;
     }
 
-    public boolean isBreathingFinished() {
+    public boolean hasBreathingFinished() {
         return breathingFinished;
     }
 
@@ -66,6 +66,9 @@ public class BreathingState {
 
     public void decrementBreathInOut() {
         if (breathingInOut > 0) breathingInOut--;
-        if (breathingInOut <= 0) breathingFinished = true;
+        if (breathingInOut <= 0) {
+            breathingFinished = true;
+            breathingBegan = false;
+        }
     }
 }
