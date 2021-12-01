@@ -2,8 +2,10 @@ package ca.sfu.fluorine.parentapp.view.calm.zen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -114,13 +116,14 @@ public class ZenActivity extends AppCompatActivity {
         return false;
     };
 
-
-    // TODO: Implement these methods
     public void onAgainButtonClicked(View v) {
-
+        binding.breatheAgain.setOnClickListener(breathingAgain -> {
+            Intent intent = new Intent(ZenActivity.this, ZenActivity.class);
+            startActivity(intent);
+        });
     }
 
     public void onFinishButtonClicked(View v) {
-
+        binding.breathingFinished.setOnClickListener(breathingFinished -> finish());
     }
 }
