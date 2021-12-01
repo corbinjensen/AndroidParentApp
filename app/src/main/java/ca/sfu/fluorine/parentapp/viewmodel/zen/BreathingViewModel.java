@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,10 @@ import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
+import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.store.BreathingStorage;
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
 public class BreathingViewModel {
@@ -24,15 +27,18 @@ public class BreathingViewModel {
     private long millisSecondsLeft;
 
     // Constants
-    public static final long TOTAL_DURATION = 100000;
-    public static final long TRANSITION = 7000;
+    public final long TOTAL_DURATION;
+    public final long TRANSITION;
     public static final long INTERVAL = 500;
     private CountDownTimer timer;
 
     @Inject
-    public BreathingViewModel(@NonNull BreathingStorage storage) {
+    public BreathingViewModel(@NonNull @ApplicationContext Context context,
+                              @NonNull BreathingStorage storage) {
         super();
         this.storage = storage;
+        TOTAL_DURATION = context.getResources().getInteger(R.integer.total_breath_duration);
+        TRANSITION = TOTAL_DURATION - context.getResources().getInteger(R.integer.breath_release);
         millisSecondsLeft = TOTAL_DURATION;
         liveBreathingState =
                 new MutableLiveData<>(new BreathingState(storage.getBreathCount()));
