@@ -172,6 +172,7 @@
     <string name="complete_task_message">Next turn will be <b>%s</b></string>
     <string name="next_turn_info">Next turn: %s</string>
     <string name="next_turn">Next turn</string>
+    <string name="history">History</string>
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
