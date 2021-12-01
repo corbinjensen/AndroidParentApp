@@ -165,7 +165,7 @@ public class TimeoutRunningFragment extends Fragment {
 
     private String timerSpeedCueString(){
         assert viewModel.getSpeed().getValue() != null;
-        int speedTimer = viewModel.getSpeed().getValue();
+        float speedTimer = (float)viewModel.getSpeed().getValue();
         return (speedTimer/100) + "x " + getString(R.string.timer_speed_cue);
     }
 
