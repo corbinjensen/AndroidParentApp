@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/change_timer_speed"
+        android:icon="@drawable/ic_stopwatch_solid"
+        android:title="@string/timer_button_desc"
+        android:tint="?attr/colorOnPrimary"
+        app:showAsAction="always">
+        <menu>
+
+        </menu>
+    </item>
+</menu>
