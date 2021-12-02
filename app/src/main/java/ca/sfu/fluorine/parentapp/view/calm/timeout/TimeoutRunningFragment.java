@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,25 +28,37 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class TimeoutRunningFragment extends Fragment {
     private FragmentTimeoutRunningBinding binding;
     private TimeoutViewModel viewModel;
+    private int[] speeds;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(TimeoutViewModel.class);
+        speeds = getResources().getIntArray(R.array.speeds);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.timeout_menu, menu);
+        SubMenu subMenu = menu.findItem(R.id.change_timer_speed).getSubMenu();
+        // Populate the menu here...
+        for (final int speed : speeds) {
+            String displayPercentage = getString(R.string.timer_speed_cue, speed);
+            // Use the ID as a speed value
+            subMenu.add(0, speed, Menu.NONE, displayPercentage);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //set speed from the item.
-        int speed = Integer.parseInt(item.toString());
-        float speedPercent = (float)(speed / 100);
-        binding.timerVisualCue.setText(String.format(String.valueOf(R.string.timer_speed_cue), speedPercent));
+        int speed = item.getItemId();
+
+        // Just a compromised work around
+        if (speed != R.id.change_timer_speed) {
+            viewModel.setSpeed(speed);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,10 +97,9 @@ public class TimeoutRunningFragment extends Fragment {
                     remainingInSeconds % 60));
         });
 
-        viewModel.getSpeed().observe(getViewLifecycleOwner(), speed -> {
-            float speedPercent = (float)(speed / 100);
-            binding.timerVisualCue.setText(String.format(String.valueOf(R.string.timer_speed_cue), speedPercent));
-        });
+        viewModel.getSpeed().observe(getViewLifecycleOwner(), speedInPercentage ->
+            binding.timerVisualCue.setText(getString(R.string.timer_speed_cue, speedInPercentage))
+        );
 
         viewModel.getTimerState().observe(getViewLifecycleOwner(), state -> {
             switch (state) {

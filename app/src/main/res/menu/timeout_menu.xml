@@ -8,34 +8,7 @@
         android:tint="?attr/colorOnPrimary"
         app:showAsAction="always">
         <menu>
-            <!--  TODO:  Create all speed options is here -->
-            <item
-                android:id="@+id/timer_speed_0.25x"
-                android:title="@string/timer_speed_0_25x"/>
 
-            <item
-                android:id="@+id/timer_speed_0.50x"
-                android:title="@string/timer_speed_0_50x"/>
-
-            <item
-                android:id="@+id/timer_speed_0.75x"
-                android:title="@string/timer_speed_0_75x"/>
-
-            <item
-                android:id="@+id/timer_speed_1.0x"
-                android:title="@string/timer_speed_1_0x"/>
-
-            <item
-                android:id="@+id/timer_speed_2.0x"
-                android:title="@string/timer_speed_2_0x"/>
-
-            <item
-                android:id="@+id/timer_speed_3.0x"
-                android:title="@string/timer_speed_3_0x"/>
-
-            <item
-                android:id="@+id/timer_speed_4.0x"
-                android:title="@string/timer_speed_4_0x"/>
         </menu>
     </item>
 </menu>
