@@ -73,6 +73,7 @@ public class ZenActivity extends AppCompatActivity {
         binding.breathingFinishedOption.setVisibility(View.GONE);
         binding.releaseButton.setVisibility(View.GONE);
         binding.breathsLeft.setVisibility(View.GONE);
+        binding.helpBreatheIn.setVisibility(View.GONE);
         binding.breatheButton.setText(R.string.begin);
     }
 
