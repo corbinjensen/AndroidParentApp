@@ -10,6 +10,9 @@ import ca.sfu.fluorine.parentapp.databinding.TaskHistoryRowLayoutBinding;
 import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 import ca.sfu.fluorine.parentapp.view.utils.Utility;
 
+/**
+ * Represents each row of the RecyclerView of the task history
+ */
 public class TaskHistoryViewHolder extends RecyclerView.ViewHolder {
     private final TaskHistoryRowLayoutBinding binding;
 

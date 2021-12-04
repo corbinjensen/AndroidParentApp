@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * Represents a view model for timeout starting and finishing screen
+ */
 @HiltViewModel
 public class TimeoutLiteViewModel extends ViewModel {
     private final TimeoutStorage storage;

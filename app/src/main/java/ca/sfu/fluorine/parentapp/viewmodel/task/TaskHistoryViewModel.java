@@ -15,6 +15,9 @@ import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
 import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * Represent a view model for task history screen
+ */
 @HiltViewModel
 public class TaskHistoryViewModel extends ViewModel {
     private final WhoseTurnDao whoseTurnDao;

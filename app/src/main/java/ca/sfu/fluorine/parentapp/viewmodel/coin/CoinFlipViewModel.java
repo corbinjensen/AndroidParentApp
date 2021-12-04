@@ -15,6 +15,9 @@ import ca.sfu.fluorine.parentapp.model.composite.CoinResultWithChild;
 import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * represent a view model for the whole coin-flipping feature
+ */
 @HiltViewModel
 public class CoinFlipViewModel extends ViewModel {
     private final CoinResultDao coinResultDao;

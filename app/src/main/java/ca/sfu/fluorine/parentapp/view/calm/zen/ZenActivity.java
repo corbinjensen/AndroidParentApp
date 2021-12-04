@@ -14,6 +14,9 @@ import ca.sfu.fluorine.parentapp.viewmodel.zen.BreathingState;
 import ca.sfu.fluorine.parentapp.viewmodel.zen.BreathingViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Represent the screen where users can taking deep breaths for calming
+ */
 @AndroidEntryPoint
 public class ZenActivity extends AppCompatActivity {
     private ActivityZenBinding binding;

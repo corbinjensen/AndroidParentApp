@@ -14,6 +14,9 @@ import ca.sfu.fluorine.parentapp.model.task.TaskDao;
 import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * Represent a view model for task listing screen
+ */
 @HiltViewModel
 public class TaskListingViewModel extends ViewModel {
     private final IconService service;

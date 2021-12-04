@@ -18,6 +18,9 @@ import ca.sfu.fluorine.parentapp.store.BreathingStorage;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 
+/**
+ * Represent a view model for zen screen (the whole taking breaths feature)
+ */
 @HiltViewModel
 public class BreathingViewModel extends ViewModel {
     // Storage
