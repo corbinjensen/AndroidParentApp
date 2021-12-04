@@ -10,7 +10,6 @@ import android.content.Intent;
  *
  * Extends BroadcastReceiver, receives when
  * the timeout timer expires.
- *
  */
 public class TimeoutExpiredReceiver extends BroadcastReceiver {
 

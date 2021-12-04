@@ -17,6 +17,9 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
+/**
+ * Provides database instance and all data access objects for the whole application
+ */
 @Module
 @InstallIn(SingletonComponent.class)
 public class DatabaseModule {

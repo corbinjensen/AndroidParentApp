@@ -7,11 +7,16 @@ import android.os.Vibrator;
 
 import androidx.annotation.RawRes;
 
-public class RingtoneController {
+/**
+ * Represent a media controller hosting inside an activity or fragment
+ *
+ * This controller can play sound or make the phone vibrate
+ */
+public class MediaController {
 	private final MediaPlayer mediaPlayer;
 	private final Vibrator vibrator;
 
-	public RingtoneController(Context context, @RawRes int rawId) {
+	public MediaController(Context context, @RawRes int rawId) {
 		mediaPlayer = MediaPlayer.create(context, rawId);
 		mediaPlayer.setLooping(true);
 
