@@ -7,6 +7,9 @@ import android.content.Context;
 
 import javax.inject.Inject;
 
+/**
+ * This service manages the alarm corresponding with the running timer in the background
+ */
 public class BackgroundTimeoutService {
 	private final Context context;
 

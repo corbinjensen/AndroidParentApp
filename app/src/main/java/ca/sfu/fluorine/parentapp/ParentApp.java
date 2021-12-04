@@ -15,7 +15,7 @@ import dagger.hilt.android.HiltAndroidApp;
 /**
  * ParentApp.java
  *
- * Class for the ParentApp Android App.
+ * Extends application class to lock the orientation and establish a notification channel
  */
 @HiltAndroidApp
 public class ParentApp extends Application {

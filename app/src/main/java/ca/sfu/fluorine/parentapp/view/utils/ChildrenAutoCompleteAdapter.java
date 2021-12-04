@@ -18,6 +18,9 @@ import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.viewmodel.children.ChildrenListingViewModel;
 
+/**
+ * Represent an adapter for the dropdown menu for selecting a child
+ */
 public class ChildrenAutoCompleteAdapter extends ArrayAdapter<Child> {
 	private Child selectedChild = Child.getUnspecifiedChild();
 	private final ChildrenListingViewModel viewModel;

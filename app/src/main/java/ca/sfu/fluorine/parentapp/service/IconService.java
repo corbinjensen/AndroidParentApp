@@ -12,6 +12,10 @@ import javax.inject.Inject;
 import ca.sfu.fluorine.parentapp.model.children.Child;
 import ca.sfu.fluorine.parentapp.store.ImageInternalStorage;
 
+/**
+ * Represents a service for managing child icon photos
+ * from the internal storage
+ */
 public class IconService {
     private final ImageInternalStorage storage;
 

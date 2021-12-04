@@ -13,6 +13,9 @@ import ca.sfu.fluorine.parentapp.model.task.WhoseTurnDao;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ca.sfu.fluorine.parentapp.model.task.WhoseTurn;
 
+/**
+ * Represents a view model for add/edit task screen
+ */
 @HiltViewModel
 public class TaskEditViewModel extends ViewModel {
     private final TaskDao taskDao;

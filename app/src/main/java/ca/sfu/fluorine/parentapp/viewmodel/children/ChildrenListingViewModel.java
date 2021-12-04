@@ -16,7 +16,7 @@ import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
- * Represents the view model for the children
+ * Represents the view model for the children listing screen
  */
 @HiltViewModel
 public class ChildrenListingViewModel extends ViewModel {
