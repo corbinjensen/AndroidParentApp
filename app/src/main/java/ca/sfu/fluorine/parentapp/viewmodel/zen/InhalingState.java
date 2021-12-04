@@ -34,9 +34,8 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonDown() {
-        // Start animation and sound + hide the breath-in message
+        // TODO: Start animation and sound + hide the breath-in message
 
-        // Start the timer
         millisLeft = TOTAL_DURATION;
         countDownTimer = new CountDownTimer(TOTAL_DURATION, 500) {
             @Override
@@ -46,9 +45,9 @@ public class InhalingState extends BreathingState {
 
             @Override
             public void onFinish() {
-                // Timer expired, show the help text to release the button
+                // TODO: Button is held too long, show the help text to release the button
 
-                // Stop animation and sound
+                // TODO: Stop animation and sound
             }
         };
         countDownTimer.start();
@@ -56,17 +55,14 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonUp() {
-        // Cancel the timer
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
 
-
         if (millisLeft <= TRANSITION) {
-            // Button held long enough, go to the exhale state
+            // TODO: Button is held long enough, go to the exhale state
         } else {
-            // Button not held long enough
-            // show the breath-in message + cancel sound and animation
+            // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
         }
     }
 }

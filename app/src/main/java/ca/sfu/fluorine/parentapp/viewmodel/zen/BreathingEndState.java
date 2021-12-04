@@ -9,13 +9,13 @@ public class BreathingEndState extends BreathingState {
 
     @Override
     public void onEnter() {
-        // Show the options "Again" or "Finish"
+        // TODO: Show the options "Again" or "Finish"
     }
 
     @Override
     public void onExit() {
-        // Hide the options "Again" or "Finish"
+        // TODO: Hide the options "Again" or "Finish"
 
-        // Hide the breath left
+        // TODO: Hide the message showing the remaining breath count
     }
 }

@@ -15,6 +15,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onEnter() {
+        // TODO: Finish all tasks below
         // Start animation and sound
 
         // Disable the button
@@ -26,6 +27,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onButtonDown() {
+        // TODO: Finish all tasks below
         // Stop sound and animation
 
         // If there is no more breaths, switch to finishing state
