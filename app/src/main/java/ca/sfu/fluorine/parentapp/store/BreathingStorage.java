@@ -9,6 +9,9 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.scopes.ActivityRetainedScoped;
 
+/**
+ * Stores the breath count selection from the Zen Activity
+ */
 @ActivityRetainedScoped
 public class BreathingStorage {
     private static final String KEY = "breathing";

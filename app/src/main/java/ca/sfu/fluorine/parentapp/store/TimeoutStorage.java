@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import javax.inject.Inject;
 
 /**
- * Represents the storage for timeout timer parameters
+ * Represents the key-value storage for timeout timer parameters
  */
 public class TimeoutStorage {
     private final static String KEY = "timeout_storage";
