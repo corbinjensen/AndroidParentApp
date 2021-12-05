@@ -202,6 +202,7 @@
     <string name="last_breath">Last breath</string>
     <string name="in">in</string>
     <string name="out">out</string>
+    <string name="help_breathe_in">Hold button and breathe in</string>
 
     <plurals name="breath_count">
         <item quantity="one">%d breath</item>

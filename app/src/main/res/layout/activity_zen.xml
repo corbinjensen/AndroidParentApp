@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/breathing_layout"
+    android:background="@drawable/gradient_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
@@ -12,27 +13,33 @@
         android:id="@+id/breathing_finished_option"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/breathing_finished"
-            android:layout_width="116dp"
-            android:layout_height="61dp"
-            android:text="@string/breathe_finish"
+            style="@style/zen_button"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@android:color/transparent"
             android:onClick="onFinishButtonClicked"
+            android:text="@string/breathe_finish"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/breathe_again"
-            android:layout_width="116dp"
-            android:layout_height="61dp"
-            android:text="@string/breathe_again"
+            style="@style/zen_button"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@android:color/transparent"
             android:onClick="onAgainButtonClicked"
+            android:text="@string/breathe_again"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/add_breath"
             app:layout_constraintStart_toEndOf="@+id/subtract_breath"
@@ -59,28 +70,36 @@
 
         <Button
             android:id="@+id/add_breath"
-            android:layout_width="49dp"
-            android:layout_height="51dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="@style/zen_button"
             android:text="@string/add_breath"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/subtract_breath"
-            android:layout_width="49dp"
-            android:layout_height="51dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="@style/zen_button"
             android:text="@string/subtract_breath"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/breathe_button"
-        android:layout_width="197dp"
-        android:layout_height="88dp"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        style="@style/zen_button"
         android:text="@string/begin"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +109,10 @@
         android:id="@+id/breaths_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="34sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,9 +124,24 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/release_button"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/breathe_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/help_breathe_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/help_breathe_in"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breathe_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

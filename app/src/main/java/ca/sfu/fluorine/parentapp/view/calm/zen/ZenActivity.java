@@ -60,4 +60,5 @@ public class ZenActivity extends AppCompatActivity {
     public ActivityZenBinding getBinding() {
         return binding;
     }
+
 }
