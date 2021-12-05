@@ -18,15 +18,15 @@ public class BreathingBeginState extends BreathingState {
         viewModel = new ViewModelProvider(activity).get(BreathingViewModel.class);
         breathCount = viewModel.getBreathCount();
         updateBreathCount();
-        activity.getBinding().addBreath.setOnClickListener(incrementBreathCount);
-        activity.getBinding().subtractBreath.setOnClickListener(decrementBreathCount);
+        binding.addBreath.setOnClickListener(incrementBreathCount);
+        binding.subtractBreath.setOnClickListener(decrementBreathCount);
 
     }
 
     @Override
     public void onEnter() {
-        activity.getBinding().breatheButton.setText(R.string.begin);
-        activity.getBinding().breathCountSelection.setVisibility(View.VISIBLE);
+        binding.breatheButton.setText(R.string.begin);
+        binding.breathCountSelection.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BreathingBeginState extends BreathingState {
     private void updateBreathCount() {
         String breathCountDisplay = activity.getResources()
                 .getQuantityString(R.plurals.breath_count, breathCount, breathCount);
-        activity.getBinding().breathCount.setText(breathCountDisplay);
+        binding.breathCount.setText(breathCountDisplay);
         viewModel.setBreathCount(breathCount);
     }
 }

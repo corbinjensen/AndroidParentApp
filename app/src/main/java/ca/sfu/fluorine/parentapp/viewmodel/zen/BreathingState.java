@@ -12,9 +12,11 @@ import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
  */
 public abstract class BreathingState {
     protected ZenActivity activity;
+    protected ActivityZenBinding binding;
 
     public BreathingState(ZenActivity activity) {
         this.activity = activity;
+        binding = activity.getBinding();
     }
 
     // Run this method when entering the state

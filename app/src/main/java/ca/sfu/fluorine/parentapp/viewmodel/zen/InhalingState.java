@@ -22,14 +22,15 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onEnter() {
-        activity.getBinding().breatheButton.setText(R.string.in);
-        activity.getBinding().breathsLeft.setVisibility(View.VISIBLE);
-        activity.getBinding().breathsLeft.setText(
+        binding.breatheButton.setText(R.string.in);
+        binding.breathsLeft.setVisibility(View.VISIBLE);
+        binding.breathsLeft.setText(
                 activity.getResources().getQuantityString(
                         R.plurals.breath_count,
                         breathCount,
                         breathCount)
         );
+        binding.helpBreatheIn.setVisibility(View.VISIBLE);
     }
 
     @Override
