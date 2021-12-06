@@ -51,7 +51,6 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonDown() {
-        // TODO: Start animation and sound
         inhaleSound = MediaPlayer.create(activity, R.raw.inhaling);
         inhaleSound.start();
         binding.inhalePulsator.setVisibility(View.VISIBLE);

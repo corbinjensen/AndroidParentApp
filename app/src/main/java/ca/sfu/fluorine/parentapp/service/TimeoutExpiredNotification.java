@@ -63,15 +63,11 @@ public class TimeoutExpiredNotification {
 				context.getString(R.string.timeout_notification_channel_description));
 		channel.enableVibration(true);
 
-		AudioAttributes attributes = new AudioAttributes.Builder()
-				.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-				.setUsage(AudioAttributes.USAGE_ALARM)
-				.build();
-
 		Uri sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
 				+ "://" + context.getApplicationContext().getPackageName()
 				+ "/" + R.raw.jingle);
-		channel.setSound(sound, attributes);
+
+		channel.setSound(sound, null);
 		return channel;
 	}
 }

@@ -1,242 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HelpActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/help_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/developers"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/about_app" />
+        android:padding="16dp"
+        tools:context=".HelpActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/citations"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/corbinName" />
+        <TextView
+            android:id="@+id/developeer_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/developers"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/about_app" />
 
-    <TextView
-        android:id="@+id/graceName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/grace_humer"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <LinearLayout
+            android:id="@+id/developers_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/developeer_title">
 
-    <TextView
-        android:id="@+id/vietName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/viet_hung_nguyen"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/graceName" />
+            <TextView
+                android:id="@+id/graceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/grace_humer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/vietName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/viet_hung_nguyen"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/gavinName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gavin_nagra"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/vietName" />
+            <TextView
+                android:id="@+id/gavinName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gavin_nagra"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/corbinName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/corbin_jensen"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/gavinName" />
+            <TextView
+                android:id="@+id/corbinName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/corbin_jensen"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/icons_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/icons"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <TextView
+            android:id="@+id/resource_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/citations"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/developers_list" />
 
-    <TextView
-        android:id="@+id/app_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/icons_header" />
+        <TextView
+            android:id="@+id/icons_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/icons"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/resource_title" />
 
-    <TextView
-        android:id="@+id/child_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/child_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/app_icon_citation" />
+        <LinearLayout
+            android:id="@+id/icon_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/icons_header">
 
-    <TextView
-        android:id="@+id/coin_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/coin_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/child_icon_citation" />
+            <TextView
+                android:id="@+id/app_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/task_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/task_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/coin_icon_citation" />
+            <TextView
+                android:id="@+id/child_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/child_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/timer_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/timer_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/task_icon_citation" />
+            <TextView
+                android:id="@+id/coin_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/coin_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/robot_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/robot_empty_image_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/timer_icon_citation" />
+            <TextView
+                android:id="@+id/wind_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wind_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/wind_icon_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wind_icon_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/robot_icon_citation" />
+            <TextView
+                android:id="@+id/task_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/task_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/external_libraries_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/external_libraries"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/wind_icon_citation" />
+            <TextView
+                android:id="@+id/timer_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timer_icon_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/external_libraries_header2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/clip_art"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/image_cropper_citation" />
+            <TextView
+                android:id="@+id/robot_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/robot_empty_image_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/pulsator_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pulsator_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/external_libraries_header" />
+            <TextView
+                android:id="@+id/tachometer_icon_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tachometer_icon_citation"
+                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/citation_board"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clip_art_board_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/external_libraries_header2" />
+        <TextView
+            android:id="@+id/external_libraries_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/external_libraries"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/icon_list" />
 
-    <TextView
-        android:id="@+id/citation_coin_flip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clip_art_coin_flip_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/citation_board" />
+        <LinearLayout
+            android:id="@+id/libraries"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/external_libraries_header">
 
-    <TextView
-        android:id="@+id/citation_children"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clip_art_children_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/citation_coin_flip" />
+            <TextView
+                android:id="@+id/pulsator_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pulsator_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/citation_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clip_art_box_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/citation_children" />
+            <TextView
+                android:id="@+id/image_cropper_citation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/image_cropper_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/image_cropper_citation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/image_cropper_citation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/pulsator_citation" />
+        <TextView
+            android:id="@+id/clip_art_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/clip_art"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/libraries" />
 
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toTopOf="@id/help_content" />
 
-    <TextView
-        android:id="@+id/about_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/about_app"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/appName" />
+        <TextView
+            android:id="@+id/about_app"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/about_app"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/appName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/clip_arts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/help_content"
+            app:layout_constraintStart_toStartOf="@id/help_content"
+            app:layout_constraintTop_toBottomOf="@+id/clip_art_title">
+
+            <TextView
+                android:id="@+id/citation_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clip_art_box_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/citation_coin_flip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clip_art_coin_flip_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/citation_board"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clip_art_board_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/citation_children"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clip_art_children_citation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
