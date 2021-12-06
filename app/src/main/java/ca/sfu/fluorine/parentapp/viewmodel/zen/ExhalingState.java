@@ -24,8 +24,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onEnter() {
-        // TODO: Finish all tasks below
-        // Start animation and sound
+        // TODO: Start animation and sound
 
         // Disable the button
         binding.breatheButton.setEnabled(false);
@@ -53,7 +52,7 @@ public class ExhalingState extends BreathingState {
 
             @Override
             public void onFinish(){
-                // Stop sound and animation after 10 seconds in total
+                // TODO: Stop sound and animation after 10 seconds in total
             }
         };
 
@@ -62,6 +61,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onButtonDown() {
+        // TODO: Stop sound and animation after 10 seconds in total
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
