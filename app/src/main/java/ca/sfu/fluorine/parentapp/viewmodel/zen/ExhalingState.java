@@ -6,6 +6,7 @@ import android.view.View;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class ExhalingState extends BreathingState {
     private int breathCount;
@@ -69,6 +70,7 @@ public class ExhalingState extends BreathingState {
     public void onExit() {
         // TODO: Stop animation
         binding.zenPulsator.stop();
+
         exhaleSound.stop();
         exhaleSound.release();
         exhaleSound = null;
