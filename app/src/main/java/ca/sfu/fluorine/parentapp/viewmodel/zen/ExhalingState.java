@@ -4,10 +4,9 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.View;
 
-import androidx.annotation.StringRes;
-
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class ExhalingState extends BreathingState {
     private int breathCount;
@@ -15,18 +14,23 @@ public class ExhalingState extends BreathingState {
     private final long TRANSITION_DURATION;
     private CountDownTimer countDownTimer;
     private boolean doneExhaling = false;
+    private MediaPlayer exhaleSound;
 
     public ExhalingState(ZenActivity activity, int breathCount) {
         super(activity);
         this.breathCount = breathCount;
         TOTAL_DURATION = activity.getResources().getInteger(R.integer.total_breath_duration);
         TRANSITION_DURATION = TOTAL_DURATION - 3000;
+        exhaleSound = MediaPlayer.create(activity, R.raw.exhaling);
     }
 
     @Override
     public void onEnter() {
-        // TODO: Start animation and sound
-
+        if (binding.zenPulsator.isStarted()){
+            binding.zenPulsator.setVisibility(View.VISIBLE);
+        };
+        binding.zenPulsator.start();
+        exhaleSound.start();
         // Disable the button
         binding.breatheButton.setEnabled(false);
 
@@ -52,27 +56,34 @@ public class ExhalingState extends BreathingState {
                         }
                         doneExhaling = true;
                     }
-
                 }
             }
 
             @Override
             public void onFinish(){
-                // TODO: Stop sound and animation after 10 seconds in total
+                moveToNextState();
             }
         };
         countDownTimer.start();
+    }
 
+    @Override
+    public void onExit() {
+        binding.zenPulsator.setVisibility(View.INVISIBLE);
+        exhaleSound.stop();
+        exhaleSound.release();
+        exhaleSound = null;
     }
 
     @Override
     public void onButtonDown() {
-        // TODO: Stop sound and animation after 10 seconds in total
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        moveToNextState();
+    }
 
-        // Navigate to new state based on remaining breath count
+    private void moveToNextState() {
         if (breathCount <= 0) {
             activity.setState(new BreathingEndState(activity));
         } else {
