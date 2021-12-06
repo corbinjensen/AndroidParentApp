@@ -4,10 +4,7 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.View;
 
-import androidx.annotation.StringRes;
-
 import ca.sfu.fluorine.parentapp.R;
-import ca.sfu.fluorine.parentapp.service.MediaController;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
 
 public class ExhalingState extends BreathingState {
@@ -29,6 +26,7 @@ public class ExhalingState extends BreathingState {
     @Override
     public void onEnter() {
         // TODO: Start animation
+        binding.zenPulsator.start();
         exhaleSound.start();
         // Disable the button
         binding.breatheButton.setEnabled(false);
@@ -70,6 +68,7 @@ public class ExhalingState extends BreathingState {
     @Override
     public void onExit() {
         // TODO: Stop animation
+        binding.zenPulsator.stop();
         exhaleSound.stop();
         exhaleSound.release();
         exhaleSound = null;
