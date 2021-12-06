@@ -12,14 +12,13 @@ public class InhalingState extends BreathingState {
     private final int breathCount;
     private final long TOTAL_DURATION, TRANSITION;
     private CountDownTimer countDownTimer;
-    private long millisLeft;
+    private boolean doneInhaling;
     public MediaPlayer inhaleSound;
 
     public InhalingState(ZenActivity activity, int breathCount) {
         super(activity);
         this.breathCount = breathCount;
         TOTAL_DURATION = activity.getResources().getInteger(R.integer.total_breath_duration);
-        millisLeft = TOTAL_DURATION;
         TRANSITION = TOTAL_DURATION - activity.getResources().getInteger(R.integer.breath_release);
         inhaleSound = MediaPlayer.create(activity,R.raw.inhaling);
     }
@@ -42,22 +41,22 @@ public class InhalingState extends BreathingState {
         // TODO: Start animation and sound + hide the breath-in message
         // inhaleSound.start();
 
-        // Hide breath-in message
         binding.helpBreatheIn.setVisibility(View.INVISIBLE);
 
-
-        millisLeft = TOTAL_DURATION;
+        doneInhaling = false;
         countDownTimer = new CountDownTimer(TOTAL_DURATION, 500) {
             @Override
             public void onTick(long remaining) {
-                millisLeft = remaining;
+                if (remaining <= TRANSITION) {
+                    doneInhaling = true;
+                    binding.breatheButton.setText(R.string.out);
+                }
             }
 
             @Override
             public void onFinish() {
-                // TODO: Button is held too long, show the help text to release the button
                 binding.releaseButton.setVisibility(View.VISIBLE);
-                // TODO: Stop animation and sound
+                // TODO: Cancel animation and sound
                 // inhaleSound.stop();
             }
         };
@@ -66,6 +65,7 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonUp() {
+        // TODO: Cancel sound and animation
 
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
 
@@ -73,12 +73,9 @@ public class InhalingState extends BreathingState {
             countDownTimer.cancel();
         }
 
-        if (millisLeft <= TRANSITION) {
-            // TODO: Button is held long enough, go to the exhale state
-            activity.setState(new ExhalingState(activity,breathCount));
+        if (doneInhaling) {
+            activity.setState(new ExhalingState(activity, breathCount));
         } else {
-            // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
-            // inhaleSound.stop();
             binding.helpBreatheIn.setVisibility(View.VISIBLE);
         }
     }
