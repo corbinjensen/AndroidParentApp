@@ -1,5 +1,6 @@
 package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.View;
 
@@ -12,7 +13,7 @@ public class InhalingState extends BreathingState {
     private final long TOTAL_DURATION, TRANSITION;
     private CountDownTimer countDownTimer;
     private long millisLeft;
-    private final MediaController inhaleSound;
+    public MediaPlayer inhaleSound;
 
     public InhalingState(ZenActivity activity, int breathCount) {
         super(activity);
@@ -20,7 +21,7 @@ public class InhalingState extends BreathingState {
         TOTAL_DURATION = activity.getResources().getInteger(R.integer.total_breath_duration);
         millisLeft = TOTAL_DURATION;
         TRANSITION = TOTAL_DURATION - activity.getResources().getInteger(R.integer.breath_release);
-        inhaleSound = new MediaController(activity, R.raw.inhaling);
+        inhaleSound = MediaPlayer.create(activity,R.raw.inhaling);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class InhalingState extends BreathingState {
     @Override
     public void onButtonDown() {
         // TODO: Start animation and sound + hide the breath-in message
-        //inhaleSound.playSound();
+        inhaleSound.start();
         binding.helpBreatheIn.setVisibility(View.INVISIBLE);
 
 
@@ -55,6 +56,7 @@ public class InhalingState extends BreathingState {
                 // TODO: Button is held too long, show the help text to release the button
 
                 // TODO: Stop animation and sound
+                // inhaleSound.stop();
             }
         };
         countDownTimer.start();
@@ -62,6 +64,7 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonUp() {
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -70,6 +73,7 @@ public class InhalingState extends BreathingState {
             // TODO: Button is held long enough, go to the exhale state
         } else {
             // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
+            // inhaleSound.stop();
             binding.helpBreatheIn.setVisibility(View.INVISIBLE);
         }
     }
