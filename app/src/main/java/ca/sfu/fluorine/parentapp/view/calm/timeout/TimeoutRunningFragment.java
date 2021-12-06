@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -55,8 +56,12 @@ public class TimeoutRunningFragment extends Fragment {
         //set speed from the item.
         int speed = item.getItemId();
 
+        // Override the up button
+        if (speed == android.R.id.home) {
+            requireActivity().onBackPressed();
+        }
         // Just a compromised work around
-        if (speed != R.id.change_timer_speed) {
+        else if (speed != R.id.change_timer_speed) {
             viewModel.setSpeed(speed);
         }
         return super.onOptionsItemSelected(item);
@@ -133,5 +138,4 @@ public class TimeoutRunningFragment extends Fragment {
 
         super.onStop();
     }
-
 }
