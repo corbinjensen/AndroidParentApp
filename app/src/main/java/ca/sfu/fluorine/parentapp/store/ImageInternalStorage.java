@@ -16,6 +16,9 @@ import javax.inject.Inject;
 
 import ca.sfu.fluorine.parentapp.R;
 
+/**
+ * Represents the in-app storage to store all the child icon photos
+ */
 public class ImageInternalStorage {
 	private final Context context;
 	private static final String FILE_EXT = ".png";

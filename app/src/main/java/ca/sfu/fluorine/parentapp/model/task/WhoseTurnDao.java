@@ -9,6 +9,9 @@ import java.util.List;
 import ca.sfu.fluorine.parentapp.model.BaseDao;
 import ca.sfu.fluorine.parentapp.model.composite.WhoseTurnRecord;
 
+/**
+ * Represents a data access object (DAO) to manipulate task history data in the database
+ */
 @Dao
 public abstract class WhoseTurnDao implements BaseDao<WhoseTurn> {
     @Query("SELECT children.*, completionTime FROM whose_turn " +

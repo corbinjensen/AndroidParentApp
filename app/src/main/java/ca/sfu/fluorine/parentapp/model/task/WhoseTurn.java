@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey;
 
 import ca.sfu.fluorine.parentapp.model.children.Child;
 
+/**
+ * Represent the task history table in the database
+ *
+ * This table contains two foreign keys referring to the child and task tables
+ */
 @Entity(
         tableName = "whose_turn",
         foreignKeys = {

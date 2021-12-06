@@ -12,6 +12,9 @@ import ca.sfu.fluorine.parentapp.model.children.ChildDao;
 import ca.sfu.fluorine.parentapp.service.IconService;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * Represents a view model for the add or edit children screen
+ */
 @HiltViewModel
 public class ChildrenEditViewModel extends ViewModel {
     private final ChildDao childDao;

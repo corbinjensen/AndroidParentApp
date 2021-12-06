@@ -7,6 +7,9 @@ import android.text.method.LinkMovementMethod;
 
 import ca.sfu.fluorine.parentapp.databinding.ActivityHelpBinding;
 
+/**
+ * Represents a helping screen containing all developers' info and citations
+ */
 public class HelpActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +28,8 @@ public class HelpActivity extends AppCompatActivity {
         binding.citationBoard.setMovementMethod(LinkMovementMethod.getInstance());
         binding.citationChildren.setMovementMethod(LinkMovementMethod.getInstance());
         binding.citationCoinFlip.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.citationBox.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.windIconCitation.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 }

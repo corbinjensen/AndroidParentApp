@@ -18,7 +18,6 @@ import ca.sfu.fluorine.parentapp.view.utils.Utility;
 /**
  * TaskViewHolder.java - Represents the Task View being Held
  */
-
 public class TaskViewHolder extends RecyclerView.ViewHolder {
 	final TextView taskName;
 	final TextView childNameTask;

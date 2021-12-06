@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.FragmentTimeoutFinishBinding;
-import ca.sfu.fluorine.parentapp.service.RingtoneController;
+import ca.sfu.fluorine.parentapp.service.MediaController;
 import ca.sfu.fluorine.parentapp.service.TimeoutExpiredNotification;
 import ca.sfu.fluorine.parentapp.view.utils.NoActionBarFragment;
 import ca.sfu.fluorine.parentapp.viewmodel.timeout.TimeoutLiteViewModel;
@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 @AndroidEntryPoint
 public class TimeoutFinishFragment extends NoActionBarFragment {
-	private RingtoneController ringtoneController;
+	private MediaController mediaController;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,17 +57,17 @@ public class TimeoutFinishFragment extends NoActionBarFragment {
 	public void onStart() {
 		super.onStart();
 		// Play the sound
-		ringtoneController = new RingtoneController(requireContext(), R.raw.jingle);
-		ringtoneController.playSound();
-		ringtoneController.vibrate();
+		mediaController = new MediaController(requireContext(), R.raw.jingle);
+		mediaController.playSound();
+		mediaController.vibrate();
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (ringtoneController != null) {
-			ringtoneController.cancelAll();
-			ringtoneController = null;
+		if (mediaController != null) {
+			mediaController.cancelAll();
+			mediaController = null;
 		}
 	}
 }

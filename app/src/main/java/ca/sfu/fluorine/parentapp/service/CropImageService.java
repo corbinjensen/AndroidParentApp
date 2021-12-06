@@ -19,6 +19,12 @@ import ca.sfu.fluorine.parentapp.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+/**
+ * Represents the crop image activity inside an activity
+ *
+ * This service will retrieve a photo taken from camera or file system
+ * and return it to the hosting activity
+ */
 public class CropImageService {
 	private final FragmentActivity activity;
 

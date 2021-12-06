@@ -14,6 +14,9 @@ import ca.sfu.fluorine.parentapp.service.BackgroundTimeoutService;
 import ca.sfu.fluorine.parentapp.store.TimeoutStorage;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * Represents a view model and business logic for the timeout running screen
+ */
 @HiltViewModel
 public class TimeoutViewModel extends ViewModel {
     // Services and storages
