@@ -14,6 +14,7 @@ public class ExhalingState extends BreathingState {
     private final long TOTAL_DURATION;
     private final long TRANSITION_DURATION;
     private CountDownTimer countDownTimer;
+    private boolean doneExhaling = false;
 
     public ExhalingState(ZenActivity activity, int breathCount) {
         super(activity);
@@ -35,18 +36,23 @@ public class ExhalingState extends BreathingState {
                 if (remaining <= TRANSITION_DURATION) {
                     // change the button + update the remaining breath count
                     binding.breatheButton.setEnabled(true);
-                    breathCount--;
-                    if (breathCount <= 0) {
-                        binding.breatheButton.setText(R.string.good_job);
-                        binding.breathsLeft.setVisibility(View.GONE);
-                    } else {
-                        if (breathCount == 1) {
-                            binding.breathsLeft.setText(R.string.last_breath);
+                    if (!doneExhaling) {
+                        breathCount--;
+                        if (breathCount <= 0) {
+                            binding.breatheButton.setText(R.string.good_job);
+                            binding.breathsLeft.setVisibility(View.GONE);
                         } else {
-                            binding.breathsLeft.setText(
-                                    activity.getString(R.string.breath_left, breathCount));
+                            binding.breatheButton.setText(R.string.in);
+                            if (breathCount == 1) {
+                                binding.breathsLeft.setText(R.string.last_breath);
+                            } else {
+                                binding.breathsLeft.setText(
+                                        activity.getString(R.string.breath_left, breathCount));
+                            }
                         }
+                        doneExhaling = true;
                     }
+
                 }
             }
 
@@ -55,7 +61,7 @@ public class ExhalingState extends BreathingState {
                 // TODO: Stop sound and animation after 10 seconds in total
             }
         };
-
+        countDownTimer.start();
 
     }
 

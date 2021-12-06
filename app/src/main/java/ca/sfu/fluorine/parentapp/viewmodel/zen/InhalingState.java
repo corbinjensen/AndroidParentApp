@@ -27,13 +27,18 @@ public class InhalingState extends BreathingState {
     public void onEnter() {
         binding.breatheButton.setText(R.string.in);
         binding.breathsLeft.setVisibility(View.VISIBLE);
-        binding.breathsLeft.setText(
-                activity.getResources().getQuantityString(
-                        R.plurals.breath_count,
-                        breathCount,
-                        breathCount)
-        );
+        if (breathCount > 1) {
+            binding.breathsLeft.setText(activity.getString(R.string.breath_left, breathCount));
+        } else {
+            binding.breathsLeft.setText(R.string.last_breath);
+        }
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onExit() {
+        binding.helpBreatheIn.setVisibility(View.GONE);
+        binding.releaseButton.setVisibility(View.GONE);
     }
 
     @Override
