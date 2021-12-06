@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 
 import ca.sfu.fluorine.parentapp.R;
+import ca.sfu.fluorine.parentapp.service.MediaController;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
 
 public class InhalingState extends BreathingState {
@@ -11,6 +12,7 @@ public class InhalingState extends BreathingState {
     private final long TOTAL_DURATION, TRANSITION;
     private CountDownTimer countDownTimer;
     private long millisLeft;
+    private final MediaController inhaleSound;
 
     public InhalingState(ZenActivity activity, int breathCount) {
         super(activity);
@@ -18,6 +20,7 @@ public class InhalingState extends BreathingState {
         TOTAL_DURATION = activity.getResources().getInteger(R.integer.total_breath_duration);
         millisLeft = TOTAL_DURATION;
         TRANSITION = TOTAL_DURATION - activity.getResources().getInteger(R.integer.breath_release);
+        inhaleSound = new MediaController(activity, R.raw.inhaling);
     }
 
     @Override
@@ -36,6 +39,9 @@ public class InhalingState extends BreathingState {
     @Override
     public void onButtonDown() {
         // TODO: Start animation and sound + hide the breath-in message
+        //inhaleSound.playSound();
+        binding.helpBreatheIn.setVisibility(View.INVISIBLE);
+
 
         millisLeft = TOTAL_DURATION;
         countDownTimer = new CountDownTimer(TOTAL_DURATION, 500) {
@@ -64,6 +70,7 @@ public class InhalingState extends BreathingState {
             // TODO: Button is held long enough, go to the exhale state
         } else {
             // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
+            binding.helpBreatheIn.setVisibility(View.INVISIBLE);
         }
     }
 }
