@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.StringRes;
 
 import ca.sfu.fluorine.parentapp.R;
+import ca.sfu.fluorine.parentapp.service.MediaController;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
 
 public class ExhalingState extends BreathingState {
@@ -15,18 +16,20 @@ public class ExhalingState extends BreathingState {
     private final long TRANSITION_DURATION;
     private CountDownTimer countDownTimer;
     private boolean doneExhaling = false;
+    private MediaPlayer exhaleSound;
 
     public ExhalingState(ZenActivity activity, int breathCount) {
         super(activity);
         this.breathCount = breathCount;
         TOTAL_DURATION = activity.getResources().getInteger(R.integer.total_breath_duration);
         TRANSITION_DURATION = TOTAL_DURATION - 3000;
+        exhaleSound = MediaPlayer.create(activity, R.raw.exhaling);
     }
 
     @Override
     public void onEnter() {
-        // TODO: Start animation and sound
-
+        // TODO: Start animation
+        exhaleSound.start();
         // Disable the button
         binding.breatheButton.setEnabled(false);
 
@@ -66,7 +69,10 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onExit() {
-        // TODO: Stop animation and stop the sound
+        // TODO: Stop animation
+        exhaleSound.stop();
+        exhaleSound.release();
+        exhaleSound = null;
     }
 
     @Override
