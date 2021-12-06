@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/change_timer_speed"
-        android:icon="@drawable/ic_stopwatch_solid"
+        android:icon="@drawable/ic_tachometer_alt_solid"
         android:title="@string/timer_button_desc"
         android:tint="?attr/colorOnPrimary"
         app:showAsAction="always">
