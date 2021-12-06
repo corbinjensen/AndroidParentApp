@@ -26,13 +26,12 @@ public class ExhalingState extends BreathingState {
     @Override
     public void onEnter() {
         binding.exhalePulsator.setVisibility(View.VISIBLE);
-        if (binding.exhalePulsator.isStarted()){
-            binding.exhalePulsator.setVisibility(View.VISIBLE);
-        };
         binding.exhalePulsator.start();
         exhaleSound.start();
-        // Disable the button
+
         binding.breatheButton.setEnabled(false);
+        binding.helpBreath.setVisibility(View.VISIBLE);
+        binding.helpBreath.setText(R.string.help_breathe_out);
 
         countDownTimer = new CountDownTimer(TOTAL_DURATION, 500) {
             @Override
@@ -70,6 +69,7 @@ public class ExhalingState extends BreathingState {
     @Override
     public void onExit() {
         binding.exhalePulsator.setVisibility(View.INVISIBLE);
+        binding.helpBreath.setVisibility(View.GONE);
         exhaleSound.stop();
         exhaleSound.release();
         exhaleSound = null;

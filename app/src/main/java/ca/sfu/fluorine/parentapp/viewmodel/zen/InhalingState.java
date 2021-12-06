@@ -30,7 +30,9 @@ public class InhalingState extends BreathingState {
         } else {
             binding.breathsLeft.setText(R.string.last_breath);
         }
-        binding.helpBreatheIn.setVisibility(View.VISIBLE);
+
+        binding.helpBreath.setVisibility(View.VISIBLE);
+        binding.helpBreath.setText(R.string.help_breathe_in);
 
         // Change the pulsator color
         binding.inhalePulsator.setVisibility(View.INVISIBLE);
@@ -39,7 +41,7 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onExit() {
-        binding.helpBreatheIn.setVisibility(View.GONE);
+        binding.helpBreath.setVisibility(View.GONE);
         binding.releaseButton.setVisibility(View.GONE);
 
         // Clean up the media
@@ -55,7 +57,7 @@ public class InhalingState extends BreathingState {
         binding.inhalePulsator.setVisibility(View.VISIBLE);
         binding.inhalePulsator.start();
 
-        binding.helpBreatheIn.setVisibility(View.INVISIBLE);
+        binding.helpBreath.setVisibility(View.INVISIBLE);
 
         doneInhaling = false;
         countDownTimer = new CountDownTimer(TOTAL_DURATION, 500) {
@@ -85,7 +87,7 @@ public class InhalingState extends BreathingState {
         binding.inhalePulsator.setVisibility(View.INVISIBLE);
         stopSound();
 
-        binding.helpBreatheIn.setVisibility(View.VISIBLE);
+        binding.helpBreath.setVisibility(View.VISIBLE);
 
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -94,7 +96,7 @@ public class InhalingState extends BreathingState {
         if (doneInhaling) {
             activity.setState(new ExhalingState(activity, breathCount));
         } else {
-            binding.helpBreatheIn.setVisibility(View.VISIBLE);
+            binding.helpBreath.setVisibility(View.VISIBLE);
         }
     }
 
