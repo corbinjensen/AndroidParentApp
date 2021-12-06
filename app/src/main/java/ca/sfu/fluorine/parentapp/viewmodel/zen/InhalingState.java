@@ -56,7 +56,7 @@ public class InhalingState extends BreathingState {
             @Override
             public void onFinish() {
                 // TODO: Button is held too long, show the help text to release the button
-
+                binding.releaseButton.setVisibility(View.VISIBLE);
                 // TODO: Stop animation and sound
                 // inhaleSound.stop();
             }
@@ -75,6 +75,7 @@ public class InhalingState extends BreathingState {
 
         if (millisLeft <= TRANSITION) {
             // TODO: Button is held long enough, go to the exhale state
+            activity.setState(new ExhalingState(activity,breathCount));
         } else {
             // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
             // inhaleSound.stop();
