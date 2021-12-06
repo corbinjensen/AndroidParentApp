@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:alpha="0.75"
-        android:padding="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/breathe_button"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/breathe_button"
@@ -25,15 +25,15 @@
         app:pulse_count="5"
         app:pulse_duration="@integer/total_breath_duration"
         app:pulse_interpolator="AccelerateDecelerate"
-        app:pulse_startFromScratch="true"
-        app:pulse_repeat="0" />
+        app:pulse_repeat="0"
+        app:pulse_startFromScratch="true" />
 
     <pl.bclogic.pulsator4droid.library.PulsatorLayout
         android:id="@+id/exhale_pulsator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:alpha="0.75"
-        android:padding="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/breathe_button"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/breathe_button"
@@ -43,8 +43,8 @@
         app:pulse_count="5"
         app:pulse_duration="@integer/total_breath_duration"
         app:pulse_interpolator="AccelerateDecelerate"
-        app:pulse_startFromScratch="true"
-        app:pulse_repeat="0" />
+        app:pulse_repeat="0"
+        app:pulse_startFromScratch="true" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/breathing_finished_option"
@@ -57,8 +57,8 @@
 
         <Button
             android:id="@+id/breathing_finished"
-            android:layout_width="116dp"
-            android:layout_height="61dp"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:textColor="@color/white"
@@ -70,8 +70,8 @@
 
         <Button
             android:id="@+id/breathe_again"
-            android:layout_width="116dp"
-            android:layout_height="61dp"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:textColor="@color/white"
@@ -106,8 +106,8 @@
 
         <ImageButton
             android:id="@+id/add_breath"
-            android:layout_width="49dp"
-            android:layout_height="51dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:src="@drawable/ic_add_breath"
@@ -121,8 +121,8 @@
 
         <ImageButton
             android:id="@+id/subtract_breath"
-            android:layout_width="49dp"
-            android:layout_height="51dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:src="@drawable/ic_remove_breath"
@@ -137,10 +137,10 @@
 
     <Button
         android:id="@+id/breathe_button"
-        android:layout_width="197dp"
-        android:layout_height="88dp"
-        android:backgroundTint="@android:color/transparent"
         style="@style/zen_button"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@android:color/transparent"
         android:text="@string/begin"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/release_button"
-        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/breathe_button"
