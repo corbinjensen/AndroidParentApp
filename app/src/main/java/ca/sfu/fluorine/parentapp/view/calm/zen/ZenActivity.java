@@ -29,6 +29,8 @@ public class ZenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityZenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        // TODO: Begin pulsator at appropriate time (with breathe in/out)
+        binding.zenPulsator.start();
 
         viewModel = new ViewModelProvider(this).get(BreathingViewModel.class);
         minBreathCount = getResources().getInteger(R.integer.min_breath_count);
