@@ -16,6 +16,12 @@
         <item name="materialThemeOverlay">@style/CalmButtonThemeOverlay</item>
     </style>
 
+    <style name="zen_button" parent="Widget.MaterialComponents.Button">
+        <item name="strokeColor">?attr/colorOnPrimary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="materialThemeOverlay">@style/CalmButtonThemeOverlay</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.Rounded" parent="">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>

@@ -125,6 +125,9 @@
     <string name="task_icon_citation">
         <a href="https://fontawesome.com/v5.15/icons/tasks?style=solid">Task</a> from Font Awesome Library
     </string>
+    <string name="tachometer_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/tachometer-alt?style=solid">Tachometer</a> from Font Awesome Library
+    </string>
 
     <string name="pulsator_citation">
         <a href="https://github.com/booncol/Pulsator4Droid">Pulsing UI Effect</a> by booncol
@@ -152,7 +155,7 @@
     </string>
 
     <string name="clip_art_box_citation">
-        <a href="https://www.flaticon.com/premium-icon/wallet_1992003?term=empty&amp;page=1&amp;position=11&amp;page=1&amp;position=11&amp;related_id=1992003&amp;origin=search">Empty Box Icon</a> By: juicy_fish
+        <a href="https://www.flaticon.com/premium-icon/wallet_1992003">Empty Box Icon</a> by juicy_fish
     </string>
 
     <string name="wind_icon_citation">
@@ -177,20 +180,20 @@
     <string name="complete_task_message">Next turn will be <b>%s</b></string>
     <string name="next_turn_info">Next turn: %s</string>
     <string name="next_turn">Next turn</string>
-    <string name="history">History</string>
+    <string name="task_history">Task History</string>
+    <string name="view_task_history">View Who\'s Turn History</string>
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
     <string name="empty_state_children_message">Tap the button on the bottom right to add a child</string>
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
-    <string name="clip_art">Clip Art:</string>
+    <string name="clip_art">Clip Arts</string>
 
     <!--  Calm screen  -->
     <string name="calm_title">Calm</string>
     <string name="crop_image_title">Crop Image</string>
     <string name="zen">Zen</string>
-    <string name="view_task_history">View Who\'s Turn History</string>
     <string name="subtract_breath">-</string>
     <string name="add_breath">+</string>
     <string name="begin">begin</string>
@@ -202,10 +205,14 @@
     <string name="last_breath">Last breath</string>
     <string name="in">in</string>
     <string name="out">out</string>
+    <string name="help_breathe_in">Hold button and breathe in</string>
+    <string name="help_breathe_out">Time to breath out</string>
+    <string name="add_a_breath">Add a breath</string>
+    <string name="remove_a_breath">Remove a breath</string>
 
     <plurals name="breath_count">
-        <item quantity="one">%d breath</item>
-        <item quantity="other">%d breaths</item>
+        <item quantity="one">Let\'s take %d breath together</item>
+        <item quantity="other">Let\'s take %d breaths together</item>
     </plurals>
 
 </resources>

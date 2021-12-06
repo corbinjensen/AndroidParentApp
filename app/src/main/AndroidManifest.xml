@@ -18,10 +18,11 @@
         <activity
             android:name=".view.task.history.TaskHistoryActivity"
             android:exported="false"
-            android:label="Task History"
+            android:label="@string/task_history"
             android:parentActivityName=".view.task.EditTaskActivity" />
         <activity
             android:name=".view.calm.zen.ZenActivity"
+            android:label="@string/zen"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
