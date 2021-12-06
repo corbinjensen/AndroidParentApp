@@ -68,37 +68,37 @@
             app:layout_constraintStart_toEndOf="@+id/subtract_breath"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/add_breath"
             android:layout_width="49dp"
             android:layout_height="51dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:onClick="incrementBreathCount"
-            android:text="@string/add_breath"
+            android:src="@drawable/ic_add_breath"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:contentDescription="@string/add_a_breath" />
 
-        <Button
+        <ImageButton
             android:id="@+id/subtract_breath"
             android:layout_width="49dp"
             android:layout_height="51dp"
             android:backgroundTint="@android:color/transparent"
             style="@style/zen_button"
             android:onClick="decrementBreathCount"
-            android:text="@string/subtract_breath"
+            android:src="@drawable/ic_remove_breath"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:contentDescription="@string/remove_a_breath" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button

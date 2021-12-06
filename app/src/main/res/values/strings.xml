@@ -203,6 +203,8 @@
     <string name="in">in</string>
     <string name="out">out</string>
     <string name="help_breathe_in">Hold button and breathe in</string>
+    <string name="add_a_breath">Add a breath</string>
+    <string name="remove_a_breath">Remove a breath</string>
 
     <plurals name="breath_count">
         <item quantity="one">%d breath</item>
