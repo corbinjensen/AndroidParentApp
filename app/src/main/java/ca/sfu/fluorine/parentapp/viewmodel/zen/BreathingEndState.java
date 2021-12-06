@@ -12,23 +12,15 @@ public class BreathingEndState extends BreathingState {
     @Override
     public void onEnter() {
         // Show the options "Again" or "Finish"
-        binding.breatheAgain.setVisibility(View.VISIBLE);
-        binding.breatheAgain.setEnabled(true);
-
-        binding.breathingFinished.setVisibility(View.VISIBLE);
-        binding.breathingFinished.setEnabled(true);
+        binding.breathingFinishedOption.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onExit() {
         // Hide the options "Again" or "Finish"
-        binding.breatheAgain.setVisibility(View.INVISIBLE);
-        binding.breatheAgain.setEnabled(false);
-
-        binding.breathingFinished.setVisibility(View.INVISIBLE);
-        binding.breathingFinished.setEnabled(false);
+        binding.breathingFinishedOption.setVisibility(View.GONE);
 
         // Hide the message showing the remaining breath count
-        binding.helpBreatheIn.setVisibility(View.INVISIBLE);
+        binding.helpBreatheIn.setVisibility(View.GONE);
     }
 }
