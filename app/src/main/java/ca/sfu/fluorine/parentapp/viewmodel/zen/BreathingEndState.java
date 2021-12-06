@@ -19,8 +19,5 @@ public class BreathingEndState extends BreathingState {
     public void onExit() {
         // Hide the options "Again" or "Finish"
         binding.breathingFinishedOption.setVisibility(View.GONE);
-
-        // Hide the message showing the remaining breath count
-        binding.helpBreatheIn.setVisibility(View.GONE);
     }
 }
