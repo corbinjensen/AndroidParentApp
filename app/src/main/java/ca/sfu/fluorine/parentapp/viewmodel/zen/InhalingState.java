@@ -13,7 +13,7 @@ public class InhalingState extends BreathingState {
     private final long TOTAL_DURATION, TRANSITION;
     private CountDownTimer countDownTimer;
     private boolean doneInhaling;
-    public MediaPlayer inhaleSound;
+    public final MediaPlayer inhaleSound;
 
     public InhalingState(ZenActivity activity, int breathCount) {
         super(activity);
@@ -33,6 +33,10 @@ public class InhalingState extends BreathingState {
             binding.breathsLeft.setText(R.string.last_breath);
         }
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
+
+        // Change the pulsator color
+        binding.zenPulsator.setVisibility(View.INVISIBLE);
+        binding.zenPulsator.setColor(activity.getColor(R.color.complementary_300));
     }
 
     @Override
@@ -43,8 +47,12 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonDown() {
-        // TODO: Start animation and sound + hide the breath-in message
+        // TODO: Start animation and sound
         // inhaleSound.start();
+        binding.zenPulsator.setVisibility(View.VISIBLE);
+        binding.zenPulsator.start();
+        
+
 
         binding.helpBreatheIn.setVisibility(View.INVISIBLE);
 
@@ -62,6 +70,8 @@ public class InhalingState extends BreathingState {
             public void onFinish() {
                 binding.releaseButton.setVisibility(View.VISIBLE);
                 // TODO: Cancel animation and sound
+                binding.zenPulsator.stop();
+                binding.zenPulsator.setVisibility(View.INVISIBLE);
                 // inhaleSound.stop();
             }
         };
@@ -71,6 +81,8 @@ public class InhalingState extends BreathingState {
     @Override
     public void onButtonUp() {
         // TODO: Cancel sound and animation
+        binding.zenPulsator.stop();
+        binding.zenPulsator.setVisibility(View.INVISIBLE);
 
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
 
