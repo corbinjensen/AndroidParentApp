@@ -26,7 +26,9 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onEnter() {
-        // TODO: Start animation
+        if (binding.zenPulsator.isStarted()){
+            binding.zenPulsator.setVisibility(View.VISIBLE);
+        };
         binding.zenPulsator.start();
         exhaleSound.start();
         // Disable the button
@@ -54,7 +56,6 @@ public class ExhalingState extends BreathingState {
                         }
                         doneExhaling = true;
                     }
-
                 }
             }
 
@@ -68,9 +69,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onExit() {
-        // TODO: Stop animation
-        binding.zenPulsator.stop();
-
+        binding.zenPulsator.setVisibility(View.INVISIBLE);
         exhaleSound.stop();
         exhaleSound.release();
         exhaleSound = null;
