@@ -6,7 +6,6 @@ import android.view.View;
 
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
-import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class ExhalingState extends BreathingState {
     private int breathCount;
@@ -26,10 +25,11 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onEnter() {
-        if (binding.zenPulsator.isStarted()){
-            binding.zenPulsator.setVisibility(View.VISIBLE);
+        binding.exhalePulsator.setVisibility(View.VISIBLE);
+        if (binding.exhalePulsator.isStarted()){
+            binding.exhalePulsator.setVisibility(View.VISIBLE);
         };
-        binding.zenPulsator.start();
+        binding.exhalePulsator.start();
         exhaleSound.start();
         // Disable the button
         binding.breatheButton.setEnabled(false);
@@ -69,7 +69,7 @@ public class ExhalingState extends BreathingState {
 
     @Override
     public void onExit() {
-        binding.zenPulsator.setVisibility(View.INVISIBLE);
+        binding.exhalePulsator.setVisibility(View.INVISIBLE);
         exhaleSound.stop();
         exhaleSound.release();
         exhaleSound = null;

@@ -33,8 +33,8 @@ public class InhalingState extends BreathingState {
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
 
         // Change the pulsator color
-        binding.zenPulsator.setVisibility(View.INVISIBLE);
-        binding.zenPulsator.setColor(activity.getColor(R.color.complementary_300));
+        binding.inhalePulsator.setVisibility(View.INVISIBLE);
+        binding.inhalePulsator.setColor(activity.getColor(R.color.complementary_300));
     }
 
     @Override
@@ -44,6 +44,7 @@ public class InhalingState extends BreathingState {
 
         // Clean up the media
         stopSound();
+        binding.inhalePulsator.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -51,8 +52,8 @@ public class InhalingState extends BreathingState {
         // TODO: Start animation and sound
         inhaleSound = MediaPlayer.create(activity, R.raw.inhaling);
         inhaleSound.start();
-        binding.zenPulsator.setVisibility(View.VISIBLE);
-        binding.zenPulsator.start();
+        binding.inhalePulsator.setVisibility(View.VISIBLE);
+        binding.inhalePulsator.start();
 
         binding.helpBreatheIn.setVisibility(View.INVISIBLE);
 
@@ -70,8 +71,8 @@ public class InhalingState extends BreathingState {
             public void onFinish() {
                 binding.releaseButton.setVisibility(View.VISIBLE);
 
-                binding.zenPulsator.stop();
-                binding.zenPulsator.setVisibility(View.INVISIBLE);
+                binding.inhalePulsator.stop();
+                binding.inhalePulsator.setVisibility(View.INVISIBLE);
                 stopSound();
             }
         };
@@ -80,8 +81,8 @@ public class InhalingState extends BreathingState {
 
     @Override
     public void onButtonUp() {
-        binding.zenPulsator.stop();
-        binding.zenPulsator.setVisibility(View.INVISIBLE);
+        binding.inhalePulsator.stop();
+        binding.inhalePulsator.setVisibility(View.INVISIBLE);
         stopSound();
 
         binding.helpBreatheIn.setVisibility(View.VISIBLE);
