@@ -1,0 +1,255 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "14a6ad705989594d1a799865d6cbe24b",
+    "entities": [
+      {
+        "tableName": "children",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`child_id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT, `lastName` TEXT, `photoFileName` TEXT, `createdTime` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "child_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "photoFileName",
+            "columnName": "photoFileName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdTime",
+            "columnName": "createdTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "child_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "coin_result",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_result_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateTimeOfFlip` INTEGER NOT NULL, `resultIsHead` INTEGER NOT NULL, `guessIsHead` INTEGER NOT NULL, `selected_child_id` INTEGER NOT NULL, FOREIGN KEY(`selected_child_id`) REFERENCES `children`(`child_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "coin_result_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateTimeOfFlip",
+            "columnName": "dateTimeOfFlip",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resultIsHead",
+            "columnName": "resultIsHead",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "guessIsHead",
+            "columnName": "guessIsHead",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "childId",
+            "columnName": "selected_child_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "coin_result_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_coin_result_selected_child_id",
+            "unique": false,
+            "columnNames": [
+              "selected_child_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_coin_result_selected_child_id` ON `${TABLE_NAME}` (`selected_child_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "children",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "selected_child_id"
+            ],
+            "referencedColumns": [
+              "child_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tasks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`task_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `child_turn_id` INTEGER DEFAULT 'NULL', FOREIGN KEY(`child_turn_id`) REFERENCES `children`(`child_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "task_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "childId",
+            "columnName": "child_turn_id",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "'NULL'"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "task_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_tasks_child_turn_id",
+            "unique": false,
+            "columnNames": [
+              "child_turn_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tasks_child_turn_id` ON `${TABLE_NAME}` (`child_turn_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "children",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "child_turn_id"
+            ],
+            "referencedColumns": [
+              "child_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "whose_turn",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`whose_turn_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `assigned_child_id` INTEGER NOT NULL, `assigned_task_id` INTEGER NOT NULL, `completionTime` INTEGER NOT NULL, FOREIGN KEY(`assigned_child_id`) REFERENCES `children`(`child_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`assigned_task_id`) REFERENCES `tasks`(`task_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "whose_turn_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "childId",
+            "columnName": "assigned_child_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskId",
+            "columnName": "assigned_task_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completionTime",
+            "columnName": "completionTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "whose_turn_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_whose_turn_assigned_child_id",
+            "unique": false,
+            "columnNames": [
+              "assigned_child_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_whose_turn_assigned_child_id` ON `${TABLE_NAME}` (`assigned_child_id`)"
+          },
+          {
+            "name": "index_whose_turn_assigned_task_id",
+            "unique": false,
+            "columnNames": [
+              "assigned_task_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_whose_turn_assigned_task_id` ON `${TABLE_NAME}` (`assigned_task_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "children",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "assigned_child_id"
+            ],
+            "referencedColumns": [
+              "child_id"
+            ]
+          },
+          {
+            "table": "tasks",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "assigned_task_id"
+            ],
+            "referencedColumns": [
+              "task_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '14a6ad705989594d1a799865d6cbe24b')"
+    ]
+  }
+}
