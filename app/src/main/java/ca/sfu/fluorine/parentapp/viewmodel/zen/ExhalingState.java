@@ -58,21 +58,26 @@ public class ExhalingState extends BreathingState {
 
             @Override
             public void onFinish(){
-                // TODO: Stop sound and animation after 10 seconds in total
+                moveToNextState();
             }
         };
         countDownTimer.start();
+    }
 
+    @Override
+    public void onExit() {
+        // TODO: Stop animation and stop the sound
     }
 
     @Override
     public void onButtonDown() {
-        // TODO: Stop sound and animation after 10 seconds in total
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        moveToNextState();
+    }
 
-        // Navigate to new state based on remaining breath count
+    private void moveToNextState() {
         if (breathCount <= 0) {
             activity.setState(new BreathingEndState(activity));
         } else {
