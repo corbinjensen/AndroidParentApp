@@ -5,6 +5,6 @@
     <item
         android:id="@+id/show_history"
         android:icon="@drawable/ic_baseline_history"
-        android:title="@string/history"
+        android:title="@string/task_history"
         app:showAsAction="ifRoom|withText" />
 </menu>

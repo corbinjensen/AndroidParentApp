@@ -180,7 +180,8 @@
     <string name="complete_task_message">Next turn will be <b>%s</b></string>
     <string name="next_turn_info">Next turn: %s</string>
     <string name="next_turn">Next turn</string>
-    <string name="history">History</string>
+    <string name="task_history">Task History</string>
+    <string name="view_task_history">View Who\'s Turn History</string>
 
     <!--  Empty states  -->
     <string name="empty_list">Empty list</string>
@@ -193,7 +194,6 @@
     <string name="calm_title">Calm</string>
     <string name="crop_image_title">Crop Image</string>
     <string name="zen">Zen</string>
-    <string name="view_task_history">View Who\'s Turn History</string>
     <string name="subtract_breath">-</string>
     <string name="add_breath">+</string>
     <string name="begin">begin</string>

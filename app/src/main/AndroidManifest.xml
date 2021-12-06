@@ -17,12 +17,12 @@
         android:theme="@style/Theme.ParentApp">
         <activity
             android:name=".view.task.history.TaskHistoryActivity"
-            android:label="Task History"
             android:exported="false"
-            android:parentActivityName=".view.task.EditTaskActivity"/>
+            android:label="@string/task_history"
+            android:parentActivityName=".view.task.EditTaskActivity" />
         <activity
             android:name=".view.calm.zen.ZenActivity"
-            android:label="Zen"
+            android:label="@string/zen"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
@@ -49,14 +49,17 @@
         <activity
             android:name=".view.children.AddChildActivity"
             android:exported="false"
+            android:label="@string/add_new_child"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".view.children.EditChildActivity"
             android:exported="false"
+            android:label="@string/edit_child"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".view.coin.CoinFlipActivity"
             android:exported="false"
+            android:label="@string/new_coin_flip"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"

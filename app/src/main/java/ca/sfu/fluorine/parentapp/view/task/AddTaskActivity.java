@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.View;
 
+import java.util.Objects;
+
 import ca.sfu.fluorine.parentapp.R;
 import ca.sfu.fluorine.parentapp.databinding.ActivityTaskFormBinding;
 import ca.sfu.fluorine.parentapp.model.children.Child;
@@ -54,9 +56,9 @@ public class AddTaskActivity extends AppCompatActivity {
             R.string.add_new_task,
             R.string.edit_task_confirm,
             (dialogInterface, i) -> {
-                String taskName = binding.editTaskName.getText().toString();
+                String taskName = Utility.getTextFromInput(binding.editTaskName);
                 Integer childID = childrenArrayAdapter.getSelectedChild().getId();
-                if(childID == Child.getUnspecifiedChild().getId()){
+                if(Objects.equals(childID, Child.getUnspecifiedChild().getId())){
                     childID = null;
                 }
                 Task newTask = new Task(taskName, childID);
@@ -69,7 +71,7 @@ public class AddTaskActivity extends AppCompatActivity {
             binding.buttonSaveTask.setEnabled(areAllFieldsFilled()));
 
     private boolean areAllFieldsFilled() {
-        String taskName = binding.editTaskName.getText().toString();
+        String taskName = Utility.getTextFromInput(binding.editTaskName);
         String child = binding.dropdownSelection.getText().toString();
         return !taskName.isEmpty() && !child.isEmpty();
     }
