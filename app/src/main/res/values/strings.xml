@@ -125,6 +125,9 @@
     <string name="task_icon_citation">
         <a href="https://fontawesome.com/v5.15/icons/tasks?style=solid">Task</a> from Font Awesome Library
     </string>
+    <string name="tachometer_icon_citation">
+        <a href="https://fontawesome.com/v5.15/icons/tachometer-alt?style=solid">Tachometer</a> from Font Awesome Library
+    </string>
 
     <string name="pulsator_citation">
         <a href="https://github.com/booncol/Pulsator4Droid">Pulsing UI Effect</a> by booncol
@@ -152,7 +155,7 @@
     </string>
 
     <string name="clip_art_box_citation">
-        <a href="https://www.flaticon.com/premium-icon/wallet_1992003?term=empty&amp;page=1&amp;position=11&amp;page=1&amp;position=11&amp;related_id=1992003&amp;origin=search">Empty Box Icon</a> By: juicy_fish
+        <a href="https://www.flaticon.com/premium-icon/wallet_1992003">Empty Box Icon</a> by juicy_fish
     </string>
 
     <string name="wind_icon_citation">
@@ -184,7 +187,7 @@
     <string name="empty_state_children_message">Tap the button on the bottom right to add a child</string>
     <string name="empty_state_coin_flip_message">Tap the button on the bottom right to flip a coin</string>
     <string name="empty_state_task_message">Tap the button on the bottom right to create a task</string>
-    <string name="clip_art">Clip Art:</string>
+    <string name="clip_art">Clip Arts</string>
 
     <!--  Calm screen  -->
     <string name="calm_title">Calm</string>
