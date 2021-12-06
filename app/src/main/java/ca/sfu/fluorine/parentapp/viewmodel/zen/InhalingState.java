@@ -40,7 +40,9 @@ public class InhalingState extends BreathingState {
     @Override
     public void onButtonDown() {
         // TODO: Start animation and sound + hide the breath-in message
-        inhaleSound.start();
+        // inhaleSound.start();
+
+        // Hide breath-in message
         binding.helpBreatheIn.setVisibility(View.INVISIBLE);
 
 
@@ -65,6 +67,8 @@ public class InhalingState extends BreathingState {
     @Override
     public void onButtonUp() {
 
+        binding.helpBreatheIn.setVisibility(View.VISIBLE);
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -74,7 +78,7 @@ public class InhalingState extends BreathingState {
         } else {
             // TODO: Button is not held long enough, show the breath-in message + cancel sound and animation
             // inhaleSound.stop();
-            binding.helpBreatheIn.setVisibility(View.INVISIBLE);
+            binding.helpBreatheIn.setVisibility(View.VISIBLE);
         }
     }
 }
