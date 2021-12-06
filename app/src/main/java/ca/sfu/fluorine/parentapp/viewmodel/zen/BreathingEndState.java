@@ -1,5 +1,7 @@
 package ca.sfu.fluorine.parentapp.viewmodel.zen;
 
+import android.view.View;
+
 import ca.sfu.fluorine.parentapp.view.calm.zen.ZenActivity;
 
 public class BreathingEndState extends BreathingState {
@@ -9,13 +11,24 @@ public class BreathingEndState extends BreathingState {
 
     @Override
     public void onEnter() {
-        // TODO: Show the options "Again" or "Finish"
+        // Show the options "Again" or "Finish"
+        binding.breatheAgain.setVisibility(View.VISIBLE);
+        binding.breatheAgain.setEnabled(true);
+
+        binding.breathingFinished.setVisibility(View.VISIBLE);
+        binding.breathingFinished.setEnabled(true);
     }
 
     @Override
     public void onExit() {
-        // TODO: Hide the options "Again" or "Finish"
+        // Hide the options "Again" or "Finish"
+        binding.breatheAgain.setVisibility(View.INVISIBLE);
+        binding.breatheAgain.setEnabled(false);
 
-        // TODO: Hide the message showing the remaining breath count
+        binding.breathingFinished.setVisibility(View.INVISIBLE);
+        binding.breathingFinished.setEnabled(false);
+
+        // Hide the message showing the remaining breath count
+        binding.helpBreatheIn.setVisibility(View.INVISIBLE);
     }
 }
